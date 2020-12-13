@@ -4,15 +4,15 @@ const ItemCard = () => {
   return (
     <div>
       <div className='m-auto flex justify-center mt-4 '>
-        <span className='block pl-4 py-3 border-l border-t  border-b '>
+        {/* <span className='block pl-4 py-3 border-l border-t  border-b '>
           <div
             style={{
               width: '24px',
               height: '24px',
             }}
           ></div>
-        </span>
-        <div className='border-r border-t border-b px-4 py-3 sm:w-1/2 w-11/12 '>
+        </span> */}
+        <div className='sm:border-r border-t border-b px-4 py-3 sm:w-1/2 w-11/12 '>
           <h1 className='font-semibold sm:text-2xl text-xl mb-1'>
             Ciprocin 500mg Tablet
           </h1>

@@ -1,49 +1,13 @@
 import React, {useContext} from 'react';
 import AppContext from '../context/appContext';
-import CartItem from './CartItem';
+import Cart from './Cart';
 
 const Nav = () => {
   const appContext = useContext(AppContext);
   const {isCartOpen, openCart} = appContext;
   return (
-    <div className={isCartOpen ? ' bg-gray-200' : 'bg-gray-200'}>
-      {isCartOpen ? (
-        <div className='sm:w-1/3 w-full h-full bg-gray-300 top-0 right-0 fixed z-10 transition duration-300 transform translate-x-0 shadow-lg overflow-y-auto'>
-          <span
-            onClick={() => {
-              openCart(!isCartOpen);
-            }}
-            className=' flex items-center cursor-pointer mt-5'
-          >
-            <svg
-              className='ml-10'
-              xmlns='http://www.w3.org/2000/svg'
-              height='32'
-              viewBox='0 0 24 24'
-              width='32'
-            >
-              <path d='M0 0h24v24H0V0z' fill='none' />
-              <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z' />
-            </svg>
-            <h2 className='font-semibold text-2xl ml-16'>Your cart</h2>
-          </span>{' '}
-          <hr className='border-gray-500 mt-6' />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-        </div>
-      ) : (
-        <div className='w-1/3 min-h-screen bg-gray-200 top-0 right-0 fixed z-10 transition duration-300 transform translate-x-full overflow-y-auto'>
-          <h2 className='font-semibold text-2xl text-center'>Your cart</h2>
-          <CartItem />
-          <CartItem />
-        </div>
-      )}
+    <div className='bg-gray-200'>
+      <Cart />
       <nav className='flex py-4  items-center sm:w-2/3 w-11/12 m-auto'>
         <h1 className='flex-grow font-bold text-4xl'>YOS</h1>
         <div

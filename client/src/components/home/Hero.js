@@ -3,7 +3,7 @@ import React from 'react';
 const Hero = () => {
   return (
     <div>
-      <div className='mt-20'>
+      <div className='mt-10'>
         <span className='flex justify-center items-center'>
           <svg
             xmlns='http://www.w3.org/2000/svg'

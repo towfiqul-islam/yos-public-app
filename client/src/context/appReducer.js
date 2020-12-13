@@ -1,4 +1,4 @@
-import {OPEN_CART} from './types';
+import {OPEN_CART, OPEN_SEARCH} from './types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -9,6 +9,12 @@ export default (state, action) => {
       return {
         ...state,
         isCartOpen: action.payload,
+      };
+
+    case OPEN_SEARCH:
+      return {
+        ...state,
+        isMobileSearchOpen: action.payload,
       };
   }
 };

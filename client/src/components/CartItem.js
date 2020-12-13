@@ -3,26 +3,26 @@ import React from 'react';
 const CartItem = () => {
   return (
     <div>
-      <div className='m-auto flex justify-center mt-4 '>
-        <span className='block pl-4 py-3 border-l border-t  border-b '>
+      <div className='m-auto flex justify-center mt-2 '>
+        {/* <span className='block pl-4 py-3 border-l border-t  border-b '>
           <div
             style={{
               width: '24px',
               height: '24px',
             }}
           ></div>
-        </span>
-        <div className='border-r border-t border-b px-4 py-3  w-11/12 '>
+        </span> */}
+        <div className='  border-b px-4 py-3  w-11/12 '>
           <h1 className='font-semibold sm:text-2xl text-xl mb-1'>
             Ciprocin 500mg Tablet
           </h1>
           <p className='mb-1'>By Square pharma</p>
-          <div className='flex items-center mb-2'>
+          <div className='flex items-center mb-1'>
             <p className='text-xl font-semibold mr-2 '>5.25 Tk </p>
             <span>per-unit</span>
           </div>
-          <div className='sm:flex justify-between'>
-            <div className='flex mb-2'>
+          <div className='flex justify-between items-center'>
+            <div className='flex'>
               {' '}
               <span className='mr-4'>Quantity</span>
               <div className='flex items-center'>
@@ -37,7 +37,7 @@ const CartItem = () => {
                     <path d='M19 13H5v-2h14v2z' />
                   </svg>
                 </span>
-                <span className='border px-2 mx-2'>10</span>
+                <span className='border border-gray-500 px-2 mx-2'>10</span>
                 <span>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
