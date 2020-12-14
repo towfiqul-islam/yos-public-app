@@ -1,4 +1,4 @@
-import {OPEN_CART, OPEN_SEARCH} from './types';
+import {OPEN_CART, OPEN_SEARCH, OPEN_MENU} from './types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -15,6 +15,12 @@ export default (state, action) => {
       return {
         ...state,
         isMobileSearchOpen: action.payload,
+      };
+
+    case OPEN_MENU:
+      return {
+        ...state,
+        isMenuOpen: action.payload,
       };
   }
 };

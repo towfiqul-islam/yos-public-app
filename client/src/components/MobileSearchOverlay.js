@@ -13,7 +13,7 @@ const MobileSearchOverlay = () => {
     isCartOpen,
   } = appContext;
   return (
-    <div>
+    <div className='mb-20'>
       <Cart />
       <div className='flex items-center justify-center'>
         <span className='block pl-4 py-4  border-t border-b border-gray-500'>
@@ -47,18 +47,23 @@ const MobileSearchOverlay = () => {
           </svg>
         </span>
       </div>
+      <p className='w-full text-center shadow bg-yellow-400 rounded text-gray-900 px-2 py-1 text-sm'>
+        Home delivery only in Dhanmondi area.
+      </p>
       <div className='sm:hidden block'>
+        <SecondaryItemCard />
+        <SecondaryItemCard />
         <SecondaryItemCard />
         <SecondaryItemCard />
         <SecondaryItemCard />
         {/* <ItemCard />
         <ItemCard /> */}
       </div>
-      <div className='flex  items-center justify-around bottom-0 fixed w-full border-t border-gray-400 pt-4'>
-        <p className='text-xl font-bold'>360.00 TK</p>
+      <div className='flex z-10 bg-gray-300 items-center justify-around bottom-0 fixed w-full pt-4 '>
+        <p className='text-xl font-bold mb-2'>360.00 TK</p>
         <div
           onClick={() => openCart(!isCartOpen)}
-          className='flex sm:mr-24 relative cursor-pointer border border-gray-500 px-4 py-2 mb-2'
+          className='flex sm:mr-24  relative cursor-pointer border border-gray-500 rounded px-4 py-2 mb-2'
         >
           <div
             style={{left: '30px', top: '-10px'}}

@@ -12,13 +12,13 @@ const CartItem = () => {
             }}
           ></div>
         </span> */}
-        <div className='  border-b px-4 py-3  w-11/12 '>
-          <h1 className='font-semibold sm:text-2xl text-xl mb-1'>
+        <div className='  border-b border-gray-300 px-4 py-3  w-11/12 '>
+          <h1 className='font-semibold sm:text-lg text-base mb-1'>
             Ciprocin 500mg Tablet
           </h1>
           <p className='mb-1'>By Square pharma</p>
           <div className='flex items-center mb-1'>
-            <p className='text-xl font-semibold mr-2 '>5.25 Tk </p>
+            <p className='sm:text-xl font-semibold mr-2 '>5.25 Tk </p>
             <span>per-unit</span>
           </div>
           <div className='flex justify-between items-center'>
@@ -26,7 +26,7 @@ const CartItem = () => {
               {' '}
               <span className='mr-4'>Quantity</span>
               <div className='flex items-center'>
-                <span>
+                <span className='cursor-pointer'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     height='20'
@@ -37,8 +37,12 @@ const CartItem = () => {
                     <path d='M19 13H5v-2h14v2z' />
                   </svg>
                 </span>
-                <span className='border border-gray-500 px-2 mx-2'>10</span>
-                <span>
+                <input
+                  className='border border-gray-600  mx-2 w-8 text-center'
+                  type='text'
+                  placeholder='10'
+                />
+                <span className='cursor-pointer'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     height='20'
@@ -57,7 +61,7 @@ const CartItem = () => {
           </div>
         </div>
       </div>{' '}
-      <hr className='border-gray-500' />
+      {/* <hr className='border-gray-300' /> */}
     </div>
   );
 };

@@ -3,17 +3,17 @@ import React from 'react';
 const SecondaryItemCard = () => {
   return (
     <div>
-      <div className='bg-gray-100 border-t border-gray-400 px-4 py-4'>
-        <h2 className='font-semibold text-xl mb-2'>Ciprocin 500mg Tablet</h2>
-        <p className='mb-2'>By Square Pharma</p>
-        <p className='mb-2 font-medium text-lg'>
+      <div className='bg-gray-100 border-t border-gray-300 px-4 py-4'>
+        <h2 className='font-semibold sm:text-lg mb-1'>Ciprocin 500mg Tablet</h2>
+        <p className='mb-1'>By Square Pharma</p>
+        <p className='mb-1 font-medium text-lg'>
           5.25Tk <span className='text-base font-normal'>per-unit</span>
         </p>
         <div className='flex justify-between'>
           <div className='flex '>
-            <p className='mr-6'>Quantity</p>
+            <p className='mr-4'>Quantity</p>
             <div className='flex items-center'>
-              <span>
+              <span className='cursor-pointer'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   height='20'
@@ -24,8 +24,12 @@ const SecondaryItemCard = () => {
                   <path d='M19 13H5v-2h14v2z' />
                 </svg>
               </span>
-              <span className='border border-gray-600 px-2 mx-2'>10</span>
-              <span>
+              <input
+                className='border border-gray-600  mx-2 w-8 text-center'
+                type='text'
+                placeholder='10'
+              />
+              <span className='cursor-pointer'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   height='20'

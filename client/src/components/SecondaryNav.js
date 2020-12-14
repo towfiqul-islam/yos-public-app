@@ -1,29 +1,56 @@
 import React, {useContext} from 'react';
 import AppContext from '../context/appContext';
 import history from '../history';
+import {useLocation} from 'react-router-dom';
 import Cart from './Cart';
 import ItemCard from './ItemCard';
 import SecondaryItemCard from './SecondaryItemCard';
 
 const SecondaryNav = () => {
+  const router = useLocation();
   const appContext = useContext(AppContext);
   const {
     isCartOpen,
     openCart,
     toggleMobileSearch,
     isMobileSearchOpen,
+    toggleMobileMenu,
+    isMenuOpen,
   } = appContext;
 
   return (
     <div className='bg-gray-200'>
+      {isCartOpen && (
+        <div className='top-0 left-0 fixed bg-black bg-opacity-75 z-40 h-screen w-full'></div>
+      )}
       <Cart />
       <nav className='flex  py-4  items-center md:w-2/3 w-11/12 m-auto'>
-        <h1
-          onClick={() => history.push('/')}
-          className='flex-grow md:flex-grow-0 font-bold md:text-4xl text-2xl cursor-pointer'
-        >
-          YOS
-        </h1>
+        <div className='flex flex-grow md:flex-grow-0 items-center'>
+          <span
+            onClick={() => toggleMobileMenu(!isMenuOpen)}
+            className='sm:hidden block mr-4 cursor-pointer'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              height='24'
+              viewBox='0 0 24 24'
+              width='24'
+            >
+              <path d='M0 0h24v24H0V0z' fill='none' />
+              <path d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' />
+            </svg>
+          </span>
+          <h1
+            onClick={() => {
+              history.push('/');
+              toggleMobileMenu(false);
+              // toggleMobileSearch(false)
+            }}
+            className=' font-bold md:text-4xl text-xl cursor-pointer'
+          >
+            YOS
+          </h1>
+        </div>
         <div className='md:flex relative flex-grow items-center justify-center  hidden'>
           <span className='block bg-white pl-4 py-3 border-l border-t border-b border-gray-500'>
             <svg
@@ -48,9 +75,9 @@ const SecondaryNav = () => {
           >
             <p
               style={{top: '-15px'}}
-              className='absolute ml-40 shadow-lg bg-yellow-400 rounded text-gray-900 px-2 py-1 text-sm'
+              className='absolute ml-20 shadow bg-yellow-400 rounded text-gray-900 px-2 py-1 text-sm'
             >
-              10% off on all orders
+              Home delivery only in Dhanmondi area.
             </p>
             <SecondaryItemCard />
             <SecondaryItemCard />
@@ -58,7 +85,7 @@ const SecondaryNav = () => {
           </div> */}
         </div>
         <div
-          onClick={() => openCart(!isCartOpen)}
+          onClick={() => openCart()}
           className='flex md:mr-24 relative cursor-pointer'
         >
           <div
@@ -98,11 +125,27 @@ const SecondaryNav = () => {
           </svg>
         </div>
         <div className='hidden md:block'>
-          <button className='bg-gray-900 text-gray-100 rounded px-6 py-2'>
+          <button
+            onClick={() => history.push('/order-by-prescription')}
+            className='bg-gray-900 text-gray-100 rounded px-6 py-2'
+          >
             Order by prescription
           </button>
         </div>
       </nav>
+
+      {isMenuOpen &&
+        router.pathname !== '/' &&
+        router.pathname !== '/order-by-prescription' && (
+          <div className='pb-2 '>
+            <button
+              onClick={() => history.push('/order-by-prescription')}
+              className='border-2 border-gray-900 text-gray-900 font-medium px-4 py-2 block w-3/4 mx-auto rounded'
+            >
+              Order by prescription
+            </button>
+          </div>
+        )}
     </div>
   );
 };

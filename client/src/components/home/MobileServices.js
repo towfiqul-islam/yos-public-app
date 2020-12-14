@@ -1,4 +1,5 @@
 import React from 'react';
+import history from '../../history';
 
 const MobileServices = () => {
   return (
@@ -75,7 +76,10 @@ const MobileServices = () => {
           <p className='text-sm ml-2'>Free home delivery</p>
         </div>
         <div className='mt-10'>
-          <button className='bg-gray-900 text-gray-100 rounded px-6 text-sm mx-auto block py-2'>
+          <button
+            onClick={() => history.push('/order-by-prescription')}
+            className='bg-gray-900 text-gray-100 rounded px-6 text-sm mx-auto block py-2'
+          >
             Order by prescription
           </button>
         </div>

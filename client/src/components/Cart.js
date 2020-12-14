@@ -10,17 +10,18 @@ const Cart = () => {
     openCart,
     toggleMobileSearch,
     isMobileSearchOpen,
+    toggleMobileMenu,
   } = appContext;
   return (
     <div>
       <div
-        className={`sm:w-1/3 w-full h-full bg-gray-100 top-0 right-0  fixed z-10 transition duration-300 transform ${
+        className={`sm:w-1/3 w-full  h-full bg-gray-100 top-0 right-0  fixed z-50 transition duration-300 transform ${
           isCartOpen ? 'translate-x-0' : 'translate-x-full'
         } shadow-lg overflow-y-auto`}
       >
         <span
           onClick={() => {
-            openCart(!isCartOpen);
+            openCart();
           }}
           className=' flex items-center cursor-pointer mt-5 ml-4'
         >
@@ -50,8 +51,9 @@ const Cart = () => {
           <button
             onClick={() => {
               history.push('/order-details');
-              openCart(!isCartOpen);
+              openCart();
               toggleMobileSearch(false);
+              toggleMobileMenu(false);
             }}
             className='block bg-gray-900 text-gray-100 px-8 py-2 text my-10 mx-auto rounded '
           >
