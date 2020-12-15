@@ -1,17 +1,31 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef, useEffect} from 'react';
 import AppContext from '../context/appContext';
 import Cart from './Cart';
-import ItemCard from './ItemCard';
+
 import SecondaryItemCard from './SecondaryItemCard';
 
 const MobileSearchOverlay = () => {
+  const searchInput = useRef(null);
   const appContext = useContext(AppContext);
   const {
     toggleMobileSearch,
     isMobileSearchOpen,
     openCart,
     isCartOpen,
+    carts,
+
+    onSearch,
+    searchResults,
+    search,
   } = appContext;
+  const onChange = e => {
+    onSearch(e.target.value);
+  };
+  useEffect(() => {
+    searchInput.current.focus();
+
+    // eslint-disable-next-line
+  }, [isMobileSearchOpen]);
   return (
     <div className='mb-20'>
       <Cart />
@@ -28,9 +42,13 @@ const MobileSearchOverlay = () => {
           </svg>
         </span>
         <input
+          ref={searchInput}
           className='sm:w-1/2 w-11/12 border-t border-b border-gray-500 px-4 py-4 focus:outline-none'
           type='text'
           placeholder='Search and order medicine'
+          name='search'
+          onChange={onChange}
+          value={search}
         />
         <span
           onClick={() => toggleMobileSearch(!isMobileSearchOpen)}
@@ -47,43 +65,84 @@ const MobileSearchOverlay = () => {
           </svg>
         </span>
       </div>
-      <p className='w-full text-center shadow bg-yellow-400 rounded text-gray-900 px-2 py-1 text-sm'>
-        Home delivery only in Dhanmondi area.
-      </p>
-      <div className='sm:hidden block'>
-        <SecondaryItemCard />
-        <SecondaryItemCard />
-        <SecondaryItemCard />
-        <SecondaryItemCard />
-        <SecondaryItemCard />
-        {/* <ItemCard />
-        <ItemCard /> */}
-      </div>
-      <div className='flex z-10 bg-gray-300 items-center justify-around bottom-0 fixed w-full pt-4 '>
-        <p className='text-xl font-bold mb-2'>360.00 TK</p>
-        <div
-          onClick={() => openCart(!isCartOpen)}
-          className='flex sm:mr-24  relative cursor-pointer border border-gray-500 rounded px-4 py-2 mb-2'
-        >
-          <div
-            style={{left: '30px', top: '-10px'}}
-            className='absolute  bg-gray-900 rounded-full h-4 w-4 p-3 flex items-center justify-center text-gray-100 text-xs'
+      <div className='flex justify-between shadow py-1 bg-yellow-400 text-gray-900'>
+        <p className=' px-2 py-1 text-sm'>
+          Home delivery only in Dhanmondi area.
+        </p>
+        {carts.length > 0 && (
+          <button
+            onClick={() => openCart(!isCartOpen)}
+            className='border border-gray-700 px-1 rounded text-sm font-semibold mr-2'
           >
-            1
+            View carts
+          </button>
+        )}
+      </div>
+      <div className='sm:hidden block'>
+        {search.length > 2 &&
+          searchResults.length > 0 &&
+          searchResults.map(med => (
+            <SecondaryItemCard key={med.id} med={med} />
+          ))}
+
+        {carts.length === 0 && search.length <= 2 && (
+          <div
+            className='fixed'
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <div className='flex justify-center mb-4'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                height='64'
+                viewBox='0 0 24 24'
+                width='64'
+              >
+                <path d='M0 0h24v24H0V0z' fill='none' />
+                <path
+                  d='M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-8.9-5h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4l-3.87 7H8.53L4.27 2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2z'
+                  fill='#c6c6c6'
+                />
+              </svg>
+            </div>
+            <p className='font-medium text-gray-700'>Your cart is empty.</p>
           </div>
-          <span>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              height='24'
-              viewBox='0 0 24 24'
-              width='24'
-            >
-              <path d='M0 0h24v24H0V0z' fill='none' />
-              <path d='M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z' />
-            </svg>
-          </span>
-          <span className='font-semibold text-lg ml-3'>View Cart</span>
-        </div>
+        )}
+
+        {carts.length > 0 && search.length === 0 && (
+          <div
+            className='fixed'
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <div className='flex justify-center mb-4'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                height='64'
+                viewBox='0 0 24 24'
+                width='64'
+              >
+                <path d='M0 0h24v24H0V0z' fill='none' />
+                <path
+                  d='M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-8.9-5h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4l-3.87 7H8.53L4.27 2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2z'
+                  fill='#c6c6c6'
+                />
+              </svg>
+            </div>
+            <p className='font-medium text-gray-700'>
+              {carts.length === 1
+                ? `${carts.length} item`
+                : `${carts.length} items`}{' '}
+              added to cart
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

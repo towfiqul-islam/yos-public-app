@@ -1,51 +1,70 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
+import AppContext from '../context/appContext';
 
-const SecondaryItemCard = () => {
+const SecondaryItemCard = ({med}) => {
+  const appContext = useContext(AppContext);
+  const {addToCart, carts, calculateCartValue, onSearch} = appContext;
+  const [qty, setQty] = useState(1);
+  const onAddToCart = med => {
+    for (const item of carts) {
+      if (med.id === item.id) {
+        console.log('Item already in the Cart');
+        return;
+      }
+    }
+
+    carts.push({
+      ...med,
+      quantity: parseInt(qty),
+      price: med.unit_price * parseInt(qty),
+    });
+    addToCart(carts);
+    calculateCartValue(carts);
+    onSearch('');
+  };
+
+  const onChange = e => {
+    if (!e.target.value) {
+      setQty(1);
+      med.price = med.unit_price;
+      calculateCartValue(carts);
+    } else {
+      setQty(parseInt(e.target.value));
+      med.price = med.unit_price * parseInt(e.target.value);
+      calculateCartValue(carts);
+    }
+  };
   return (
     <div>
       <div className='bg-gray-100 border-t border-gray-300 px-4 py-4'>
-        <h2 className='font-semibold sm:text-lg mb-1'>Ciprocin 500mg Tablet</h2>
-        <p className='mb-1'>By Square Pharma</p>
-        <p className='mb-1 font-medium text-lg'>
-          5.25Tk <span className='text-base font-normal'>per-unit</span>
-        </p>
-        <div className='flex justify-between'>
-          <div className='flex '>
-            <p className='mr-4'>Quantity</p>
-            <div className='flex items-center'>
-              <span className='cursor-pointer'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='20'
-                  viewBox='0 0 24 24'
-                  width='20'
-                >
-                  <path d='M0 0h24v24H0V0z' fill='none' />
-                  <path d='M19 13H5v-2h14v2z' />
-                </svg>
-              </span>
-              <input
-                className='border border-gray-600  mx-2 w-8 text-center'
-                type='text'
-                placeholder='10'
-              />
-              <span className='cursor-pointer'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='20'
-                  viewBox='0 0 24 24'
-                  width='20'
-                >
-                  <path d='M0 0h24v24H0V0z' fill='none' />
-                  <path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' />
-                </svg>
-              </span>
-            </div>
+        <h2 className='font-semibold sm:text-lg mb-1'>
+          {med !== undefined && med.trade_name}
+        </h2>
+        <p className='mb-2'>By {med !== undefined && med.company_name}</p>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center'>
+            <p className='mb-1 font-medium text-lg'>
+              {!med.price ? med.unit_price : med.price} Tk
+            </p>
+            <input
+              className='border-2 rounded border-gray-400 text-center px-1 sm:py-1 ml-2'
+              type='number'
+              min='1'
+              max='9'
+              step='1'
+              placeholder='Qty'
+              value={!qty ? 1 : qty}
+              name='qty'
+              onChange={onChange}
+            />
           </div>
-          <button className='bg-gray-900 text-gray-100 px-4 py-1 rounded text-sm'>
+          <button
+            onClick={() => onAddToCart(med)}
+            className='bg-gray-900 text-gray-100 px-4 py-1 rounded text-sm'
+          >
             Add To Cart
           </button>
-        </div>{' '}
+        </div>
       </div>
     </div>
   );

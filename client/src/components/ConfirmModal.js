@@ -35,7 +35,10 @@ const ConfirmModal = () => {
           Thanks for your order. we'll call you shortly to confirm your order.
         </p>
         <button
-          onClick={() => history.push('/')}
+          onClick={() => {
+            history.push('/');
+            window.location.reload();
+          }}
           className='px-4 py-2 mt-8 bg-gray-900 text-gray-100 block mx-auto rounded text-sm'
         >
           Back To Home

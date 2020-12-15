@@ -1,27 +1,89 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
+import {useEffect} from 'react';
 import AppContext from '../context/appContext';
-import ConfirmModal from './ConfirmModal';
+import history from '../history';
+import axios from 'axios';
+
 import MobileSearchOverlay from './MobileSearchOverlay';
 
 import SecondaryNav from './SecondaryNav';
 
 const OrderDetails = () => {
   const appContext = useContext(AppContext);
-  const {isMobileSearchOpen, isCartOpen} = appContext;
-  // if (isMobileSearchOpen) {
-  //   return (
-  //     <div className=''>
-  //       <MobileSearchOverlay />
-  //     </div>
-  //   );
-  // } else {
+  const {
+    isMobileSearchOpen,
+    isCartOpen,
+    carts,
+    cartValue,
+    isAlertOpen,
+    setAlert,
+  } = appContext;
+
+  const [file, setFile] = useState('');
+
+  const [orderDetails, setOrderDetails] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    additional_notes: '',
+    prescription: '',
+  });
+
+  const {name, phone, address, additional_notes, prescription} = orderDetails;
+
+  const onChange = e => {
+    setOrderDetails({...orderDetails, [e.target.name]: e.target.value});
+  };
+
+  const onFileChange = async e => {
+    setFile(e.target.files[0]);
+    const formData = new FormData();
+    formData.append('file', e.target.files[0]);
+    formData.append('upload_preset', 'yos-prescription');
+    const res = await axios.post(
+      'https://api.cloudinary.com/v1_1/yos/image/upload',
+      formData,
+    );
+    setOrderDetails({
+      ...orderDetails,
+      prescription: res.data.secure_url,
+    });
+  };
+
+  const onConfirmOrder = () => {
+    const orderInfo = {
+      carts: carts,
+      orderDetails: orderDetails,
+      cartValue: cartValue,
+    };
+
+    if (name !== '' && phone !== '' && address !== '') {
+      sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
+      history.push('/order-review');
+    } else {
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    }
+  };
+
+  useEffect(() => {
+    const orderInfos = JSON.parse(sessionStorage.getItem('orderInfo'));
+
+    if (orderInfos !== null) {
+      setOrderDetails(orderInfos.orderDetails);
+    }
+
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <>
       <div className={isMobileSearchOpen ? 'block sm:hidden' : 'hidden'}>
         <MobileSearchOverlay />
       </div>
       <div className={isMobileSearchOpen ? 'hidden sm:block' : 'block'}>
-        {/* <ConfirmModal /> */}
         <SecondaryNav />
         <div
           style={{
@@ -30,8 +92,26 @@ const OrderDetails = () => {
           }}
           className='sm:w-3/4 w-11/12 mx-auto'
         >
+          {/* Show Alert */}
+          {isAlertOpen && (
+            <div
+              className='w-11/12 sm:w-auto'
+              style={{
+                top: '0',
+                left: '50%',
+                position: 'fixed',
+                transform: 'translate(-50%, 50%)',
+              }}
+            >
+              <p className=' bg-yellow-400 px-1 sm:px-4 py-1 rounded shadow-lg text-center sm:font-semibold'>
+                Please fill the order form properly!
+              </p>
+            </div>
+          )}
+          {/* Show Alert */}
           <h2 className='text-center font-semibold text-gray-600 sm:text-2xl text-lg mt-10'>
-            You have 5 items in your Cart
+            You have {carts.length === 1 ? '1 item' : `${carts.length} items`}{' '}
+            in your Cart
           </h2>
           <div className='flex justify-center items-center  mt-4 sm:w-3/4 w-11/12 sm:mx-auto'>
             <h3 className='font-medium text-lg sm:text-xl text-gray-800'>
@@ -39,7 +119,7 @@ const OrderDetails = () => {
             </h3>
 
             <h3 className='font-bold text-lg sm:text-2xl ml-10 bg-gray-900 text-gray-100 px-2 py-1 rounded'>
-              360.00 Tk
+              {cartValue} Tk
             </h3>
           </div>
           <div className='mx-auto sm:w-3/4'>
@@ -55,6 +135,9 @@ const OrderDetails = () => {
                 type='text'
                 id='name'
                 name='name'
+                value={name}
+                required
+                onChange={onChange}
               />
             </div>
             <div className='mb-4'>
@@ -66,6 +149,9 @@ const OrderDetails = () => {
                 type='text'
                 id='phone'
                 name='phone'
+                value={phone}
+                required
+                onChange={onChange}
               />
             </div>
             <div className='mb-4'>
@@ -80,6 +166,9 @@ const OrderDetails = () => {
                 type='text'
                 id='address'
                 name='address'
+                required
+                value={address}
+                onChange={onChange}
                 rows='5'
               />
             </div>
@@ -93,6 +182,8 @@ const OrderDetails = () => {
                 type='text'
                 id='additional_notes'
                 name='additional_notes'
+                value={additional_notes}
+                onChange={onChange}
                 rows='5'
               />
             </div>
@@ -101,13 +192,69 @@ const OrderDetails = () => {
                 Prescription{' '}
                 <span className='text-sm font-semibold'>(optional)</span>
               </label>
-              <input className='mt-2' type='file' />
+              <input className='mt-2' type='file' onChange={onFileChange} />
+              {prescription !== '' && (
+                <div>
+                  <img
+                    className='border border-gray-400 rounded mt-4'
+                    width='64'
+                    height='64'
+                    src={prescription}
+                    alt=''
+                  />
+                </div>
+              )}
+              {prescription === '' && file !== '' && (
+                <div>
+                  <svg
+                    style={{
+                      margin: '10px 0 0 10px',
+                      background: 'none',
+                      display: 'block',
+                      shapeRendering: 'auto',
+                    }}
+                    width='64px'
+                    height='64px'
+                    viewBox='0 0 100 100'
+                    preserveAspectRatio='xMidYMid'
+                  >
+                    <path
+                      d='M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50'
+                      fill='#0a0a0a'
+                      stroke='none'
+                    >
+                      <animateTransform
+                        attributeName='transform'
+                        type='rotate'
+                        dur='0.7s'
+                        repeatCount='indefinite'
+                        keyTimes='0;1'
+                        values='0 50 51;360 50 51'
+                      ></animateTransform>
+                    </path>
+                  </svg>
+                </div>
+              )}
             </div>
-            <div className='my-10 sm:w-2/3'>
-              <button className='bg-gray-900 text-gray-100 px-8 py-2 rounded block mx-auto'>
-                Confirm order
-              </button>
-            </div>
+            {prescription === '' && file !== '' ? (
+              <div className='my-10 sm:w-2/3'>
+                <button
+                  // onClick={onCofirmOrder}
+                  className='bg-gray-500 text-gray-300 px-8 py-2 rounded block mx-auto'
+                >
+                  Confirm order
+                </button>
+              </div>
+            ) : (
+              <div className='my-10 sm:w-2/3'>
+                <button
+                  onClick={onConfirmOrder}
+                  className='bg-gray-900 text-gray-100 px-8 py-2 rounded block mx-auto'
+                >
+                  Confirm order
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

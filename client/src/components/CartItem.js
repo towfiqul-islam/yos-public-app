@@ -1,67 +1,79 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
+import AppContext from '../context/appContext';
 
-const CartItem = () => {
+const CartItem = ({cart, index}) => {
+  const appContext = useContext(AppContext);
+  const {carts, calculateCartValue} = appContext;
+  const [qty, setQty] = useState(cart.quantity);
+  const onRemoveFromCart = index => {
+    carts.splice(index, 1);
+
+    calculateCartValue(carts);
+
+    const storedCarts = JSON.parse(localStorage.getItem('carts'));
+    // find the item in local storage then remove it
+    for (const item of storedCarts) {
+      if (item.id === cart.id) {
+        const indexOfRemovedItem = storedCarts.indexOf(item);
+        storedCarts.splice(indexOfRemovedItem, 1);
+        localStorage.setItem('carts', JSON.stringify(storedCarts));
+      }
+    }
+  };
+  const onChange = e => {
+    if (!e.target.value) {
+      setQty(1);
+      cart.price = cart.unit_price;
+      calculateCartValue(carts);
+    } else {
+      setQty(parseInt(e.target.value));
+      cart.price = cart.unit_price * parseInt(e.target.value);
+      calculateCartValue(carts);
+      const storedCarts = JSON.parse(localStorage.getItem('carts'));
+      // find the item in local storage then update it's value
+      for (const item of storedCarts) {
+        if (item.id === cart.id) {
+          item.price = cart.unit_price * parseInt(e.target.value);
+          item.quantity = parseInt(e.target.value);
+          localStorage.setItem('carts', JSON.stringify(storedCarts));
+        }
+      }
+    }
+  };
   return (
     <div>
       <div className='m-auto flex justify-center mt-2 '>
-        {/* <span className='block pl-4 py-3 border-l border-t  border-b '>
-          <div
-            style={{
-              width: '24px',
-              height: '24px',
-            }}
-          ></div>
-        </span> */}
         <div className='  border-b border-gray-300 px-4 py-3  w-11/12 '>
           <h1 className='font-semibold sm:text-lg text-base mb-1'>
-            Ciprocin 500mg Tablet
+            {cart !== undefined && cart.trade_name}
           </h1>
-          <p className='mb-1'>By Square pharma</p>
-          <div className='flex items-center mb-1'>
-            <p className='sm:text-xl font-semibold mr-2 '>5.25 Tk </p>
-            <span>per-unit</span>
-          </div>
-          <div className='flex justify-between items-center'>
-            <div className='flex'>
-              {' '}
-              <span className='mr-4'>Quantity</span>
-              <div className='flex items-center'>
-                <span className='cursor-pointer'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='20'
-                    viewBox='0 0 24 24'
-                    width='20'
-                  >
-                    <path d='M0 0h24v24H0V0z' fill='none' />
-                    <path d='M19 13H5v-2h14v2z' />
-                  </svg>
-                </span>
-                <input
-                  className='border border-gray-600  mx-2 w-8 text-center'
-                  type='text'
-                  placeholder='10'
-                />
-                <span className='cursor-pointer'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='20'
-                    viewBox='0 0 24 24'
-                    width='20'
-                  >
-                    <path d='M0 0h24v24H0V0z' fill='none' />
-                    <path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' />
-                  </svg>
-                </span>
-              </div>
+          <p className='mb-2'>By {cart !== undefined && cart.company_name}</p>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center'>
+              <p className='mb-1 font-medium text-lg'>
+                {!cart.price ? cart.unit_price : cart.price} Tk
+              </p>
+              <input
+                className='border-2 rounded border-gray-400 text-center px-1 sm:py-1 ml-2'
+                type='number'
+                min='1'
+                max='9'
+                step='1'
+                placeholder='Qty'
+                value={!qty ? 1 : qty}
+                name='qty'
+                onChange={onChange}
+              />
             </div>
-            <button className='border-2 border-red-700 text-gray-900 px-4 py-1 rounded text-sm'>
+            <button
+              onClick={() => onRemoveFromCart(index)}
+              className='border-2 border-red-700 text-gray-900 px-4 py-1 rounded text-sm'
+            >
               Remove
             </button>
           </div>
         </div>
       </div>{' '}
-      {/* <hr className='border-gray-300' /> */}
     </div>
   );
 };

@@ -9,9 +9,13 @@ const Cart = () => {
     isCartOpen,
     openCart,
     toggleMobileSearch,
-    isMobileSearchOpen,
+
     toggleMobileMenu,
+    carts,
+
+    cartValue,
   } = appContext;
+
   return (
     <div>
       <div
@@ -27,39 +31,45 @@ const Cart = () => {
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
+            enableBackground='new 0 0 24 24'
             height='24'
             viewBox='0 0 24 24'
             width='24'
           >
-            <path d='M0 0h24v24H0V0z' fill='none' />
-            <path d='M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21v-2z' />
+            <rect fill='none' height='24' width='24' />
+            <path d='M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z' />
           </svg>
           <h2 className='font-semibold sm:text-xl text-lg ml-5 text-gray-600'>
-            You have 5 items in your cart
+            You have {carts.length === 1 ? '1 item' : `${carts.length} items`}{' '}
+            in your cart
           </h2>
         </span>{' '}
         <hr className='border-gray-500 mt-6' />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <div>
-          <button
-            onClick={() => {
-              history.push('/order-details');
-              openCart();
-              toggleMobileSearch(false);
-              toggleMobileMenu(false);
-            }}
-            className='block bg-gray-900 text-gray-100 px-8 py-2 text my-10 mx-auto rounded '
-          >
-            Proceed to order
-          </button>
-        </div>
+        {carts.length > 0 &&
+          carts.map((cartItem, index) => (
+            <CartItem key={cartItem.id} cart={cartItem} index={index} />
+          ))}
+        {carts.length > 0 && (
+          <div className='flex justify-between sm:w-3/4 w-11/12 mx-auto mt-4'>
+            <p className='text-lg sm:text-xl'>Cart Value</p>
+            <p className='font-bold text-lg sm:text-xl'>{cartValue} TK</p>
+          </div>
+        )}
+        {carts.length > 0 && (
+          <div>
+            <button
+              onClick={() => {
+                history.push('/order-details');
+                openCart();
+                toggleMobileSearch(false);
+                toggleMobileMenu(false);
+              }}
+              className='block bg-gray-900 text-gray-100 px-8 py-2 text my-10 mx-auto rounded '
+            >
+              Proceed to order
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

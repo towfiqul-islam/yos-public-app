@@ -1,10 +1,12 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import AppContext from '../context/appContext';
 import history from '../history';
 import {useLocation} from 'react-router-dom';
 import Cart from './Cart';
-import ItemCard from './ItemCard';
+
 import SecondaryItemCard from './SecondaryItemCard';
+
+import {data} from '../data';
 
 const SecondaryNav = () => {
   const router = useLocation();
@@ -16,7 +18,26 @@ const SecondaryNav = () => {
     isMobileSearchOpen,
     toggleMobileMenu,
     isMenuOpen,
+    carts,
+    search,
+    searchResults,
+    onSearch,
+    addToCart,
+    calculateCartValue,
   } = appContext;
+
+  const onChange = e => {
+    onSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    const storedCarts = JSON.parse(localStorage.getItem('carts'));
+    if (storedCarts !== null) {
+      addToCart(storedCarts);
+      calculateCartValue(storedCarts);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className='bg-gray-200'>
@@ -67,33 +88,40 @@ const SecondaryNav = () => {
             className='md:w-2/3  w-11/12 border-t border-b border-r border-gray-500 px-4 py-3 focus:outline-none'
             type='text'
             placeholder='Search and order medicine'
+            name='search'
+            value={search}
+            onChange={onChange}
           />
           {/* Searched items */}
-          {/* <div
-            style={{top: '70px'}}
-            className=' absolute  border-l border-r border-b border-gray-400 shadow-xl  md:w-3/4'
-          >
-            <p
-              style={{top: '-15px'}}
-              className='absolute ml-20 shadow bg-yellow-400 rounded text-gray-900 px-2 py-1 text-sm'
+          {search.length > 2 && searchResults.length > 0 && (
+            <div
+              style={{top: '70px'}}
+              className=' absolute  border-l border-r border-b border-gray-400 shadow-xl  md:w-3/4'
             >
-              Home delivery only in Dhanmondi area.
-            </p>
-            <SecondaryItemCard />
-            <SecondaryItemCard />
-            <SecondaryItemCard />
-          </div> */}
+              <p
+                style={{top: '-15px'}}
+                className='absolute ml-20 shadow bg-yellow-400 rounded text-gray-900 px-2 py-1 text-sm'
+              >
+                Home delivery only in Dhanmondi area.
+              </p>
+              {data.map(med => (
+                <SecondaryItemCard key={med.id} med={med} />
+              ))}
+            </div>
+          )}
         </div>
         <div
           onClick={() => openCart()}
           className='flex md:mr-24 relative cursor-pointer'
         >
-          <div
-            style={{left: '15px', top: '-16px'}}
-            className='absolute  bg-gray-900 rounded-full h-4 w-4 p-3 flex items-center justify-center text-gray-100 text-xs'
-          >
-            1
-          </div>
+          {carts.length > 0 && (
+            <div
+              style={{left: '15px', top: '-16px'}}
+              className='absolute  bg-gray-900 rounded-full h-4 w-4 p-3 flex items-center justify-center text-gray-100 text-xs'
+            >
+              {carts.length}
+            </div>
+          )}
           <span className='mr-3 md:mr-0'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -105,7 +133,7 @@ const SecondaryNav = () => {
               <path d='M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z' />
             </svg>
           </span>
-          <span className='font-semibold text-lg ml-3 hidden md:block '>
+          <span className='font-semibold text-lg ml-2 hidden md:block '>
             Cart
           </span>
         </div>
@@ -126,8 +154,16 @@ const SecondaryNav = () => {
         </div>
         <div className='hidden md:block'>
           <button
-            onClick={() => history.push('/order-by-prescription')}
-            className='bg-gray-900 text-gray-100 rounded px-6 py-2'
+            onClick={() => {
+              if (router.pathname !== '/order-by-prescription') {
+                history.push('/order-by-prescription');
+              }
+            }}
+            className={
+              router.pathname === '/order-by-prescription'
+                ? 'bg-gray-500 text-gray-300 rounded px-6 py-2 cursor-default focus:outline-none'
+                : 'bg-gray-900 text-gray-100 rounded px-6 py-2'
+            }
           >
             Order by prescription
           </button>

@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import AppState from './context/AppState';
 import OrderDetails from './components/OrderDetails';
 import OrderByPrescription from './components/OrderByPrescription';
+import OrderReview from './components/OrderReview';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               path='/order-by-prescription'
               component={OrderByPrescription}
             />
+            <Route exact path='/order-review' component={OrderReview} />
           </Switch>
         </Router>
       </AppState>
