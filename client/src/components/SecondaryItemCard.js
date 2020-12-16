@@ -4,7 +4,7 @@ import AppContext from '../context/appContext';
 const SecondaryItemCard = ({med}) => {
   const appContext = useContext(AppContext);
   const {addToCart, carts, calculateCartValue, onSearch} = appContext;
-  const [qty, setQty] = useState(1);
+  let [qty, setQty] = useState(1);
   const [price, setPrice] = useState(med.unit_price);
   const onAddToCart = med => {
     for (const item of carts) {
@@ -16,6 +16,7 @@ const SecondaryItemCard = ({med}) => {
 
     carts.push({
       ...med,
+      item_name: med.trade_name,
       quantity: parseInt(qty),
       price: med.unit_price * parseInt(qty),
     });
@@ -32,8 +33,31 @@ const SecondaryItemCard = ({med}) => {
       med.price = price;
       calculateCartValue(carts);
     } else {
-      setQty(parseInt(e.target.value));
-      setPrice(med.unit_price * parseInt(e.target.value));
+      if (parseInt(e.target.value) > 100) {
+        setQty(100);
+        setPrice(med.unit_price * 100);
+        med.price = price;
+        calculateCartValue(carts);
+      } else {
+        setQty(parseInt(e.target.value));
+        setPrice(med.unit_price * parseInt(e.target.value));
+        // med.quantity = parseInt(e.target.value);
+        med.price = price;
+        calculateCartValue(carts);
+      }
+    }
+  };
+
+  const onQuantityClick = val => {
+    if (val === 'inc' && qty < 100) {
+      setQty(++qty);
+      setPrice(med.unit_price * qty);
+      // med.quantity = parseInt(e.target.value);
+      med.price = price;
+      calculateCartValue(carts);
+    } else if (val === 'dec' && qty > 1) {
+      setQty(--qty);
+      setPrice(med.unit_price * qty);
       // med.quantity = parseInt(e.target.value);
       med.price = price;
       calculateCartValue(carts);
@@ -48,18 +72,32 @@ const SecondaryItemCard = ({med}) => {
         <p className='mb-2'>By {med !== undefined && med.company_name}</p>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
-            <p className='mb-1 font-medium text-lg'>{price} Tk</p>
+            <p className='mb-1 font-medium  mr-4'>
+              {price} <span className='font-normal'>Tk</span>
+            </p>
+            <button
+              onClick={() => onQuantityClick('dec')}
+              className='w-8 h-8 font-bold bg-gray-300 px-2'
+            >
+              -
+            </button>
             <input
-              className='border-2 rounded border-gray-400 text-center px-1 sm:py-1 ml-2'
+              className='text-center bg-yellow-300 h-8'
               type='number'
               min='1'
-              max='9'
+              max='100'
               step='1'
               placeholder='Qty'
               value={!qty ? 1 : qty}
               name='qty'
               onChange={onChange}
             />
+            <button
+              onClick={() => onQuantityClick('inc')}
+              className='w-8 h-8 font-bold bg-gray-300 px-2'
+            >
+              +
+            </button>
           </div>
           <button
             onClick={() => onAddToCart(med)}

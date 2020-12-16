@@ -6,12 +6,19 @@ import {
   CART_VALUE,
   ON_SEARCH,
   SET_ALERT,
+  SET_LOADING,
 } from './types';
 
 export default (state, action) => {
   switch (action.type) {
     default:
       return state;
+
+    case SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
 
     case SET_ALERT:
       return {

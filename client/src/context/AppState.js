@@ -11,6 +11,7 @@ import {
   CART_VALUE,
   ON_SEARCH,
   SET_ALERT,
+  SET_LOADING,
 } from './types';
 
 const AppState = props => {
@@ -23,9 +24,17 @@ const AppState = props => {
     search: '',
     searchResults: [],
     isAlertOpen: false,
+    isLoading: false,
   };
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
+  const setLoading = val => {
+    dispatch({
+      type: SET_LOADING,
+      payload: val,
+    });
+  };
 
   const setAlert = val => {
     dispatch({
@@ -91,6 +100,8 @@ const AppState = props => {
         search: state.search,
         searchResults: state.searchResults,
         isAlertOpen: state.isAlertOpen,
+        isLoading: state.isLoading,
+        setLoading,
         setAlert,
         onSearch,
         calculateCartValue,

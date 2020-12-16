@@ -3,6 +3,13 @@ const app = express();
 const path = require('path');
 const compression = require('compression');
 
+require('dotenv').config({path: 'variables.env'});
+
+// const connection = require('./startup/db');
+require('./startup/routes')(app);
+
+// connection.connect();
+
 app.use(compression());
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {

@@ -31,6 +31,7 @@ const SecondaryNav = () => {
   };
 
   useEffect(() => {
+    onSearch('');
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
     if (storedCarts !== null) {
       addToCart(storedCarts);
@@ -42,7 +43,16 @@ const SecondaryNav = () => {
   return (
     <div className='bg-gray-200'>
       {isCartOpen && (
-        <div className='top-0 left-0 fixed bg-black bg-opacity-75 z-40 h-screen w-full'></div>
+        <div
+          onClick={openCart}
+          className='top-0 left-0 fixed bg-black bg-opacity-75 z-50 h-screen w-full'
+        ></div>
+      )}
+      {search.length > 2 && searchResults.length > 0 && (
+        <div
+          onClick={() => onSearch('')}
+          className='top-0 left-0 fixed bg-black bg-opacity-75 z-10 h-screen w-full'
+        ></div>
       )}
       <Cart />
       <nav className='flex  py-4  items-center md:w-2/3 w-11/12 m-auto'>
@@ -72,7 +82,7 @@ const SecondaryNav = () => {
             YOS
           </h1>
         </div>
-        <div className='md:flex relative flex-grow items-center justify-center  hidden'>
+        <div className='md:flex relative flex-grow items-center justify-center z-30  hidden'>
           <span className='block bg-white pl-4 py-3 border-l border-t border-b border-gray-500'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -85,7 +95,8 @@ const SecondaryNav = () => {
             </svg>
           </span>
           <input
-            className='md:w-2/3  w-11/12 border-t border-b border-r border-gray-500 px-4 py-3 focus:outline-none'
+            style={{width: '400px'}}
+            className=' border-t border-b border-r border-gray-500 px-4 py-3 focus:outline-none'
             type='text'
             placeholder='Search and order medicine'
             name='search'
@@ -95,18 +106,21 @@ const SecondaryNav = () => {
           {/* Searched items */}
           {search.length > 2 && searchResults.length > 0 && (
             <div
-              style={{top: '70px'}}
-              className=' absolute  border-l border-r border-b border-gray-400 shadow-xl  md:w-3/4'
+              style={{top: '60px', width: '440px'}}
+              className=' absolute   border-b z-30 border-gray-400 shadow-xl'
             >
-              <p
-                style={{top: '-15px'}}
-                className='absolute ml-20 shadow bg-yellow-400 rounded text-gray-900 px-2 py-1 text-sm'
-              >
+              <p className=' shadow bg-yellow-400 text-gray-900 px-2 py-2 text-sm'>
                 Home delivery only in Dhanmondi area.
+                <span className='bg-gray-200 text-xs font-bold ml-2 px-2 text-center inline-block'>
+                  5% cashback on all orders
+                </span>
               </p>
               {data.map(med => (
                 <SecondaryItemCard key={med.id} med={med} />
               ))}
+              <p className='bg-gray-100 text-center p-2  pb-2 text-sm border-t border-gray-500'>
+                Found 250 results
+              </p>
             </div>
           )}
         </div>

@@ -21,15 +21,26 @@ const OrderDetails = () => {
 
   const [file, setFile] = useState('');
 
+  const percentageValue = (cartValue / 100) * 3;
+
   const [orderDetails, setOrderDetails] = useState({
-    name: '',
-    phone: '',
-    address: '',
-    additional_notes: '',
-    prescription: '',
+    customer_name: '',
+    customer_phone: '',
+    customer_address: '',
+    customer_additional_notes: '',
+    customer_prescription: '',
+    total_amount: cartValue,
+    discount_percentage: 3,
+    amount_after_discount: cartValue - percentageValue,
   });
 
-  const {name, phone, address, additional_notes, prescription} = orderDetails;
+  const {
+    customer_name,
+    customer_phone,
+    customer_address,
+    customer_additional_notes,
+    customer_prescription,
+  } = orderDetails;
 
   const onChange = e => {
     setOrderDetails({...orderDetails, [e.target.name]: e.target.value});
@@ -46,7 +57,7 @@ const OrderDetails = () => {
     );
     setOrderDetails({
       ...orderDetails,
-      prescription: res.data.secure_url,
+      customer_prescription: res.data.secure_url,
     });
   };
 
@@ -54,10 +65,13 @@ const OrderDetails = () => {
     const orderInfo = {
       carts: carts,
       orderDetails: orderDetails,
-      cartValue: cartValue,
     };
 
-    if (name !== '' && phone !== '' && address !== '') {
+    if (
+      customer_name !== '' &&
+      customer_phone !== '' &&
+      customer_address !== ''
+    ) {
       sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
       history.push('/order-review');
     } else {
@@ -69,10 +83,17 @@ const OrderDetails = () => {
   };
 
   useEffect(() => {
+    // console.log(orderDetails)
     const orderInfos = JSON.parse(sessionStorage.getItem('orderInfo'));
 
     if (orderInfos !== null) {
-      setOrderDetails(orderInfos.orderDetails);
+      const {orderDetails} = orderInfos;
+      // setOrderDetails(orderInfos.orderDetails);
+      setOrderDetails({
+        ...orderDetails,
+        total_amount: cartValue,
+        amount_after_discount: cartValue - percentageValue,
+      });
     }
 
     // eslint-disable-next-line
@@ -134,8 +155,8 @@ const OrderDetails = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='name'
-                name='name'
-                value={name}
+                name='customer_name'
+                value={customer_name}
                 required
                 onChange={onChange}
               />
@@ -148,8 +169,8 @@ const OrderDetails = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='phone'
-                name='phone'
-                value={phone}
+                name='customer_phone'
+                value={customer_phone}
                 required
                 onChange={onChange}
               />
@@ -165,9 +186,9 @@ const OrderDetails = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='address'
-                name='address'
+                name='customer_address'
                 required
-                value={address}
+                value={customer_address}
                 onChange={onChange}
                 rows='5'
               />
@@ -181,8 +202,8 @@ const OrderDetails = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='additional_notes'
-                name='additional_notes'
-                value={additional_notes}
+                name='customer_additional_notes'
+                value={customer_additional_notes}
                 onChange={onChange}
                 rows='5'
               />
@@ -193,18 +214,18 @@ const OrderDetails = () => {
                 <span className='text-sm font-semibold'>(optional)</span>
               </label>
               <input className='mt-2' type='file' onChange={onFileChange} />
-              {prescription !== '' && (
+              {customer_prescription !== '' && (
                 <div>
                   <img
                     className='border border-gray-400 rounded mt-4'
                     width='64'
                     height='64'
-                    src={prescription}
+                    src={customer_prescription}
                     alt=''
                   />
                 </div>
               )}
-              {prescription === '' && file !== '' && (
+              {customer_prescription === '' && file !== '' && (
                 <div>
                   <svg
                     style={{
@@ -236,7 +257,7 @@ const OrderDetails = () => {
                 </div>
               )}
             </div>
-            {prescription === '' && file !== '' ? (
+            {customer_prescription === '' && file !== '' ? (
               <div className='my-10 sm:w-2/3'>
                 <button
                   // onClick={onCofirmOrder}

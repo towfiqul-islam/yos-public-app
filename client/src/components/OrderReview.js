@@ -4,10 +4,12 @@ import history from '../history';
 import ConfirmModal from './ConfirmModal';
 import MobileSearchOverlay from './MobileSearchOverlay';
 import SecondaryNav from './SecondaryNav';
+import axios from 'axios';
+import Loading from './Loading';
 
 const OrderReview = () => {
   const appContext = useContext(AppContext);
-  const {isMobileSearchOpen, isCartOpen} = appContext;
+  const {isMobileSearchOpen, isCartOpen, setLoading, isLoading} = appContext;
 
   const [confirm, setConfirm] = useState(false);
 
@@ -21,15 +23,31 @@ const OrderReview = () => {
     // eslint-disable-next-line
   }, []);
 
-  const onSubmitOrder = () => {
-    // send request to API
-    // check for success
-    // if success, remove order from sessionStorage and localStorage
-    // show order received modal
-    // else show something went wrong. Try later
-    sessionStorage.removeItem('orderInfo');
-    localStorage.removeItem('carts');
-    setConfirm(true);
+  const onSubmitOrder = async () => {
+    setLoading(true);
+
+    setTimeout(async () => {
+      const res = await axios.post(
+        '/api/guest/add_order',
+        orderDetails.orderDetails,
+      );
+
+      if (res.status === 200) {
+        for (const item of orderDetails.carts) {
+          const data = {
+            item_name: item.item_name,
+            quantity: item.quantity,
+            price: item.price,
+            order_id: res.data.insertID,
+          };
+          await axios.post('/api/guest/add_order_item', data);
+        }
+        setLoading(false);
+        sessionStorage.removeItem('orderInfo');
+        localStorage.removeItem('carts');
+        setConfirm(true);
+      }
+    }, 2000);
   };
 
   //   orderDetails&& const {orderDetails, carts, cartValue} = orderDetails2;
@@ -41,6 +59,7 @@ const OrderReview = () => {
       </div>
       <div className={isMobileSearchOpen ? 'hidden sm:block' : 'block'}>
         {confirm && <ConfirmModal />}
+        {isLoading && <Loading />}
         <SecondaryNav />
         {Object.keys(orderDetails).length > 0 && (
           <div
@@ -68,28 +87,30 @@ const OrderReview = () => {
                 </div>
                 <div className='flex my-2'>
                   <p className='mr-2 text-gray-600'>Name: </p>
-                  <p>{orderDetails.orderDetails.name}</p>
+                  <p>{orderDetails.orderDetails.customer_name}</p>
                 </div>
                 <div className='flex my-2'>
                   <p className='mr-2 text-gray-600'>Phone: </p>
-                  <p>{orderDetails.orderDetails.phone}</p>
+                  <p>{orderDetails.orderDetails.customer_phone}</p>
                 </div>
                 <div className='flex my-2'>
                   <p className='mr-2 text-gray-600'>Address: </p>
-                  <p className=''>{orderDetails.orderDetails.address}</p>
+                  <p className=''>
+                    {orderDetails.orderDetails.customer_address}
+                  </p>
                 </div>
                 <div className='flex my-2'>
                   <p className='mr-2 text-gray-600'>Additional Notes: </p>
                   <p>
-                    {orderDetails.orderDetails.additional_notes === ''
+                    {orderDetails.orderDetails.customer_additional_notes === ''
                       ? 'N/A'
-                      : orderDetails.orderDetails.additional_notes}
+                      : orderDetails.orderDetails.customer_additional_notes}
                   </p>
                 </div>
                 <div className='flex my-2'>
                   <p className='mr-2 text-gray-600'>Prescription: </p>
                   <p>
-                    {orderDetails.orderDetails.prescription === ''
+                    {orderDetails.orderDetails.customer_prescription === ''
                       ? 'N/A'
                       : 'Uploaded'}
                   </p>
@@ -123,8 +144,17 @@ const OrderReview = () => {
                       </div>
                     </div>
                   ))}
-                  <p className=' font-semibold text-center mt-8 sm:text-xl'>
-                    Total: {orderDetails.cartValue} Tk
+                  <p className=' font-semibold  text-center mt-8 sm:text-xl'>
+                    <span className='font-normal'>Total:</span>{' '}
+                    {orderDetails.orderDetails.total_amount}{' '}
+                    <span className='font-normal text-base mr-4'>Tk</span>
+                  </p>
+                  <p className=' font-semibold  text-center mt-2 sm:text-xl'>
+                    <span className='font-normal'>After </span>{' '}
+                    {orderDetails.orderDetails.discount_percentage}%
+                    <span className='font-normal'> Discount: </span>{' '}
+                    {orderDetails.orderDetails.amount_after_discount}{' '}
+                    <span className='font-normal text-base'>Tk</span>
                   </p>
                   {/* <p className='text-center mt-4 sm:text-base text-sm'>
                   ***YOU CAN UPDATE ORDER ITEMS FROM YOUR CART***
@@ -134,9 +164,15 @@ const OrderReview = () => {
             )}
 
             <div>
+              <p className='text-center mt-10'>
+                By submitting order, you agree with our{' '}
+                <a className='underline' href='#!'>
+                  Terms & Conditions
+                </a>
+              </p>
               <button
                 onClick={onSubmitOrder}
-                className='block mx-auto bg-gray-900 text-gray-100 py-2 px-8 mt-12 mb-20 rounded'
+                className='block mx-auto bg-gray-900 text-gray-100 py-2 px-8 mt-4 mb-20 rounded'
               >
                 Submit order
               </button>

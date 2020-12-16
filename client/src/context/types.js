@@ -5,3 +5,4 @@ export const ADD_TO_CART = 'ADD_TO_CART';
 export const CART_VALUE = 'CART_VALUE';
 export const ON_SEARCH = 'ON_SEARCH';
 export const SET_ALERT = 'SET_ALERT';
+export const SET_LOADING = 'SET_LOADING';
