@@ -24,10 +24,21 @@ const CartItem = ({cart, index}) => {
     if (!e.target.value) {
       setQty(1);
       cart.price = cart.unit_price;
+      cart.quantity = 1;
       calculateCartValue(carts);
+      const storedCarts = JSON.parse(localStorage.getItem('carts'));
+      // find the item in local storage then update it's value
+      for (const item of storedCarts) {
+        if (item.id === cart.id) {
+          item.price = cart.unit_price;
+          item.quantity = 1;
+          localStorage.setItem('carts', JSON.stringify(storedCarts));
+        }
+      }
     } else {
       setQty(parseInt(e.target.value));
       cart.price = cart.unit_price * parseInt(e.target.value);
+      cart.quantity = parseInt(e.target.value);
       calculateCartValue(carts);
       const storedCarts = JSON.parse(localStorage.getItem('carts'));
       // find the item in local storage then update it's value
@@ -60,7 +71,7 @@ const CartItem = ({cart, index}) => {
                 max='9'
                 step='1'
                 placeholder='Qty'
-                value={!qty ? 1 : qty}
+                value={!qty ? 1 : cart.quantity}
                 name='qty'
                 onChange={onChange}
               />

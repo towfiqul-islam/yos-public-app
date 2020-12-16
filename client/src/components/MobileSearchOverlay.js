@@ -51,7 +51,11 @@ const MobileSearchOverlay = () => {
           value={search}
         />
         <span
-          onClick={() => toggleMobileSearch(!isMobileSearchOpen)}
+          onClick={() => {
+            toggleMobileSearch(!isMobileSearchOpen);
+            onSearch('');
+            // searchResults
+          }}
           className='border-t border-b block border-gray-500 pr-4 py-4 cursor-pointer'
         >
           <svg

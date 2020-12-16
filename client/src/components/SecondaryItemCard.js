@@ -5,6 +5,7 @@ const SecondaryItemCard = ({med}) => {
   const appContext = useContext(AppContext);
   const {addToCart, carts, calculateCartValue, onSearch} = appContext;
   const [qty, setQty] = useState(1);
+  const [price, setPrice] = useState(med.unit_price);
   const onAddToCart = med => {
     for (const item of carts) {
       if (med.id === item.id) {
@@ -26,11 +27,15 @@ const SecondaryItemCard = ({med}) => {
   const onChange = e => {
     if (!e.target.value) {
       setQty(1);
-      med.price = med.unit_price;
+      // med.quantity = 1;
+      setPrice(med.unit_price);
+      med.price = price;
       calculateCartValue(carts);
     } else {
       setQty(parseInt(e.target.value));
-      med.price = med.unit_price * parseInt(e.target.value);
+      setPrice(med.unit_price * parseInt(e.target.value));
+      // med.quantity = parseInt(e.target.value);
+      med.price = price;
       calculateCartValue(carts);
     }
   };
@@ -43,9 +48,7 @@ const SecondaryItemCard = ({med}) => {
         <p className='mb-2'>By {med !== undefined && med.company_name}</p>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
-            <p className='mb-1 font-medium text-lg'>
-              {!med.price ? med.unit_price : med.price} Tk
-            </p>
+            <p className='mb-1 font-medium text-lg'>{price} Tk</p>
             <input
               className='border-2 rounded border-gray-400 text-center px-1 sm:py-1 ml-2'
               type='number'

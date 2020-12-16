@@ -22,7 +22,8 @@ export default (state, action) => {
     case ON_SEARCH:
       return {
         ...state,
-        searchResults: action.payload.data,
+        searchResults:
+          action.payload.searchVal === '' ? [] : action.payload.data,
         search: action.payload.searchVal,
       };
 
