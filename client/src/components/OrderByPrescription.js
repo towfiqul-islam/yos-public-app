@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import AppContext from '../context/appContext';
 import history from '../history';
 
@@ -13,14 +13,20 @@ const OrderByPrescription = () => {
   const {isMobileSearchOpen, isCartOpen, isAlertOpen, setAlert} = appContext;
   const [file, setFile] = useState('');
   const [orderDetails, setOrderDetails] = useState({
-    name: '',
-    phone: '',
-    address: '',
-    additional_notes: '',
-    prescription: '',
+    customer_name: '',
+    customer_phone: '',
+    customer_address: '',
+    customer_additional_notes: '',
+    customer_prescription: '',
   });
 
-  const {name, phone, address, additional_notes, prescription} = orderDetails;
+  const {
+    customer_name,
+    customer_phone,
+    customer_address,
+    customer_additional_notes,
+    customer_prescription,
+  } = orderDetails;
 
   const onChange = e => {
     setOrderDetails({...orderDetails, [e.target.name]: e.target.value});
@@ -36,12 +42,17 @@ const OrderByPrescription = () => {
     );
     setOrderDetails({
       ...orderDetails,
-      prescription: res.data.secure_url,
+      customer_prescription: res.data.secure_url,
     });
   };
   const onConfirmOrder = () => {
     // check if input is valid
-    if (prescription !== '' && name !== '' && phone !== '' && address !== '') {
+    if (
+      customer_prescription !== '' &&
+      customer_name !== '' &&
+      customer_phone !== '' &&
+      customer_address !== ''
+    ) {
       sessionStorage.setItem('orderInfo', JSON.stringify({orderDetails}));
       history.push('/order-review');
     } else {
@@ -51,6 +62,22 @@ const OrderByPrescription = () => {
       }, 3000);
     }
   };
+  useEffect(() => {
+    // console.log(orderDetails)
+    const orderInfos = JSON.parse(sessionStorage.getItem('orderInfo'));
+
+    if (orderInfos !== null) {
+      const {orderDetails} = orderInfos;
+      // setOrderDetails(orderInfos.orderDetails);
+      setOrderDetails({
+        ...orderDetails,
+        // total_amount: cartValue,
+        // amount_after_discount: cartValue - percentageValue,
+      });
+    }
+
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <div className={isMobileSearchOpen ? 'block sm:hidden' : 'hidden'}>
@@ -83,7 +110,7 @@ const OrderByPrescription = () => {
             </div>
           )}
           {/* Show Alert */}
-          <h2 className='text-center  text-gray-600 sm:text-xl text-base mt-10'>
+          <h2 className='text-center  text-gray-700 sm:text-xl text-base mt-10'>
             Upload your prescription and order. We'll do the rest.
           </h2>
 
@@ -101,18 +128,18 @@ const OrderByPrescription = () => {
                 type='file'
                 onChange={onFileChange}
               />
-              {prescription !== '' && (
+              {customer_prescription !== '' && (
                 <div>
                   <img
                     className='border border-gray-400 rounded mt-4'
                     width='64'
                     height='64'
-                    src={prescription}
+                    src={customer_prescription}
                     alt=''
                   />
                 </div>
               )}
-              {prescription === '' && file !== '' && (
+              {customer_prescription === '' && file !== '' && (
                 <div>
                   <svg
                     style={{
@@ -153,8 +180,8 @@ const OrderByPrescription = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='additional_notes'
-                name='additional_notes'
-                value={additional_notes}
+                name='customer_additional_notes'
+                value={customer_additional_notes}
                 onChange={onChange}
                 rows='5'
               />
@@ -173,8 +200,8 @@ const OrderByPrescription = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='name'
-                name='name'
-                value={name}
+                name='customer_name'
+                value={customer_name}
                 onChange={onChange}
               />
             </div>
@@ -186,8 +213,8 @@ const OrderByPrescription = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='phone'
-                name='phone'
-                value={phone}
+                name='customer_phone'
+                value={customer_phone}
                 onChange={onChange}
               />
             </div>
@@ -202,14 +229,14 @@ const OrderByPrescription = () => {
                 className='border w-11/12 sm:w-2/3 mx-auto border-gray-600 px-2 py-2 rounded mt-2'
                 type='text'
                 id='address'
-                name='address'
-                value={address}
+                name='customer_address'
+                value={customer_address}
                 onChange={onChange}
                 rows='5'
               />
             </div>
 
-            {prescription === '' && file !== '' ? (
+            {customer_prescription === '' && file !== '' ? (
               <div className='my-10 sm:w-2/3'>
                 <button
                   // onClick={onCofirmOrder}

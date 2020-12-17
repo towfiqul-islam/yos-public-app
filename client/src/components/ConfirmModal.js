@@ -4,7 +4,7 @@ import history from '../history';
 const ConfirmModal = () => {
   return (
     <div>
-      <div className='top-0 left-0 fixed bg-black bg-opacity-75 z-10 h-screen w-full'></div>
+      <div className='top-0 left-0 fixed bg-black bg-opacity-75 z-40 h-screen w-full'></div>
 
       <div
         style={{
@@ -12,7 +12,7 @@ const ConfirmModal = () => {
           left: '50%',
           transform: 'translate(-50%, -50%)',
         }}
-        className='fixed sm:w-1/3 w-11/12  pb-8 px-4 z-40 text-lg mx-auto bg-white text-gray-700  rounded'
+        className='fixed sm:w-1/3 w-11/12  pb-8 px-4 z-50 text-lg mx-auto bg-white text-gray-700  rounded'
       >
         <span className='mt-8 flex justify-center items-center'>
           <svg
