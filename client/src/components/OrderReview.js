@@ -180,7 +180,11 @@ const OrderReview = () => {
                       </div>
                       <div className='flex my-2'>
                         <p className='mr-2 ml-5 text-gray-600'>Price: </p>
-                        <p>{cartItem.price} Tk</p>
+                        <p>
+                          {Math.round((cartItem.price + Number.EPSILON) * 100) /
+                            100}{' '}
+                          Tk
+                        </p>
                       </div>
                     </div>
                   ))}
