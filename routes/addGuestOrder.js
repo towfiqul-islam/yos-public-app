@@ -97,11 +97,15 @@ router.post('/mail_test', async (req, res) => {
                     .join('')
                 }
                   <h4 style="margin-top: 10px">Total amount: ${
-                    req.body.total_amount
+                    // req.body.total_amount
+                    Math.round((req.body.total_amount + Number.EPSILON) * 100) /
+                    100
                   }</h4>
                   <h3 style="margin-top: 10px">
                     Amount after ${req.body.discount_percentage}% discount: ${
-        req.body.amount_after_discount
+        // req.body.amount_after_discount
+        Math.round((req.body.amount_after_discount + Number.EPSILON) * 100) /
+        100
       }
                   </h3>
 
