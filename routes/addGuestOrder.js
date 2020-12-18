@@ -91,7 +91,9 @@ router.post('/mail_test', async (req, res) => {
                         item.item_name
                       }</p>
                   <p style="margin: 0; ">Quantity: ${item.quantity}</p>
-                  <p style="margin-bottom: 10px; ">Price: ${item.price}</p>
+                  <p style="margin-bottom: 10px; ">Price: ${
+                    Math.round((item.price + Number.EPSILON) * 100) / 100
+                  }</p>
                   </div>`,
                     )
                     .join('')
