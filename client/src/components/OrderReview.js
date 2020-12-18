@@ -189,14 +189,22 @@ const OrderReview = () => {
                   ))}
                   <p className=' font-semibold  text-center mt-8 sm:text-xl'>
                     <span className='font-normal'>Total:</span>{' '}
-                    {orderDetails.orderDetails.total_amount}{' '}
+                    {Math.round(
+                      (orderDetails.orderDetails.total_amount +
+                        Number.EPSILON) *
+                        100,
+                    ) / 100}
                     <span className='font-normal text-base mr-4'>Tk</span>
                   </p>
                   <p className=' font-semibold  text-center mt-2 sm:text-xl'>
                     <span className='font-normal'>After </span>{' '}
                     {orderDetails.orderDetails.discount_percentage}%
                     <span className='font-normal'> Discount: </span>{' '}
-                    {orderDetails.orderDetails.amount_after_discount}{' '}
+                    {Math.round(
+                      (orderDetails.orderDetails.amount_after_discount +
+                        Number.EPSILON) *
+                        100,
+                    ) / 100}{' '}
                     <span className='font-normal text-base'>Tk</span>
                   </p>
                   {/* <p className='text-center mt-4 sm:text-base text-sm'>

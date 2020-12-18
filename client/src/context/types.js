@@ -6,3 +6,4 @@ export const CART_VALUE = 'CART_VALUE';
 export const ON_SEARCH = 'ON_SEARCH';
 export const SET_ALERT = 'SET_ALERT';
 export const SET_LOADING = 'SET_LOADING';
+export const FILL_SEARCH = 'FILL_SEARCH';

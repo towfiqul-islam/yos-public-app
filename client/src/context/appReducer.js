@@ -7,12 +7,19 @@ import {
   ON_SEARCH,
   SET_ALERT,
   SET_LOADING,
+  FILL_SEARCH,
 } from './types';
 
 export default (state, action) => {
   switch (action.type) {
     default:
       return state;
+
+    case FILL_SEARCH:
+      return {
+        ...state,
+        searchResults: action.payload,
+      };
 
     case SET_LOADING:
       return {
@@ -29,8 +36,7 @@ export default (state, action) => {
     case ON_SEARCH:
       return {
         ...state,
-        searchResults:
-          action.payload.searchVal === '' ? [] : action.payload.data,
+
         search: action.payload.searchVal,
       };
 

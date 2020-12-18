@@ -4,6 +4,8 @@ import Cart from './Cart';
 
 import SecondaryItemCard from './SecondaryItemCard';
 
+import axios from 'axios';
+
 const MobileSearchOverlay = () => {
   const searchInput = useRef(null);
   const appContext = useContext(AppContext);
@@ -17,9 +19,14 @@ const MobileSearchOverlay = () => {
     onSearch,
     searchResults,
     search,
+    fillSearchResults,
   } = appContext;
-  const onChange = e => {
+  const onChange = async e => {
     onSearch(e.target.value);
+    if (search.length >= 2) {
+      const res = await axios.get(`/api/medicines/search/${search}`);
+      fillSearchResults(res.data.data);
+    }
   };
   useEffect(() => {
     searchInput.current.focus();
@@ -86,7 +93,7 @@ const MobileSearchOverlay = () => {
         {search.length > 2 &&
           searchResults.length > 0 &&
           searchResults.map(med => (
-            <SecondaryItemCard key={med.id} med={med} />
+            <SecondaryItemCard key={med.medicine_id} med={med} />
           ))}
 
         {carts.length === 0 && search.length <= 2 && (

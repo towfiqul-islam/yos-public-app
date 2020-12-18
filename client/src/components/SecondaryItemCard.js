@@ -8,7 +8,7 @@ const SecondaryItemCard = ({med}) => {
   const [price, setPrice] = useState(med.unit_price);
   const onAddToCart = med => {
     for (const item of carts) {
-      if (med.id === item.id) {
+      if (med.medicine_id === item.medicine_id) {
         console.log('Item already in the Cart');
         return;
       }
@@ -73,7 +73,8 @@ const SecondaryItemCard = ({med}) => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <p className='mb-1 font-medium  mr-4'>
-              {price} <span className='font-normal'>Tk</span>
+              {Math.round((price + Number.EPSILON) * 100) / 100}{' '}
+              <span className='font-normal'>Tk</span>
             </p>
             <button
               onClick={() => onQuantityClick('dec')}

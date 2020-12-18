@@ -6,7 +6,8 @@ import Cart from './Cart';
 
 import SecondaryItemCard from './SecondaryItemCard';
 
-import {data} from '../data';
+// import {data} from '../data';
+import axios from 'axios';
 
 const SecondaryNav = () => {
   const router = useLocation();
@@ -24,10 +25,15 @@ const SecondaryNav = () => {
     onSearch,
     addToCart,
     calculateCartValue,
+    fillSearchResults,
   } = appContext;
 
-  const onChange = e => {
+  const onChange = async e => {
     onSearch(e.target.value);
+    if (search.length >= 2) {
+      const res = await axios.get(`/api/medicines/search/${search}`);
+      fillSearchResults(res.data.data);
+    }
   };
 
   useEffect(() => {
@@ -119,11 +125,11 @@ const SecondaryNav = () => {
                     5% cashback on all orders
                   </span>
                 </p>
-                {data.map(med => (
-                  <SecondaryItemCard key={med.id} med={med} />
+                {searchResults.map(med => (
+                  <SecondaryItemCard key={med.medicine_id} med={med} />
                 ))}
                 <p className='bg-gray-100 text-center p-2  pb-2 text-sm border-t border-gray-500'>
-                  Found 250 results
+                  Found {searchResults.length} results
                 </p>
               </div>
             )}

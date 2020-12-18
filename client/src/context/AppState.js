@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react';
-import {data} from '../data';
+// import {data} from '../data';
 import AppContext from './appContext';
 import AppReducer from './appReducer';
 
@@ -12,6 +12,7 @@ import {
   ON_SEARCH,
   SET_ALERT,
   SET_LOADING,
+  FILL_SEARCH,
 } from './types';
 
 const AppState = props => {
@@ -43,11 +44,17 @@ const AppState = props => {
     });
   };
 
+  const fillSearchResults = data => {
+    dispatch({
+      type: FILL_SEARCH,
+      payload: data,
+    });
+  };
+
   const onSearch = val => {
     dispatch({
       type: ON_SEARCH,
       payload: {
-        data,
         searchVal: val,
       },
     });
@@ -109,6 +116,7 @@ const AppState = props => {
         toggleMobileMenu,
         toggleMobileSearch,
         openCart,
+        fillSearchResults,
       }}
     >
       {props.children}

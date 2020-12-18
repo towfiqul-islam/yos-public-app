@@ -47,7 +47,11 @@ const Cart = () => {
         <hr className='border-gray-500 mt-6' />
         {carts.length > 0 &&
           carts.map((cartItem, index) => (
-            <CartItem key={cartItem.id} cart={cartItem} index={index} />
+            <CartItem
+              key={cartItem.medicine_id}
+              cart={cartItem}
+              index={index}
+            />
           ))}
         {carts.length > 0 && (
           <div className='flex justify-between sm:w-3/4 w-11/12 mx-auto mt-4'>

@@ -140,7 +140,7 @@ const OrderDetails = () => {
             </h3>
 
             <h3 className='font-bold text-lg sm:text-2xl ml-10 bg-gray-900 text-gray-100 px-2 py-1 rounded'>
-              {cartValue} Tk
+              {Math.round((cartValue + Number.EPSILON) * 100) / 100} Tk
             </h3>
           </div>
           <div className='mx-auto sm:w-3/4'>
