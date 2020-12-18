@@ -91,6 +91,7 @@ const MobileSearchOverlay = () => {
       </div>
       <div className='sm:hidden block'>
         {search.length > 2 &&
+          searchResults &&
           searchResults.length > 0 &&
           searchResults.map(med => (
             <SecondaryItemCard key={med.medicine_id} med={med} />

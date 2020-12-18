@@ -56,7 +56,9 @@ const Cart = () => {
         {carts.length > 0 && (
           <div className='flex justify-between sm:w-3/4 w-11/12 mx-auto mt-4'>
             <p className='text-lg sm:text-xl'>Cart Value</p>
-            <p className='font-bold text-lg sm:text-xl'>{cartValue} TK</p>
+            <p className='font-bold text-lg sm:text-xl'>
+              {Math.round((cartValue + Number.EPSILON) * 100) / 100} TK
+            </p>
           </div>
         )}
         {carts.length > 0 && (

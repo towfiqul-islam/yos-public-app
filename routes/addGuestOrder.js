@@ -2,38 +2,50 @@ const express = require('express');
 const {transport} = require('../mail');
 const router = express.Router();
 
-const pool = require('../startup/db');
+const connection = require('../startup/db');
 
 function addOrderItem(fields) {
   return new Promise(function (resolve, reject) {
     const sql = `INSERT INTO guest_order_items SET ?`;
 
-    pool.getConnection(function (err, connection) {
-      connection.query(sql, fields, (err, results) => {
-        if (!err) {
-          connection.release();
-          resolve(results.insertId);
-        } else {
-          console.error('OOPS!!!', err);
-        }
-      });
+    connection.query(sql, fields, (err, results) => {
+      if (err) {
+        console.error('sql error', err);
+      }
+      resolve(results.insertId);
     });
+    // pool.getConnection(function (err, connection) {
+    // connection.query(sql, fields, (err, results) => {
+    //   if (!err) {
+    //     connection.release();
+    //     resolve(results.insertId);
+    //   } else {
+    //     console.error('OOPS!!!', err);
+    //   }
+    // });
+    // });
   });
 }
 
 function addGuestOrder(fields) {
   return new Promise(function (resolve, reject) {
     const sql = `INSERT INTO guest_orders SET ?`;
-    pool.getConnection(function (err, connection) {
-      connection.query(sql, fields, (err, results) => {
-        if (!err) {
-          connection.release();
-          resolve(results.insertId);
-        } else {
-          throw err;
-        }
-      });
+    connection.query(sql, fields, (err, results) => {
+      if (err) {
+        console.error('sql error', err);
+      }
+      resolve(results.insertId);
     });
+    // pool.getConnection(function (err, connection) {
+    //   connection.query(sql, fields, (err, results) => {
+    //     if (!err) {
+    //       connection.release();
+    //       resolve(results.insertId);
+    //     } else {
+    //       throw err;
+    //     }
+    //   });
+    // });
   });
 }
 
@@ -93,7 +105,7 @@ router.post('/mail_test', async (req, res) => {
       }
                   </h3>
 
-                  <a href='http://localhost:3000/update-order/${
+                  <a href='https://admin-stage.yos.com.bd/update-order/${
                     req.body.order_id
                   }'>Update order</a>
                   </div>

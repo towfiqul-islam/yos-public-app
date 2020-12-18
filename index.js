@@ -5,10 +5,10 @@ const compression = require('compression');
 
 require('dotenv').config({path: 'variables.env'});
 
-// const connection = require('./startup/db');
+const connection = require('./startup/db');
 require('./startup/routes')(app);
 
-// connection.connect();
+connection.connect();
 
 app.use(compression());
 app.use(express.static('client/build'));

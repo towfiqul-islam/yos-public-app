@@ -126,7 +126,9 @@ const CartItem = ({cart, index}) => {
             </div> */}
             <div className='flex items-center'>
               <p className='mb-1 font-medium  mr-4'>
-                {!cart.price ? cart.unit_price : cart.price}
+                {!cart.price
+                  ? Math.round((cart.unit_price + Number.EPSILON) * 100) / 100
+                  : Math.round((cart.price + Number.EPSILON) * 100) / 100}
                 <span className='font-normal'> Tk</span>
               </p>
               <button

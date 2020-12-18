@@ -55,6 +55,7 @@ const SecondaryNav = () => {
         ></div>
       )}
       {search.length > 2 &&
+        searchResults &&
         searchResults.length > 0 &&
         router.pathname !== '/order-review' && (
           <div
@@ -113,6 +114,7 @@ const SecondaryNav = () => {
           />
           {/* Searched items */}
           {search.length > 2 &&
+            searchResults &&
             searchResults.length > 0 &&
             router.pathname !== '/order-review' && (
               <div
