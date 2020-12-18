@@ -26,65 +26,62 @@ const OrderReview = () => {
   const onSubmitOrder = async () => {
     setLoading(true);
 
-    setTimeout(async () => {
-      const res = await axios.post(
-        '/api/guest/add_order',
-        orderDetails.orderDetails,
-      );
+    // setTimeout(async () => {
+    const res = await axios.post(
+      '/api/guest/add_order',
+      orderDetails.orderDetails,
+    );
 
-      if (res.status === 200 && orderDetails.carts) {
-        for (const item of orderDetails.carts) {
-          const data = {
-            item_name: item.item_name,
-            quantity: item.quantity,
-            price: item.price,
-            order_id: res.data.insertID,
-          };
-          await axios.post('/api/guest/add_order_item', data);
-        }
-        // send mail
-        const mailBody = {
+    if (res.status === 200 && orderDetails.carts) {
+      for (const item of orderDetails.carts) {
+        const data = {
+          item_name: item.item_name,
+          quantity: item.quantity,
+          price: item.price,
           order_id: res.data.insertID,
-          customer_name: orderDetails.orderDetails.customer_name,
-          customer_phone: orderDetails.orderDetails.customer_phone,
-          customer_address: orderDetails.orderDetails.customer_address,
-          customer_prescription:
-            orderDetails.orderDetails.customer_prescription,
-          customer_additional_notes:
-            orderDetails.orderDetails.customer_additional_notes,
-          orderedItems: orderDetails.carts,
-          total_amount: orderDetails.orderDetails.total_amount,
-          discount_percentage: orderDetails.orderDetails.discount_percentage,
-          amount_after_discount:
-            orderDetails.orderDetails.amount_after_discount,
         };
-        await axios.post('/api/guest/mail_test', mailBody);
-        setLoading(false);
-        sessionStorage.removeItem('orderInfo');
-        localStorage.removeItem('carts');
-        setConfirm(true);
-      } else if (res.status === 200 && !orderDetails.carts) {
-        const mailBody = {
-          order_id: res.data.insertID,
-          customer_name: orderDetails.orderDetails.customer_name,
-          customer_phone: orderDetails.orderDetails.customer_phone,
-          customer_address: orderDetails.orderDetails.customer_address,
-          customer_prescription:
-            orderDetails.orderDetails.customer_prescription,
-          customer_additional_notes:
-            orderDetails.orderDetails.customer_additional_notes,
-          // orderedItems: orderDetails.carts,
-          // total_amount: 0,
-          // discount_percentage: 3,
-          // amount_after_discount: 0,
-        };
-        await axios.post('/api/guest/mail_test', mailBody);
-        setLoading(false);
-        sessionStorage.removeItem('orderInfo');
-        localStorage.removeItem('carts');
-        setConfirm(true);
+        await axios.post('/api/guest/add_order_item', data);
       }
-    }, 2000);
+      // send mail
+      const mailBody = {
+        order_id: res.data.insertID,
+        customer_name: orderDetails.orderDetails.customer_name,
+        customer_phone: orderDetails.orderDetails.customer_phone,
+        customer_address: orderDetails.orderDetails.customer_address,
+        customer_prescription: orderDetails.orderDetails.customer_prescription,
+        customer_additional_notes:
+          orderDetails.orderDetails.customer_additional_notes,
+        orderedItems: orderDetails.carts,
+        total_amount: orderDetails.orderDetails.total_amount,
+        discount_percentage: orderDetails.orderDetails.discount_percentage,
+        amount_after_discount: orderDetails.orderDetails.amount_after_discount,
+      };
+      await axios.post('/api/guest/mail_test', mailBody);
+      setLoading(false);
+      sessionStorage.removeItem('orderInfo');
+      localStorage.removeItem('carts');
+      setConfirm(true);
+    } else if (res.status === 200 && !orderDetails.carts) {
+      const mailBody = {
+        order_id: res.data.insertID,
+        customer_name: orderDetails.orderDetails.customer_name,
+        customer_phone: orderDetails.orderDetails.customer_phone,
+        customer_address: orderDetails.orderDetails.customer_address,
+        customer_prescription: orderDetails.orderDetails.customer_prescription,
+        customer_additional_notes:
+          orderDetails.orderDetails.customer_additional_notes,
+        // orderedItems: orderDetails.carts,
+        // total_amount: 0,
+        // discount_percentage: 3,
+        // amount_after_discount: 0,
+      };
+      await axios.post('/api/guest/mail_test', mailBody);
+      setLoading(false);
+      sessionStorage.removeItem('orderInfo');
+      localStorage.removeItem('carts');
+      setConfirm(true);
+    }
+    // }, 2000);
   };
 
   //   orderDetails&& const {orderDetails, carts, cartValue} = orderDetails2;
