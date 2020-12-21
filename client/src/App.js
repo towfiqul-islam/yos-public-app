@@ -8,6 +8,7 @@ import AppState from './context/AppState';
 import OrderDetails from './components/OrderDetails';
 import OrderByPrescription from './components/OrderByPrescription';
 import OrderReview from './components/OrderReview';
+import MedicineDetails from './components/MedicineDetails';
 
 function App() {
   return (
@@ -17,6 +18,11 @@ function App() {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/order-details' component={OrderDetails} />
+            <Route
+              exact
+              path='/medicine-details/:name/:id'
+              component={MedicineDetails}
+            />
             <Route
               exact
               path='/order-by-prescription'

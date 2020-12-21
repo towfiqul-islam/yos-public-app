@@ -86,6 +86,14 @@ const OrderReview = () => {
 
   //   orderDetails&& const {orderDetails, carts, cartValue} = orderDetails2;
 
+  useEffect(() => {
+    const storedInSessions = JSON.parse(sessionStorage.getItem('orderInfo'));
+    if (!storedInSessions || Object.keys('orderInfo').length < 1) {
+      history.push('/');
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <>
       <div className={isMobileSearchOpen ? 'block sm:hidden' : 'hidden'}>
@@ -150,9 +158,18 @@ const OrderReview = () => {
                 <div className='flex my-2'>
                   <p className='mr-2 text-gray-600'>Prescription: </p>
                   <p>
-                    {orderDetails.orderDetails.customer_prescription === ''
-                      ? 'N/A'
-                      : 'Uploaded'}
+                    {orderDetails.orderDetails.customer_prescription === '' ? (
+                      'N/A'
+                    ) : (
+                      <a
+                        className='text-blue-600 underline'
+                        href={orderDetails.orderDetails.customer_prescription}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        View Prescription
+                      </a>
+                    )}
                   </p>
                 </div>
               </div>
@@ -166,29 +183,57 @@ const OrderReview = () => {
                     <h3 className='font-semibold mr-2'>ORDERED ITEMS</h3>
                   </div>
                   {orderDetails.carts.map((cartItem, index) => (
-                    <div key={index} className='mb-8'>
-                      <div className='flex my-2'>
-                        <div className='flex'>
-                          <p className='mr-2'>{index + 1}.</p>
-                          <p className='mr-2 text-gray-600'>Medicine: </p>
+                    <div key={index} className='mb-8 flex'>
+                      <div>
+                        <div className='flex my-2'>
+                          <div className='flex'>
+                            <p className='mr-2'>{index + 1}.</p>
+                            <p className='mr-2 text-gray-600'>Medicine: </p>
+                          </div>
+                          <p>{cartItem.trade_name}</p>
                         </div>
-                        <p>{cartItem.trade_name}</p>
-                      </div>
-                      <div className='flex  my-2'>
-                        <p className='mr-2 ml-5 text-gray-600'>Quantity: </p>
-                        <p>{cartItem.quantity}</p>
-                      </div>
-                      <div className='flex my-2'>
-                        <p className='mr-2 ml-5 text-gray-600'>Price: </p>
-                        <p>
-                          {Math.round((cartItem.price + Number.EPSILON) * 100) /
-                            100}{' '}
-                          Tk
-                        </p>
+                        <div className='flex  my-2'>
+                          <p className='mr-2 ml-5 text-gray-600'>Quantity: </p>
+                          <p>{cartItem.quantity}</p>
+                        </div>
+                        <div className='flex my-2'>
+                          <p className='mr-2 ml-5 text-gray-600'>Price: </p>
+                          <p>
+                            {Math.round(
+                              (cartItem.price + Number.EPSILON) * 100,
+                            ) / 100}{' '}
+                            Tk
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}
-                  <p className=' font-semibold  text-center mt-8 sm:text-xl'>
+                  <div>
+                    <h4 className='font-semibold text-xl text-gray-800'>
+                      Total:{' '}
+                      <span>
+                        {Math.round(
+                          (orderDetails.orderDetails.amount_after_discount +
+                            Number.EPSILON) *
+                            100,
+                        ) / 100}{' '}
+                        Tk
+                      </span>
+                      <span className='text-base font-normal text-gray-600 ml-4 line-through'>
+                        {' '}
+                        {Math.round(
+                          (orderDetails.orderDetails.total_amount +
+                            Number.EPSILON) *
+                            100,
+                        ) / 100}{' '}
+                        Tk
+                      </span>
+                      <span className='font-normal text-sm inline-block bg-yellow-400 ml-2 px-2 py-1'>
+                        Save {orderDetails.orderDetails.discount_percentage}%
+                      </span>
+                    </h4>
+                  </div>
+                  {/* <p className=' font-semibold  text-center mt-8 sm:text-xl'>
                     <span className='font-normal'>Total:</span>{' '}
                     {Math.round(
                       (orderDetails.orderDetails.total_amount +
@@ -207,10 +252,7 @@ const OrderReview = () => {
                         100,
                     ) / 100}{' '}
                     <span className='font-normal text-base'>Tk</span>
-                  </p>
-                  {/* <p className='text-center mt-4 sm:text-base text-sm'>
-                  ***YOU CAN UPDATE ORDER ITEMS FROM YOUR CART***
-                </p> */}
+                  </p> */}
                 </div>
               </div>
             )}

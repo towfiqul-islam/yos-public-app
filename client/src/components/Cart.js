@@ -16,6 +16,12 @@ const Cart = () => {
     cartValue,
   } = appContext;
 
+  function calculatePrice(price) {
+    const percentageValue = (price / 100) * 3;
+    const valueAfterDiscount = price - percentageValue;
+    return valueAfterDiscount;
+  }
+
   return (
     <div>
       <div
@@ -57,7 +63,9 @@ const Cart = () => {
           <div className='flex justify-between sm:w-3/4 w-11/12 mx-auto mt-4'>
             <p className='text-lg sm:text-xl'>Cart Value</p>
             <p className='font-bold text-lg sm:text-xl'>
-              {Math.round((cartValue + Number.EPSILON) * 100) / 100} TK
+              {Math.round((calculatePrice(cartValue) + Number.EPSILON) * 100) /
+                100}{' '}
+              TK
             </p>
           </div>
         )}

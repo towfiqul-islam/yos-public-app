@@ -83,18 +83,41 @@ const OrderDetails = () => {
     }
   };
 
+  const onDeletePrescription = () => {
+    setOrderDetails({...orderDetails, customer_prescription: ''});
+    // setFile('');
+
+    const orderInfo = {
+      carts: carts,
+      orderDetails: orderDetails,
+    };
+    // const storedInSessions = JSON.parse(sessionStorage.getItem('orderInfo'));
+    // if (storedInSessions) {
+    sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
+    // window.location.reload();
+    // } else {
+    // do nothing
+    // window.location.reload();
+    // }
+  };
+
   useEffect(() => {
     // console.log(orderDetails)
-    const orderInfos = JSON.parse(sessionStorage.getItem('orderInfo'));
+    const storedCarts = JSON.parse(localStorage.getItem('carts'));
+    if (!storedCarts || storedCarts.length < 1) {
+      history.push('/');
+    } else {
+      const orderInfos = JSON.parse(sessionStorage.getItem('orderInfo'));
 
-    if (orderInfos !== null) {
-      const {orderDetails} = orderInfos;
-      // setOrderDetails(orderInfos.orderDetails);
-      setOrderDetails({
-        ...orderDetails,
-        total_amount: cartValue,
-        amount_after_discount: cartValue - percentageValue,
-      });
+      if (orderInfos !== null) {
+        const {orderDetails} = orderInfos;
+        // setOrderDetails(orderInfos.orderDetails);
+        setOrderDetails({
+          ...orderDetails,
+          total_amount: cartValue,
+          amount_after_discount: cartValue - percentageValue,
+        });
+      }
     }
 
     // eslint-disable-next-line
@@ -212,23 +235,40 @@ const OrderDetails = () => {
             <div className='mb-4'>
               <label className='block' htmlFor='prescription'>
                 Prescription{' '}
-                <span className='text-sm font-semibold'>(optional)</span>
+                <span className='text-sm font-semibold'>
+                  (optional. only images are allowed)
+                </span>
               </label>
               <input
                 className='mt-2'
                 type='file'
                 accept='image/*'
                 onChange={onFileChange}
+                id='prescription'
               />
               {customer_prescription !== '' && (
-                <div>
+                <div className='flex mt-4'>
                   <img
-                    className='border border-gray-400 rounded mt-4'
+                    className='border border-gray-400 rounded'
                     width='64'
                     height='64'
                     src={customer_prescription}
                     alt=''
                   />
+                  <span
+                    onClick={onDeletePrescription}
+                    className='inline-block h-full ml-2'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      height='20'
+                      viewBox='0 0 24 24'
+                      width='20'
+                    >
+                      <path d='M0 0h24v24H0V0z' fill='none' />
+                      <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z' />
+                    </svg>
+                  </span>
                 </div>
               )}
               {customer_prescription === '' && file !== '' && (
@@ -276,9 +316,9 @@ const OrderDetails = () => {
               <div className='my-10 sm:w-2/3'>
                 <button
                   onClick={onConfirmOrder}
-                  className='bg-gray-900 text-gray-100 px-8 py-2 rounded block mx-auto'
+                  className='bg-gray-900 text-gray-100 px-8 py-1 rounded flex items-center mx-auto'
                 >
-                  Confirm order
+                  Next <span className='text-2xl ml-2'>&#8594;</span>
                 </button>
               </div>
             )}

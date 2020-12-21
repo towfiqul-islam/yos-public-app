@@ -100,14 +100,51 @@ const CartItem = ({cart, index}) => {
       }
     }
   };
+  function calculatePrice(price) {
+    const percentageValue = (price / 100) * 3;
+    const valueAfterDiscount = price - percentageValue;
+    return valueAfterDiscount;
+  }
   return (
     <div>
       <div className='m-auto flex justify-center mt-2 '>
         <div className='  border-b border-gray-300 px-4 py-3  w-11/12 '>
           <h1 className='font-semibold sm:text-lg text-base mb-1'>
-            {cart !== undefined && cart.trade_name}
+            {cart !== undefined && cart.trade_name}{' '}
+            {cart !== undefined && cart.medicine_type}
+            {cart.over_the_counter === 'no' && (
+              <span className='ml-1 border border-gray-400 px-2 rounded font-normal text-base'>
+                {cart.over_the_counter === 'no' && 'Rx'}
+              </span>
+            )}
           </h1>
-          <p className='mb-2'>By {cart !== undefined && cart.company_name}</p>
+          <p className='mb-2 text-gray-700'>
+            By {cart !== undefined && cart.company_name}
+          </p>
+          <p className='mb-2 text-gray-700'>
+            By {cart !== undefined && cart.generic_name}
+          </p>
+          <div className='mb-4'>
+            <span className='font-medium text-xl text-gray-800'>
+              {!cart.price
+                ? Math.round(
+                    (calculatePrice(cart.unit_price) + Number.EPSILON) * 100,
+                  ) / 100
+                : Math.round(
+                    (calculatePrice(cart.price) + Number.EPSILON) * 100,
+                  ) / 100}{' '}
+              Tk
+            </span>
+            <span className='text-sm text-gray-600 line-through ml-2'>
+              {!cart.price
+                ? Math.round((cart.unit_price + Number.EPSILON) * 100) / 100
+                : Math.round((cart.price + Number.EPSILON) * 100) / 100}{' '}
+              Tk
+            </span>
+            <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
+              Save 3%
+            </span>
+          </div>
           <div className='flex items-center justify-between'>
             {/* <div className='flex items-center'>
               <p className='mb-1 font-medium text-lg'>
@@ -126,12 +163,7 @@ const CartItem = ({cart, index}) => {
               />
             </div> */}
             <div className='flex items-center'>
-              <p className='mb-1 font-medium  mr-4'>
-                {!cart.price
-                  ? Math.round((cart.unit_price + Number.EPSILON) * 100) / 100
-                  : Math.round((cart.price + Number.EPSILON) * 100) / 100}
-                <span className='font-normal'> Tk</span>
-              </p>
+              <p className='mb-1  mr-4'>Quantity</p>
               <button
                 onClick={() => onQuantityClick('dec')}
                 className='w-8 h-8 font-bold bg-gray-300 px-2'
@@ -139,7 +171,7 @@ const CartItem = ({cart, index}) => {
                 -
               </button>
               <input
-                className='text-center bg-yellow-300 h-8'
+                className='text-center  h-8'
                 type='number'
                 min='1'
                 max='100'

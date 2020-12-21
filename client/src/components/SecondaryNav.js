@@ -58,9 +58,22 @@ const SecondaryNav = () => {
     // eslint-disable-next-line
   }, []);
 
+  function checkPath(pathName) {
+    if (
+      pathName === '/order-review' ||
+      pathName === '/order-details' ||
+      pathName === '/order-by-prescription'
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  // console.log(checkPath('dfdf'));
+
   return (
     <div className='bg-gray-200'>
-      {isCartOpen && router.pathname !== '/order-review' && (
+      {isCartOpen && checkPath(router.pathname) && (
         <div
           onClick={openCart}
           className='top-0 left-0 fixed bg-black bg-opacity-75 z-50 h-screen w-full'
@@ -69,14 +82,14 @@ const SecondaryNav = () => {
       {search.length > 2 &&
         searchResults &&
         searchResults.length > 0 &&
-        router.pathname !== '/order-review' && (
+        checkPath(router.pathname) && (
           <div
             onClick={() => onSearch('')}
             className='top-0 left-0 fixed bg-black bg-opacity-75 z-10 h-screen w-full'
           ></div>
         )}
-      {router.pathname !== '/order-review' && <Cart />}
-      <nav className='flex  py-4  items-center md:w-2/3 w-11/12 m-auto'>
+      {checkPath(router.pathname) && <Cart />}
+      <nav className='flex  py-4  items-center md:w-3/4 w-11/12 m-auto'>
         <div className='flex flex-grow md:flex-grow-0 items-center'>
           <span
             onClick={() => toggleMobileMenu(!isMenuOpen)}
@@ -103,7 +116,13 @@ const SecondaryNav = () => {
             YOS
           </h1>
         </div>
-        <div className='md:flex relative flex-grow items-center justify-center z-30  hidden'>
+        <div
+          className={
+            checkPath(router.pathname)
+              ? 'md:flex relative flex-grow items-center justify-center z-30  hidden'
+              : 'md:flex relative flex-grow items-center justify-center z-30  hidden opacity-50'
+          }
+        >
           <span className='block bg-white pl-4 py-3 border-l border-t border-b border-gray-500'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -121,23 +140,23 @@ const SecondaryNav = () => {
             type='text'
             placeholder='Search and order medicine'
             name='search'
-            value={router.pathname !== '/order-review' ? search : ''}
+            value={checkPath(router.pathname) ? search : ''}
             onChange={onChange}
           />
           {/* Searched items */}
           {search.length > 2 &&
             searchResults &&
             searchResults.length > 0 &&
-            router.pathname !== '/order-review' && (
+            checkPath(router.pathname) && (
               <div
                 style={{top: '60px', width: '440px'}}
                 className=' absolute   border-b z-30 border-gray-400 shadow-xl'
               >
-                <p className=' shadow bg-yellow-400 text-gray-900 px-2 py-2 text-sm'>
+                <p className=' shadow bg-yellow-400 text-center text-gray-900 px-2 py-2 text-sm'>
                   Home delivery only in Dhanmondi area.
-                  <span className='bg-gray-200 text-xs font-bold ml-2 px-2 text-center inline-block'>
+                  {/* <span className='bg-gray-200 text-xs font-bold ml-2 px-2 text-center inline-block'>
                     5% cashback on all orders
-                  </span>
+                  </span> */}
                 </p>
                 {searchResults.map(med => (
                   <SecondaryItemCard
@@ -154,11 +173,15 @@ const SecondaryNav = () => {
         </div>
         <div
           onClick={() => {
-            if (router.pathname !== '/order-review') {
+            if (checkPath(router.pathname)) {
               openCart();
             }
           }}
-          className='flex md:mr-24 relative cursor-pointer'
+          className={
+            checkPath(router.pathname)
+              ? 'flex md:mr-24 relative cursor-pointer'
+              : 'flex md:mr-24 relative cursor-default opacity-25'
+          }
         >
           {carts.length > 0 && (
             <div

@@ -1,9 +1,10 @@
 import React, {useContext, useState} from 'react';
+
 import AppContext from '../context/appContext';
 
 const SecondaryItemCard = ({med, inCart}) => {
   const appContext = useContext(AppContext);
-  const {addToCart, carts, calculateCartValue, onSearch} = appContext;
+  const {addToCart, carts, calculateCartValue} = appContext;
   let [qty, setQty] = useState(1);
   const [price, setPrice] = useState(med.unit_price);
   const onAddToCart = med => {
@@ -49,13 +50,13 @@ const SecondaryItemCard = ({med, inCart}) => {
   };
 
   const onQuantityClick = val => {
-    if (val === 'inc' && qty < 100) {
+    if (val === 'inc' && qty < 100 && !inCart) {
       setQty(++qty);
       setPrice(med.unit_price * qty);
       // med.quantity = parseInt(e.target.value);
       med.price = price;
       calculateCartValue(carts);
-    } else if (val === 'dec' && qty > 1) {
+    } else if (val === 'dec' && qty > 1 && !inCart) {
       setQty(--qty);
       setPrice(med.unit_price * qty);
       // med.quantity = parseInt(e.target.value);
@@ -63,36 +64,79 @@ const SecondaryItemCard = ({med, inCart}) => {
       calculateCartValue(carts);
     }
   };
+  function calculatePrice(price) {
+    const percentageValue = (price / 100) * 3;
+    const valueAfterDiscount = price - percentageValue;
+    return valueAfterDiscount;
+  }
   return (
     <div>
       <div className='bg-gray-100 border-t border-gray-300 px-4 py-4'>
-        <h2 className='font-semibold sm:text-lg mb-1'>
-          {med !== undefined && med.trade_name}
-        </h2>
-        <p className='mb-2'>By {med !== undefined && med.company_name}</p>
+        <a
+          href={`/medicine-details/${med.trade_name}/${med.medicine_id}`}
+          className='font-semibold sm:text-lg mb-1'
+        >
+          {med !== undefined && med.trade_name}{' '}
+          {med !== undefined && med.medicine_type}
+          {med.over_the_counter === 'no' && (
+            <span className='ml-2 border border-gray-400 px-2 rounded font-normal text-base'>
+              {med.over_the_counter === 'no' && 'Rx'}
+            </span>
+          )}
+        </a>
+        <p className='mb-1 text-gray-700'>
+          {med !== undefined && med.generic_name}
+        </p>
+        <p className='mb-2 text-gray-700'>
+          By {med !== undefined && med.company_name}
+        </p>
+        <div className='mb-4'>
+          <span className='font-medium text-xl text-gray-800'>
+            {Math.round((calculatePrice(price) + Number.EPSILON) * 100) / 100}{' '}
+            Tk
+          </span>
+          <span className='text-sm text-gray-600 line-through ml-2'>
+            {Math.round((price + Number.EPSILON) * 100) / 100} Tk
+          </span>
+          <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
+            Save 3%
+          </span>
+        </div>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
-            <p className='mb-1 font-medium  mr-4'>
-              {Math.round((price + Number.EPSILON) * 100) / 100}{' '}
-              <span className='font-normal'>Tk</span>
-            </p>
+            <p className='mb-1  mr-4'>Quantity</p>
             <button
               onClick={() => onQuantityClick('dec')}
               className='w-8 h-8 font-bold bg-gray-300 px-2'
             >
               -
             </button>
-            <input
-              className='text-center bg-yellow-300 h-8'
-              type='number'
-              min='1'
-              max='100'
-              step='1'
-              placeholder='Qty'
-              value={!qty ? 1 : qty}
-              name='qty'
-              onChange={onChange}
-            />
+            {inCart ? (
+              <input
+                className='text-center h-8 focus:outline-none'
+                type='number'
+                min='1'
+                max='100'
+                step='1'
+                placeholder='Qty'
+                readOnly
+                name='qty'
+                value={qty}
+              />
+            ) : (
+              <input
+                className='text-center h-8'
+                type='number'
+                min='1'
+                max='100'
+                step='1'
+                placeholder='Qty'
+                value={!qty ? 1 : qty}
+                name='qty'
+                onChange={onChange}
+              />
+            )}
+
             <button
               onClick={() => onQuantityClick('inc')}
               className='w-8 h-8 font-bold bg-gray-300 px-2'
