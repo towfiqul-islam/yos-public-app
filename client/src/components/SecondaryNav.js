@@ -36,6 +36,18 @@ const SecondaryNav = () => {
     }
   };
 
+  function checkCarts(itemOnSearch) {
+    if (carts.length > 0) {
+      for (const item of carts) {
+        if (item.medicine_id === itemOnSearch.medicine_id) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return false;
+  }
+
   useEffect(() => {
     onSearch('');
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
@@ -128,7 +140,11 @@ const SecondaryNav = () => {
                   </span>
                 </p>
                 {searchResults.map(med => (
-                  <SecondaryItemCard key={med.medicine_id} med={med} />
+                  <SecondaryItemCard
+                    inCart={checkCarts(med)}
+                    key={med.medicine_id}
+                    med={med}
+                  />
                 ))}
                 <p className='bg-gray-100 text-center p-2  pb-2 text-sm border-t border-gray-500'>
                   Found {searchResults.length} results

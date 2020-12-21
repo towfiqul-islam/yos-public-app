@@ -28,6 +28,17 @@ const MobileSearchOverlay = () => {
       fillSearchResults(res.data.data);
     }
   };
+  function checkCarts(itemOnSearch) {
+    if (carts.length > 0) {
+      for (const item of carts) {
+        if (item.medicine_id === itemOnSearch.medicine_id) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return false;
+  }
   useEffect(() => {
     searchInput.current.focus();
 
@@ -94,7 +105,11 @@ const MobileSearchOverlay = () => {
           searchResults &&
           searchResults.length > 0 &&
           searchResults.map(med => (
-            <SecondaryItemCard key={med.medicine_id} med={med} />
+            <SecondaryItemCard
+              inCart={checkCarts(med)}
+              key={med.medicine_id}
+              med={med}
+            />
           ))}
 
         {carts.length === 0 && search.length <= 2 && (

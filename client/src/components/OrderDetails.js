@@ -59,6 +59,7 @@ const OrderDetails = () => {
       ...orderDetails,
       customer_prescription: res.data.secure_url,
     });
+    setFile('');
   };
 
   const onConfirmOrder = () => {
@@ -213,7 +214,12 @@ const OrderDetails = () => {
                 Prescription{' '}
                 <span className='text-sm font-semibold'>(optional)</span>
               </label>
-              <input className='mt-2' type='file' onChange={onFileChange} />
+              <input
+                className='mt-2'
+                type='file'
+                accept='image/*'
+                onChange={onFileChange}
+              />
               {customer_prescription !== '' && (
                 <div>
                   <img

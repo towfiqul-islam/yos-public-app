@@ -11,6 +11,7 @@ const CartItem = ({cart, index}) => {
     calculateCartValue(carts);
 
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
+
     // find the item in local storage then remove it
     for (const item of storedCarts) {
       if (item.id === cart.id) {

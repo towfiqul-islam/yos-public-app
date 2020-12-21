@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import AppContext from '../context/appContext';
 
-const SecondaryItemCard = ({med}) => {
+const SecondaryItemCard = ({med, inCart}) => {
   const appContext = useContext(AppContext);
   const {addToCart, carts, calculateCartValue, onSearch} = appContext;
   let [qty, setQty] = useState(1);
@@ -22,7 +22,7 @@ const SecondaryItemCard = ({med}) => {
     });
     addToCart(carts);
     calculateCartValue(carts);
-    onSearch('');
+    // onSearch('');
   };
 
   const onChange = e => {
@@ -101,10 +101,14 @@ const SecondaryItemCard = ({med}) => {
             </button>
           </div>
           <button
-            onClick={() => onAddToCart(med)}
-            className='bg-gray-900 text-gray-100 px-4 py-1 rounded text-sm'
+            onClick={() => !inCart && onAddToCart(med)}
+            className={
+              !inCart
+                ? ' bg-gray-900 text-gray-100 px-4 py-1 rounded text-sm'
+                : ' bg-gray-300 text-gray-600 px-8 py-1 rounded text-sm cursor-default focus:outline-none'
+            }
           >
-            Add To Cart
+            {inCart ? 'In Cart' : 'Add To Cart'}
           </button>
         </div>
       </div>
