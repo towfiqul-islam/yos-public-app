@@ -65,29 +65,16 @@ const OrderByPrescription = () => {
   };
   const onDeletePrescription = () => {
     setOrderDetails({...orderDetails, customer_prescription: ''});
-
-    // const storedInSessions = JSON.parse(sessionStorage.getItem('orderInfo'));
-    // if (storedInSessions) {
     sessionStorage.setItem('orderInfo', JSON.stringify({orderDetails}));
-
-    // window.location.reload();
-
-    // } else {
-    // do nothing
-    // window.location.reload();
-    // }
   };
   useEffect(() => {
-    // console.log(orderDetails)
     const orderInfos = JSON.parse(sessionStorage.getItem('orderInfo'));
 
     if (orderInfos !== null) {
       const {orderDetails} = orderInfos;
-      // setOrderDetails(orderInfos.orderDetails);
+
       setOrderDetails({
         ...orderDetails,
-        // total_amount: cartValue,
-        // amount_after_discount: cartValue - percentageValue,
       });
     }
 
@@ -270,20 +257,17 @@ const OrderByPrescription = () => {
 
             {customer_prescription === '' && file !== '' ? (
               <div className='my-10 sm:w-2/3'>
-                <button
-                  // onClick={onCofirmOrder}
-                  className='bg-gray-500 text-gray-300 px-8 py-2 rounded block mx-auto'
-                >
-                  Confirm order
+                <button className='bg-gray-500 text-gray-300 px-8 py-1 rounded flex items-center mx-auto'>
+                  Next <span className='text-2xl ml-2'>&#8594;</span>
                 </button>
               </div>
             ) : (
               <div className='my-10 sm:w-2/3'>
                 <button
                   onClick={onConfirmOrder}
-                  className='bg-gray-900 text-gray-100 px-8 py-2 rounded block mx-auto'
+                  className='bg-gray-900 text-gray-100 px-8 py-1 rounded flex items-center mx-auto'
                 >
-                  Confirm order
+                  Next <span className='text-2xl ml-2'>&#8594;</span>
                 </button>
               </div>
             )}
@@ -292,7 +276,6 @@ const OrderByPrescription = () => {
       </div>
     </>
   );
-  // }
 };
 
 export default OrderByPrescription;

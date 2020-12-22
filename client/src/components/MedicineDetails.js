@@ -4,6 +4,12 @@ import AppContext from '../context/appContext';
 import MobileSearchOverlay from './MobileSearchOverlay';
 import SecondaryNav from './SecondaryNav';
 import axios from 'axios';
+import {
+  calculatePriceWithDiscount,
+  discount,
+  checkCarts,
+  onAddToCart,
+} from '../utils';
 
 const MedicineDetails = () => {
   const {id} = useParams();
@@ -16,35 +22,14 @@ const MedicineDetails = () => {
     carts,
     calculateCartValue,
   } = appContext;
-  function calculatePrice(price) {
-    const percentageValue = (price / 100) * 3;
-    const valueAfterDiscount = price - percentageValue;
-    return valueAfterDiscount;
-  }
+
   let [qty, setQty] = useState(1);
   const [price, setPrice] = useState(med.unit_price);
-  const onAddToCart = med => {
-    for (const item of carts) {
-      if (med.medicine_id === item.medicine_id) {
-        console.log('Item already in the Cart');
-        return;
-      }
-    }
 
-    carts.push({
-      ...med,
-      item_name: med.trade_name,
-      quantity: parseInt(qty),
-      price: med.unit_price * parseInt(qty),
-    });
-    addToCart(carts);
-    calculateCartValue(carts);
-    // onSearch('');
-  };
   const onChange = e => {
     if (!e.target.value) {
       setQty(1);
-      // med.quantity = 1;
+
       setPrice(med.unit_price);
       med.price = price;
       calculateCartValue(carts);
@@ -57,7 +42,7 @@ const MedicineDetails = () => {
       } else {
         setQty(parseInt(e.target.value));
         setPrice(med.unit_price * parseInt(e.target.value));
-        // med.quantity = parseInt(e.target.value);
+
         med.price = price;
         calculateCartValue(carts);
       }
@@ -65,31 +50,21 @@ const MedicineDetails = () => {
   };
 
   const onQuantityClick = val => {
-    if (val === 'inc' && qty < 100 && !checkCarts()) {
+    if (val === 'inc' && qty < 100 && !checkCarts(med, carts)) {
       setQty(++qty);
       setPrice(med.unit_price * qty);
-      // med.quantity = parseInt(e.target.value);
+
       med.price = price;
       calculateCartValue(carts);
-    } else if (val === 'dec' && qty > 1 && !checkCarts()) {
+    } else if (val === 'dec' && qty > 1 && !checkCarts(med, carts)) {
       setQty(--qty);
       setPrice(med.unit_price * qty);
-      // med.quantity = parseInt(e.target.value);
+
       med.price = price;
       calculateCartValue(carts);
     }
   };
-  function checkCarts() {
-    if (carts.length > 0) {
-      for (const item of carts) {
-        if (item.medicine_id === med.medicine_id) {
-          return true;
-        }
-      }
-      return false;
-    }
-    return false;
-  }
+
   async function getMedicineDetails(id) {
     const res = await axios.get(`/api/medicines/details/${id}`);
     setMed(res.data.data);
@@ -149,15 +124,16 @@ const MedicineDetails = () => {
 
               <div className='mb-4'>
                 <span className='font-medium text-xl text-gray-800'>
-                  {Math.round((calculatePrice(price) + Number.EPSILON) * 100) /
-                    100}{' '}
+                  {Math.round(
+                    (calculatePriceWithDiscount(price) + Number.EPSILON) * 100,
+                  ) / 100}{' '}
                   Tk
                 </span>
                 <span className='text-sm text-gray-600 line-through ml-2'>
                   {Math.round((price + Number.EPSILON) * 100) / 100} Tk
                 </span>
                 <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
-                  Save 3%
+                  Save {discount}%
                 </span>
               </div>
               <div className='flex items-center'>
@@ -169,7 +145,7 @@ const MedicineDetails = () => {
                   >
                     -
                   </button>
-                  {checkCarts() ? (
+                  {checkCarts(med, carts) ? (
                     <input
                       className='text-center h-8 focus:outline-none'
                       type='number'
@@ -204,14 +180,17 @@ const MedicineDetails = () => {
                 </div>
               </div>
               <button
-                onClick={() => !checkCarts() && onAddToCart(med)}
+                onClick={() =>
+                  !checkCarts(med, carts) &&
+                  onAddToCart(med, carts, addToCart, calculateCartValue, qty)
+                }
                 className={
-                  !checkCarts()
+                  !checkCarts(med, carts)
                     ? ' bg-gray-900 text-gray-100 px-8 py-2 rounded text-sm mt-4 inline-block'
                     : ' bg-gray-300 text-gray-600 px-12 py-2 rounded text-sm cursor-default focus:outline-none mt-4 inline-block'
                 }
               >
-                {checkCarts() ? 'In Cart' : 'Add To Cart'}
+                {checkCarts(med, carts) ? 'In Cart' : 'Add To Cart'}
               </button>
             </div>
           </div>

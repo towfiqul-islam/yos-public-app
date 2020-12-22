@@ -6,7 +6,7 @@ import Cart from './Cart';
 
 import SecondaryItemCard from './SecondaryItemCard';
 
-// import {data} from '../data';
+import {checkCarts, checkPath} from '../utils';
 import axios from 'axios';
 
 const SecondaryNav = () => {
@@ -36,18 +36,6 @@ const SecondaryNav = () => {
     }
   };
 
-  function checkCarts(itemOnSearch) {
-    if (carts.length > 0) {
-      for (const item of carts) {
-        if (item.medicine_id === itemOnSearch.medicine_id) {
-          return true;
-        }
-      }
-      return false;
-    }
-    return false;
-  }
-
   useEffect(() => {
     onSearch('');
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
@@ -57,19 +45,6 @@ const SecondaryNav = () => {
     }
     // eslint-disable-next-line
   }, []);
-
-  function checkPath(pathName) {
-    if (
-      pathName === '/order-review' ||
-      pathName === '/order-details' ||
-      pathName === '/order-by-prescription'
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  // console.log(checkPath('dfdf'));
 
   return (
     <div className='bg-gray-200'>
@@ -109,7 +84,6 @@ const SecondaryNav = () => {
             onClick={() => {
               history.push('/');
               toggleMobileMenu(false);
-              // toggleMobileSearch(false)
             }}
             className=' font-bold md:text-4xl text-xl cursor-pointer'
           >
@@ -160,7 +134,7 @@ const SecondaryNav = () => {
                 </p>
                 {searchResults.map(med => (
                   <SecondaryItemCard
-                    inCart={checkCarts(med)}
+                    inCart={checkCarts(med, carts)}
                     key={med.medicine_id}
                     med={med}
                   />

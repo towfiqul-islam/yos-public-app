@@ -1,35 +1,18 @@
 import React, {useContext, useState} from 'react';
 
 import AppContext from '../context/appContext';
+import {calculatePriceWithDiscount, discount, onAddToCart} from '../utils';
 
 const SecondaryItemCard = ({med, inCart}) => {
   const appContext = useContext(AppContext);
   const {addToCart, carts, calculateCartValue} = appContext;
   let [qty, setQty] = useState(1);
   const [price, setPrice] = useState(med.unit_price);
-  const onAddToCart = med => {
-    for (const item of carts) {
-      if (med.medicine_id === item.medicine_id) {
-        console.log('Item already in the Cart');
-        return;
-      }
-    }
-
-    carts.push({
-      ...med,
-      item_name: med.trade_name,
-      quantity: parseInt(qty),
-      price: med.unit_price * parseInt(qty),
-    });
-    addToCart(carts);
-    calculateCartValue(carts);
-    // onSearch('');
-  };
 
   const onChange = e => {
     if (!e.target.value) {
       setQty(1);
-      // med.quantity = 1;
+
       setPrice(med.unit_price);
       med.price = price;
       calculateCartValue(carts);
@@ -42,7 +25,7 @@ const SecondaryItemCard = ({med, inCart}) => {
       } else {
         setQty(parseInt(e.target.value));
         setPrice(med.unit_price * parseInt(e.target.value));
-        // med.quantity = parseInt(e.target.value);
+
         med.price = price;
         calculateCartValue(carts);
       }
@@ -53,22 +36,18 @@ const SecondaryItemCard = ({med, inCart}) => {
     if (val === 'inc' && qty < 100 && !inCart) {
       setQty(++qty);
       setPrice(med.unit_price * qty);
-      // med.quantity = parseInt(e.target.value);
+
       med.price = price;
       calculateCartValue(carts);
     } else if (val === 'dec' && qty > 1 && !inCart) {
       setQty(--qty);
       setPrice(med.unit_price * qty);
-      // med.quantity = parseInt(e.target.value);
+
       med.price = price;
       calculateCartValue(carts);
     }
   };
-  function calculatePrice(price) {
-    const percentageValue = (price / 100) * 3;
-    const valueAfterDiscount = price - percentageValue;
-    return valueAfterDiscount;
-  }
+
   return (
     <div>
       <div className='bg-gray-100 border-t border-gray-300 px-4 py-4'>
@@ -92,14 +71,16 @@ const SecondaryItemCard = ({med, inCart}) => {
         </p>
         <div className='mb-4'>
           <span className='font-medium text-xl text-gray-800'>
-            {Math.round((calculatePrice(price) + Number.EPSILON) * 100) / 100}{' '}
+            {Math.round(
+              (calculatePriceWithDiscount(price) + Number.EPSILON) * 100,
+            ) / 100}{' '}
             Tk
           </span>
           <span className='text-sm text-gray-600 line-through ml-2'>
             {Math.round((price + Number.EPSILON) * 100) / 100} Tk
           </span>
           <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
-            Save 3%
+            Save {discount}%
           </span>
         </div>
         <div className='flex items-center justify-between'>
@@ -145,7 +126,10 @@ const SecondaryItemCard = ({med, inCart}) => {
             </button>
           </div>
           <button
-            onClick={() => !inCart && onAddToCart(med)}
+            onClick={() =>
+              !inCart &&
+              onAddToCart(med, carts, addToCart, calculateCartValue, qty)
+            }
             className={
               !inCart
                 ? ' bg-gray-900 text-gray-100 px-4 py-1 rounded text-sm'

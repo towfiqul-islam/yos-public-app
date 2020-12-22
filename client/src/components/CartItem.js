@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import AppContext from '../context/appContext';
+import {calculatePriceWithDiscount, discount} from '../utils';
 
 const CartItem = ({cart, index}) => {
   const appContext = useContext(AppContext);
@@ -100,11 +101,7 @@ const CartItem = ({cart, index}) => {
       }
     }
   };
-  function calculatePrice(price) {
-    const percentageValue = (price / 100) * 3;
-    const valueAfterDiscount = price - percentageValue;
-    return valueAfterDiscount;
-  }
+
   return (
     <div>
       <div className='m-auto flex justify-center mt-2 '>
@@ -119,19 +116,22 @@ const CartItem = ({cart, index}) => {
             )}
           </h1>
           <p className='mb-2 text-gray-700'>
-            By {cart !== undefined && cart.company_name}
+            {cart !== undefined && cart.generic_name}
           </p>
           <p className='mb-2 text-gray-700'>
-            By {cart !== undefined && cart.generic_name}
+            By {cart !== undefined && cart.company_name}
           </p>
           <div className='mb-4'>
             <span className='font-medium text-xl text-gray-800'>
               {!cart.price
                 ? Math.round(
-                    (calculatePrice(cart.unit_price) + Number.EPSILON) * 100,
+                    (calculatePriceWithDiscount(cart.unit_price) +
+                      Number.EPSILON) *
+                      100,
                   ) / 100
                 : Math.round(
-                    (calculatePrice(cart.price) + Number.EPSILON) * 100,
+                    (calculatePriceWithDiscount(cart.price) + Number.EPSILON) *
+                      100,
                   ) / 100}{' '}
               Tk
             </span>
@@ -142,26 +142,10 @@ const CartItem = ({cart, index}) => {
               Tk
             </span>
             <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
-              Save 3%
+              Save {discount}%
             </span>
           </div>
           <div className='flex items-center justify-between'>
-            {/* <div className='flex items-center'>
-              <p className='mb-1 font-medium text-lg'>
-                {!cart.price ? cart.unit_price : cart.price} Tk
-              </p>
-              <input
-                className='border-2 rounded border-gray-400 text-center px-1 sm:py-1 ml-2'
-                type='number'
-                min='1'
-                max='9'
-                step='1'
-                placeholder='Qty'
-                value={!qty ? 1 : cart.quantity}
-                name='qty'
-                onChange={onChange}
-              />
-            </div> */}
             <div className='flex items-center'>
               <p className='mb-1  mr-4'>Quantity</p>
               <button

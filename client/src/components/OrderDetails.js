@@ -7,6 +7,7 @@ import axios from 'axios';
 import MobileSearchOverlay from './MobileSearchOverlay';
 
 import SecondaryNav from './SecondaryNav';
+import {discount} from '../utils';
 
 const OrderDetails = () => {
   const appContext = useContext(AppContext);
@@ -21,7 +22,7 @@ const OrderDetails = () => {
 
   const [file, setFile] = useState('');
 
-  const percentageValue = (cartValue / 100) * 3;
+  const percentageValue = (cartValue / 100) * discount;
 
   const [orderDetails, setOrderDetails] = useState({
     customer_name: '',
@@ -30,7 +31,7 @@ const OrderDetails = () => {
     customer_additional_notes: '',
     customer_prescription: '',
     total_amount: cartValue,
-    discount_percentage: 3,
+    discount_percentage: discount,
     amount_after_discount: cartValue - percentageValue,
   });
 
@@ -85,24 +86,16 @@ const OrderDetails = () => {
 
   const onDeletePrescription = () => {
     setOrderDetails({...orderDetails, customer_prescription: ''});
-    // setFile('');
 
     const orderInfo = {
       carts: carts,
       orderDetails: orderDetails,
     };
-    // const storedInSessions = JSON.parse(sessionStorage.getItem('orderInfo'));
-    // if (storedInSessions) {
+
     sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
-    // window.location.reload();
-    // } else {
-    // do nothing
-    // window.location.reload();
-    // }
   };
 
   useEffect(() => {
-    // console.log(orderDetails)
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
     if (!storedCarts || storedCarts.length < 1) {
       history.push('/');
@@ -111,7 +104,7 @@ const OrderDetails = () => {
 
       if (orderInfos !== null) {
         const {orderDetails} = orderInfos;
-        // setOrderDetails(orderInfos.orderDetails);
+
         setOrderDetails({
           ...orderDetails,
           total_amount: cartValue,
@@ -305,11 +298,8 @@ const OrderDetails = () => {
             </div>
             {customer_prescription === '' && file !== '' ? (
               <div className='my-10 sm:w-2/3'>
-                <button
-                  // onClick={onCofirmOrder}
-                  className='bg-gray-500 text-gray-300 px-8 py-2 rounded block mx-auto'
-                >
-                  Confirm order
+                <button className='bg-gray-500 text-gray-300 px-8 py-1 rounded flex items-center  mx-auto'>
+                  Next <span className='text-2xl ml-2'>&#8594;</span>
                 </button>
               </div>
             ) : (

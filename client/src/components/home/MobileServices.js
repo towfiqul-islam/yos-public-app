@@ -1,5 +1,6 @@
 import React from 'react';
 import history from '../../history';
+import {discount} from '../../utils';
 
 const MobileServices = () => {
   return (
@@ -56,7 +57,7 @@ const MobileServices = () => {
               <circle cx='6.5' cy='6.5' r='1.5' fill='#909090' />
             </svg>
           </span>
-          <p className='text-sm ml-2'>3% discount on all orders</p>
+          <p className='text-sm ml-2'>{discount}% discount on all orders</p>
         </div>
         <div className='flex mb-4'>
           <span className=''>

@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react';
-// import {data} from '../data';
+
 import AppContext from './appContext';
 import AppReducer from './appReducer';
 

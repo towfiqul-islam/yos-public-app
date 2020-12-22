@@ -26,7 +26,6 @@ const OrderReview = () => {
   const onSubmitOrder = async () => {
     setLoading(true);
 
-    // setTimeout(async () => {
     const res = await axios.post(
       '/api/guest/add_order',
       orderDetails.orderDetails,
@@ -70,10 +69,6 @@ const OrderReview = () => {
         customer_prescription: orderDetails.orderDetails.customer_prescription,
         customer_additional_notes:
           orderDetails.orderDetails.customer_additional_notes,
-        // orderedItems: orderDetails.carts,
-        // total_amount: 0,
-        // discount_percentage: 3,
-        // amount_after_discount: 0,
       };
       await axios.post('/api/guest/mail_test', mailBody);
       setLoading(false);
@@ -81,10 +76,7 @@ const OrderReview = () => {
       localStorage.removeItem('carts');
       setConfirm(true);
     }
-    // }, 2000);
   };
-
-  //   orderDetails&& const {orderDetails, carts, cartValue} = orderDetails2;
 
   useEffect(() => {
     const storedInSessions = JSON.parse(sessionStorage.getItem('orderInfo'));
@@ -233,26 +225,6 @@ const OrderReview = () => {
                       </span>
                     </h4>
                   </div>
-                  {/* <p className=' font-semibold  text-center mt-8 sm:text-xl'>
-                    <span className='font-normal'>Total:</span>{' '}
-                    {Math.round(
-                      (orderDetails.orderDetails.total_amount +
-                        Number.EPSILON) *
-                        100,
-                    ) / 100}
-                    <span className='font-normal text-base mr-4'>Tk</span>
-                  </p>
-                  <p className=' font-semibold  text-center mt-2 sm:text-xl'>
-                    <span className='font-normal'>After </span>{' '}
-                    {orderDetails.orderDetails.discount_percentage}%
-                    <span className='font-normal'> Discount: </span>{' '}
-                    {Math.round(
-                      (orderDetails.orderDetails.amount_after_discount +
-                        Number.EPSILON) *
-                        100,
-                    ) / 100}{' '}
-                    <span className='font-normal text-base'>Tk</span>
-                  </p> */}
                 </div>
               </div>
             )}

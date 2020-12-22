@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import AppContext from '../context/appContext';
 import history from '../history';
+import {calculatePriceWithDiscount} from '../utils';
 import CartItem from './CartItem';
 
 const Cart = () => {
@@ -15,12 +16,6 @@ const Cart = () => {
 
     cartValue,
   } = appContext;
-
-  function calculatePrice(price) {
-    const percentageValue = (price / 100) * 3;
-    const valueAfterDiscount = price - percentageValue;
-    return valueAfterDiscount;
-  }
 
   return (
     <div>
@@ -63,8 +58,9 @@ const Cart = () => {
           <div className='flex justify-between sm:w-3/4 w-11/12 mx-auto mt-4'>
             <p className='text-lg sm:text-xl'>Cart Value</p>
             <p className='font-bold text-lg sm:text-xl'>
-              {Math.round((calculatePrice(cartValue) + Number.EPSILON) * 100) /
-                100}{' '}
+              {Math.round(
+                (calculatePriceWithDiscount(cartValue) + Number.EPSILON) * 100,
+              ) / 100}{' '}
               TK
             </p>
           </div>

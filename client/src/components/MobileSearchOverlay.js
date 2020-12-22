@@ -5,6 +5,7 @@ import Cart from './Cart';
 import SecondaryItemCard from './SecondaryItemCard';
 
 import axios from 'axios';
+import {checkCarts} from '../utils';
 
 const MobileSearchOverlay = () => {
   const searchInput = useRef(null);
@@ -28,17 +29,7 @@ const MobileSearchOverlay = () => {
       fillSearchResults(res.data.data);
     }
   };
-  function checkCarts(itemOnSearch) {
-    if (carts.length > 0) {
-      for (const item of carts) {
-        if (item.medicine_id === itemOnSearch.medicine_id) {
-          return true;
-        }
-      }
-      return false;
-    }
-    return false;
-  }
+
   useEffect(() => {
     searchInput.current.focus();
 
@@ -106,7 +97,7 @@ const MobileSearchOverlay = () => {
           searchResults.length > 0 &&
           searchResults.map(med => (
             <SecondaryItemCard
-              inCart={checkCarts(med)}
+              inCart={checkCarts(med, carts)}
               key={med.medicine_id}
               med={med}
             />

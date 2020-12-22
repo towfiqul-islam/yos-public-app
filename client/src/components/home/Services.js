@@ -1,4 +1,5 @@
 import React from 'react';
+import {discount} from '../../utils';
 
 const Services = () => {
   return (
@@ -63,7 +64,7 @@ const Services = () => {
             </svg>
           </span>
           <p className='text-center mt-2 font-medium'>
-            3% discount on all orders
+            {discount}% discount on all orders
           </p>
         </div>
         <div className='m-5'></div>
