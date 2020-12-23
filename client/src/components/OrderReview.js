@@ -261,7 +261,7 @@ const OrderReview = () => {
           </div>
         )}
       </div>
-      <Footer />
+      {orderDetails && Object.keys(orderDetails).length > 0 && <Footer />}
     </>
   );
 };
