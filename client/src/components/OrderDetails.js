@@ -7,7 +7,7 @@ import axios from 'axios';
 import MobileSearchOverlay from './MobileSearchOverlay';
 
 import SecondaryNav from './SecondaryNav';
-import {discount} from '../utils';
+import {calculatePriceWithDiscount, discount} from '../utils';
 import Footer from './Footer';
 
 const OrderDetails = () => {
@@ -161,7 +161,10 @@ const OrderDetails = () => {
             </h3>
 
             <h3 className='font-bold text-lg sm:text-2xl ml-10 bg-gray-900 text-gray-100 px-2 py-1 rounded'>
-              {Math.round((cartValue + Number.EPSILON) * 100) / 100} Tk
+              {Math.round(
+                (calculatePriceWithDiscount(cartValue) + Number.EPSILON) * 100,
+              ) / 100}{' '}
+              Tk
             </h3>
           </div>
           <div className='mx-auto sm:w-3/4'>

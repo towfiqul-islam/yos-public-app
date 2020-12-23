@@ -27,10 +27,19 @@ const OrderReview = () => {
   const onSubmitOrder = async () => {
     setLoading(true);
 
-    const res = await axios.post(
-      '/api/guest/add_order',
-      orderDetails.orderDetails,
-    );
+    const customerData = {
+      customer_name: orderDetails.orderDetails.customer_name,
+      customer_phone: orderDetails.orderDetails.customer_phone,
+      customer_address: orderDetails.orderDetails.customer_address,
+      customer_additional_notes:
+        orderDetails.orderDetails.customer_additional_notes,
+      customer_prescription: orderDetails.orderDetails.customer_prescription,
+      total_amount: orderDetails.orderDetails.total_amount,
+      discount_percentage: orderDetails.orderDetails.discount_percentage,
+      amount_after_discount: orderDetails.orderDetails.amount_after_discount,
+    };
+
+    const res = await axios.post('/api/guest/add_order', customerData);
 
     if (res.status === 200 && orderDetails.carts) {
       for (const item of orderDetails.carts) {
@@ -56,7 +65,7 @@ const OrderReview = () => {
         discount_percentage: orderDetails.orderDetails.discount_percentage,
         amount_after_discount: orderDetails.orderDetails.amount_after_discount,
       };
-      await axios.post('/api/guest/mail_test', mailBody);
+      await axios.post('/api/guest/guest_order_mail', mailBody);
       setLoading(false);
       sessionStorage.removeItem('orderInfo');
       localStorage.removeItem('carts');
@@ -71,7 +80,7 @@ const OrderReview = () => {
         customer_additional_notes:
           orderDetails.orderDetails.customer_additional_notes,
       };
-      await axios.post('/api/guest/mail_test', mailBody);
+      await axios.post('/api/guest/guest_order_mail', mailBody);
       setLoading(false);
       sessionStorage.removeItem('orderInfo');
       localStorage.removeItem('carts');
@@ -233,7 +242,12 @@ const OrderReview = () => {
             <div>
               <p className='text-center mt-10'>
                 By submitting order, you agree with our{' '}
-                <a className='underline' href='#!'>
+                <a
+                  className='underline'
+                  href='/terms-and-conditions'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   Terms & Conditions
                 </a>
               </p>

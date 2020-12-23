@@ -1,4 +1,4 @@
-export const discount = 3;
+export const discount = 5;
 
 export function calculatePriceWithDiscount(price) {
   const percentageValue = (price / 100) * discount;
