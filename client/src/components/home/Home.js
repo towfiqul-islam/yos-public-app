@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import AppContext from '../../context/appContext';
+import Footer from '../Footer';
 
 import MobileSearchOverlay from '../MobileSearchOverlay';
 
@@ -57,6 +58,7 @@ const Home = () => {
           <MobileServices />
           <Services />
         </div>
+        <Footer />
       </div>
     </>
   );

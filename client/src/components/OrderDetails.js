@@ -8,6 +8,7 @@ import MobileSearchOverlay from './MobileSearchOverlay';
 
 import SecondaryNav from './SecondaryNav';
 import {discount} from '../utils';
+import Footer from './Footer';
 
 const OrderDetails = () => {
   const appContext = useContext(AppContext);
@@ -315,6 +316,7 @@ const OrderDetails = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
   // }

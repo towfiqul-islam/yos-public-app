@@ -6,6 +6,7 @@ import MobileSearchOverlay from './MobileSearchOverlay';
 import SecondaryNav from './SecondaryNav';
 import axios from 'axios';
 import Loading from './Loading';
+import Footer from './Footer';
 
 const OrderReview = () => {
   const appContext = useContext(AppContext);
@@ -246,6 +247,7 @@ const OrderReview = () => {
           </div>
         )}
       </div>
+      <Footer />
     </>
   );
 };

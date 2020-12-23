@@ -9,6 +9,7 @@ import OrderDetails from './components/OrderDetails';
 import OrderByPrescription from './components/OrderByPrescription';
 import OrderReview from './components/OrderReview';
 import MedicineDetails from './components/MedicineDetails';
+import AboutUs from './components/AboutUs';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               component={OrderByPrescription}
             />
             <Route exact path='/order-review' component={OrderReview} />
+            <Route exact path='/about-us' component={AboutUs} />
           </Switch>
         </Router>
       </AppState>

@@ -7,6 +7,7 @@ import axios from 'axios';
 import MobileSearchOverlay from './MobileSearchOverlay';
 
 import SecondaryNav from './SecondaryNav';
+import Footer from './Footer';
 
 const OrderByPrescription = () => {
   const appContext = useContext(AppContext);
@@ -274,6 +275,7 @@ const OrderByPrescription = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

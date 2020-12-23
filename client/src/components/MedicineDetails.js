@@ -10,6 +10,7 @@ import {
   checkCarts,
   onAddToCart,
 } from '../utils';
+import Footer from './Footer';
 
 const MedicineDetails = () => {
   const {id} = useParams();
@@ -196,6 +197,7 @@ const MedicineDetails = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
