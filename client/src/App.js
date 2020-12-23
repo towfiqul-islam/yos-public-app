@@ -10,6 +10,8 @@ import OrderByPrescription from './components/OrderByPrescription';
 import OrderReview from './components/OrderReview';
 import MedicineDetails from './components/MedicineDetails';
 import AboutUs from './components/AboutUs';
+import Privacy from './components/Privacy';
+import Terms from './components/Terms';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
             />
             <Route exact path='/order-review' component={OrderReview} />
             <Route exact path='/about-us' component={AboutUs} />
+            <Route exact path='/privacy-policy' component={Privacy} />
+            <Route exact path='/terms-and-conditions' component={Terms} />
           </Switch>
         </Router>
       </AppState>

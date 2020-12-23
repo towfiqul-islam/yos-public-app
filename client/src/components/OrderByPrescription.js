@@ -19,6 +19,7 @@ const OrderByPrescription = () => {
     customer_address: '',
     customer_additional_notes: '',
     customer_prescription: '',
+    blueberry: '',
   });
 
   const {
@@ -27,6 +28,7 @@ const OrderByPrescription = () => {
     customer_address,
     customer_additional_notes,
     customer_prescription,
+    blueberry,
   } = orderDetails;
 
   const onChange = e => {
@@ -53,7 +55,8 @@ const OrderByPrescription = () => {
       customer_prescription !== '' &&
       customer_name !== '' &&
       customer_phone !== '' &&
-      customer_address !== ''
+      customer_address !== '' &&
+      blueberry === ''
     ) {
       sessionStorage.setItem('orderInfo', JSON.stringify({orderDetails}));
       history.push('/order-review');
@@ -255,6 +258,16 @@ const OrderByPrescription = () => {
                 rows='5'
               />
             </div>
+
+            <input
+              style={{display: 'none'}}
+              className='appearance-none block w-full bg-white text-gray-700 border border-gray-500 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+              id='blueBerry'
+              name='blueBerry'
+              onChange={onChange}
+              value={blueberry}
+              type='text'
+            />
 
             {customer_prescription === '' && file !== '' ? (
               <div className='my-10 sm:w-2/3'>

@@ -34,6 +34,7 @@ const OrderDetails = () => {
     total_amount: cartValue,
     discount_percentage: discount,
     amount_after_discount: cartValue - percentageValue,
+    blueberry: '',
   });
 
   const {
@@ -42,6 +43,7 @@ const OrderDetails = () => {
     customer_address,
     customer_additional_notes,
     customer_prescription,
+    blueberry,
   } = orderDetails;
 
   const onChange = e => {
@@ -73,7 +75,8 @@ const OrderDetails = () => {
     if (
       customer_name !== '' &&
       customer_phone !== '' &&
-      customer_address !== ''
+      customer_address !== '' &&
+      blueberry === ''
     ) {
       sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
       history.push('/order-review');
@@ -226,6 +229,15 @@ const OrderDetails = () => {
                 rows='5'
               />
             </div>
+            <input
+              style={{display: 'none'}}
+              className='appearance-none block w-full bg-white text-gray-700 border border-gray-500 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+              id='blueBerry'
+              name='blueBerry'
+              onChange={onChange}
+              value={blueberry}
+              type='text'
+            />
             <div className='mb-4'>
               <label className='block' htmlFor='prescription'>
                 Prescription{' '}
