@@ -1,26 +1,86 @@
 import React from 'react';
+import hero from '../../assets/hero-2.jpg';
+import history from '../../history';
 
 const Hero = () => {
   return (
-    <div>
-      <div className='mt-10'>
-        <span className='flex justify-center items-center'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            height='48'
-            viewBox='0 0 24 24'
-            width='48'
+    <div className=''>
+      <div
+        className='hidden sm:block'
+        style={{
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          position: 'relative',
+          height: '80vh',
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${hero})`,
+        }}
+      >
+        <div
+          style={{
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            color: 'white',
+          }}
+          className='text-center absolute'
+        >
+          <h1 className='text-5xl text-black font-bold'>
+            Pharmacy at your doorstep
+          </h1>
+          <p className='text-xl text-gray-100  font-medium w-3/4 text-center mx-auto mt-4 leading-8'>
+            Search and order any medicine from us and get it delivered at your
+            doorstep in less than 3 hours.
+          </p>
+          <p className='text-lg text-black   w-3/4 font-semibold text-center mx-auto mt-20'>
+            Or just upload the prescription and we'll fill the order for you.
+          </p>
+          <button
+            onClick={() => history.push('/order-by-prescription')}
+            className='px-10 py-4 mt-8 text-lg tracking-wider font-medium bg-yellow-500 text-black uppercase shadow-xl rounded'
           >
-            <path d='M0 0h24v24H0V0z' fill='none' />
-            <path
-              d='M21 5h-2.64l1.14-3.14L17.15 1l-1.46 4H3v2l2 6-2 6v2h18v-2l-2-6 2-6V5zm-3.9 8.63L18.89 19H5.11l1.79-5.37.21-.63-.21-.63L5.11 7h13.78l-1.79 5.37-.21.63.21.63zM13 9h-2v3H8v2h3v3h2v-3h3v-2h-3z'
-              fill='#C6C6C6'
-            />
-          </svg>
-        </span>
-        <p className='text-center font-semibold text-gray-600 text-xl'>
-          Pharmacy at your doorstep
-        </p>
+            Upload prescription
+          </button>
+        </div>
+      </div>
+      {/* Mobile Hero */}
+      <div
+        className='block sm:hidden'
+        style={{
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          position: 'relative',
+          height: '80vh',
+          background: '#DADADA',
+        }}
+      >
+        <div
+          style={{
+            top: '50%',
+            left: '0%',
+            transform: 'translate(0%, -50%)',
+            color: 'white',
+          }}
+          className='text-center absolute'
+        >
+          <h1 className='text-4xl text-black font-bold'>
+            Pharmacy at your doorstep
+          </h1>
+          <p className='text-xl text-gray-900  w-11/12 text-center mx-auto mt-4 leading-8'>
+            Search and order any medicine from us and get it delivered at your
+            doorstep in less than 3 hours.
+          </p>
+          <p className='text-lg text-black w-11/12 font-semibold  mx-auto mt-20'>
+            Or just upload the prescription and we'll fill the order for you.
+          </p>
+          <button
+            onClick={() => history.push('/order-by-prescription')}
+            className='px-8 py-4 mt-8 text tracking-wider font-medium bg-yellow-500 text-black uppercase shadow-xl rounded'
+          >
+            Upload prescription
+          </button>
+        </div>
       </div>
     </div>
   );

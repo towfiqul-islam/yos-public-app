@@ -6,7 +6,7 @@ import MobileSearchOverlay from '../MobileSearchOverlay';
 
 import SecondaryNav from '../SecondaryNav';
 import Hero from './Hero';
-import MobileServices from './MobileServices';
+
 import Services from './Services';
 
 const Home = () => {
@@ -14,7 +14,6 @@ const Home = () => {
   const {
     isCartOpen,
 
-    toggleMobileSearch,
     isMobileSearchOpen,
   } = appContext;
 
@@ -30,12 +29,12 @@ const Home = () => {
             maxHeight: isCartOpen && '88vh',
             overflowY: isCartOpen && 'hidden',
           }}
-          className='sm:w-3/4 w-11/12 m-auto h-full'
+          className=' m-auto h-full'
         >
           <Hero />
 
           {/* Mobile search */}
-          <div className='sm:hidden flex items-center justify-center mt-10'>
+          {/* <div className='sm:hidden flex items-center justify-center mt-10'>
             <span className='block pl-4 py-3 border-l border-t border-b border-gray-500'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -53,9 +52,9 @@ const Home = () => {
               type='text'
               placeholder='Search and order medicine'
             />
-          </div>
+          </div> */}
 
-          <MobileServices />
+          {/* <MobileServices /> */}
           <Services />
         </div>
         <Footer />
