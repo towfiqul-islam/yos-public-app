@@ -205,7 +205,7 @@ const SecondaryNav = () => {
             className={
               router.pathname === '/order-by-prescription'
                 ? 'bg-gray-500 text-gray-300 rounded px-6 py-2 cursor-default focus:outline-none'
-                : 'bg-gray-900 text-gray-100 rounded px-6 py-2'
+                : 'border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-gray-100 rounded px-6 py-2'
             }
           >
             Order by prescription

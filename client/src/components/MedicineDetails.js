@@ -93,10 +93,10 @@ const MedicineDetails = () => {
           <div className='mt-12 flex flex-wrap  mx-auto'>
             <img
               width='300'
-              height='auto'
+              height='250'
               style={{
-                maxWidth: '300px',
-                height: 'auto',
+                width: '300px',
+                height: '250px',
               }}
               className='rounded shadow sm:mr-8 object-fit object-center'
               src={
@@ -104,7 +104,7 @@ const MedicineDetails = () => {
                   ? med.image
                   : 'https://www.pharmamirror.com/wp-content/themes/fox/images/placeholder.jpg'
               }
-              alt=''
+              alt={med.image !== '' ? med.trade_name : 'placeholder'}
             />
             <div className='mt-8 sm:mt-0'>
               <h2 className='font-semibold text-gray-800 text-2xl'>
@@ -197,6 +197,7 @@ const MedicineDetails = () => {
           </div>
         </div>
       </div>
+      <div className='w-full h-40'></div>
       <Footer />
     </>
   );

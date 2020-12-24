@@ -90,7 +90,7 @@ router.post('/guest_order_mail', async (req, res) => {
                     (item, index) => `<div>
                   <p style="margin: 0; ">${index + 1}. Item name: ${
                       item.item_name
-                    }</p>
+                    } ${item.medicine_type}</p>
                   <p style="margin: 0; ">Quantity: ${item.quantity}</p>
                   <p style="margin-bottom: 10px; ">Price: ${
                     Math.round((item.price + Number.EPSILON) * 100) / 100
@@ -115,7 +115,7 @@ router.post('/guest_order_mail', async (req, res) => {
                }
                     
                     <div>
-                  <a style="margin-top: 10px; display: inline-block; background: black; padding: 8px 12px; color: white; border-radius: 4px; text-align: center;" href='${
+                  <a style="margin-top: 10px; display: inline-block; background: black; padding: 8px 12px; color: white; border-radius: 4px; text-align: center; text-decoration: none;" href='${
                     process.env.NODE_ENV === 'testing'
                       ? 'http://localhost:3001'
                       : 'https://admin-stage.yos.com.bd'

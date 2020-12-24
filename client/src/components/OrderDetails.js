@@ -157,7 +157,7 @@ const OrderDetails = () => {
           </h2>
           <div className='flex justify-center items-center  mt-4 sm:w-3/4 w-11/12 sm:mx-auto'>
             <h3 className='font-medium text-lg sm:text-xl text-gray-800'>
-              Cart value
+              Total amount
             </h3>
 
             <h3 className='font-bold text-lg sm:text-2xl ml-10 bg-gray-900 text-gray-100 px-2 py-1 rounded'>

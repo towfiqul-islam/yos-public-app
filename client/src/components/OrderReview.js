@@ -192,7 +192,9 @@ const OrderReview = () => {
                             <p className='mr-2'>{index + 1}.</p>
                             <p className='mr-2 text-gray-600'>Medicine: </p>
                           </div>
-                          <p>{cartItem.trade_name}</p>
+                          <p>
+                            {cartItem.trade_name} {cartItem.medicine_type}
+                          </p>
                         </div>
                         <div className='flex  my-2'>
                           <p className='mr-2 ml-5 text-gray-600'>Quantity: </p>

@@ -55,8 +55,8 @@ const Cart = () => {
             />
           ))}
         {carts.length > 0 && (
-          <div className='flex justify-between sm:w-3/4 w-11/12 mx-auto mt-4'>
-            <p className='text-lg sm:text-xl'>Cart Value</p>
+          <div className='flex justify-between sm:w-4/5 w-11/12 mx-auto mt-4'>
+            <p className='text-lg sm:text-xl'>Total amount</p>
             <p className='font-bold text-lg sm:text-xl'>
               {Math.round(
                 (calculatePriceWithDiscount(cartValue) + Number.EPSILON) * 100,

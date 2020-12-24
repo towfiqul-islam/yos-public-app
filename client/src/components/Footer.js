@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
+import AppContext from '../context/appContext';
 
 const Footer = () => {
+  const appContext = useContext(AppContext);
+  const {isMobileSearchOpen} = appContext;
   return (
-    <footer className='py-4  bg-gray-900 text-gray-100 mt-8'>
+    <footer
+      className={`py-4  bg-gray-900 text-gray-100 mt-8 ${
+        isMobileSearchOpen && 'hidden'
+      }`}
+    >
       <div className='flex justify-center'>
         <ul className='flex flex-wrap justify-center py-4 text-sm sm:text-base'>
           <li className='mr-8 sm:mr-12 mb-4 sm:mb-0'>
