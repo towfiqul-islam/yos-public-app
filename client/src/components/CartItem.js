@@ -15,7 +15,7 @@ const CartItem = ({cart, index}) => {
 
     // find the item in local storage then remove it
     for (const item of storedCarts) {
-      if (item.id === cart.id) {
+      if (item.medicine_id === cart.medicine_id) {
         const indexOfRemovedItem = storedCarts.indexOf(item);
         storedCarts.splice(indexOfRemovedItem, 1);
         localStorage.setItem('carts', JSON.stringify(storedCarts));
@@ -31,7 +31,7 @@ const CartItem = ({cart, index}) => {
       const storedCarts = JSON.parse(localStorage.getItem('carts'));
       // find the item in local storage then update it's value
       for (const item of storedCarts) {
-        if (item.id === cart.id) {
+        if (item.medicine_id === cart.medicine_id) {
           item.price = cart.unit_price;
           item.quantity = 1;
           localStorage.setItem('carts', JSON.stringify(storedCarts));
@@ -46,7 +46,7 @@ const CartItem = ({cart, index}) => {
         const storedCarts = JSON.parse(localStorage.getItem('carts'));
         // find the item in local storage then update it's value
         for (const item of storedCarts) {
-          if (item.id === cart.id) {
+          if (item.medicine_id === cart.medicine_id) {
             item.price = cart.unit_price * 100;
             item.quantity = 100;
             localStorage.setItem('carts', JSON.stringify(storedCarts));
@@ -60,7 +60,7 @@ const CartItem = ({cart, index}) => {
         const storedCarts = JSON.parse(localStorage.getItem('carts'));
         // find the item in local storage then update it's value
         for (const item of storedCarts) {
-          if (item.id === cart.id) {
+          if (item.medicine_id === cart.medicine_id) {
             item.price = cart.unit_price * parseInt(e.target.value);
             item.quantity = parseInt(e.target.value);
             localStorage.setItem('carts', JSON.stringify(storedCarts));
@@ -78,7 +78,7 @@ const CartItem = ({cart, index}) => {
       const storedCarts = JSON.parse(localStorage.getItem('carts'));
       // find the item in local storage then update it's value
       for (const item of storedCarts) {
-        if (item.id === cart.id) {
+        if (item.medicine_id === cart.medicine_id) {
           item.price = cart.unit_price * qty;
           item.quantity = qty;
           localStorage.setItem('carts', JSON.stringify(storedCarts));
@@ -93,7 +93,7 @@ const CartItem = ({cart, index}) => {
       const storedCarts = JSON.parse(localStorage.getItem('carts'));
       // find the item in local storage then update it's value
       for (const item of storedCarts) {
-        if (item.id === cart.id) {
+        if (item.medicine_id === cart.medicine_id) {
           item.price = cart.unit_price * qty;
           item.quantity = qty;
           localStorage.setItem('carts', JSON.stringify(storedCarts));
