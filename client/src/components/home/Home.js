@@ -6,6 +6,7 @@ import MobileSearchOverlay from '../MobileSearchOverlay';
 
 import SecondaryNav from '../SecondaryNav';
 import Hero from './Hero';
+import HowToOrder from './HowToOrder';
 
 import Services from './Services';
 
@@ -56,6 +57,7 @@ const Home = () => {
 
           {/* <MobileServices /> */}
           <Services />
+          <HowToOrder />
         </div>
         <Footer />
       </div>
