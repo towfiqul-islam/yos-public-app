@@ -7,7 +7,13 @@ import axios from 'axios';
 import MobileSearchOverlay from './MobileSearchOverlay';
 
 import SecondaryNav from './SecondaryNav';
-import {calculatePriceWithDiscount, discount} from '../utils';
+import {
+  calculatePriceWithDiscount,
+  discount,
+  validateAddress,
+  validateName,
+  validatePhone,
+} from '../utils';
 import Footer from './Footer';
 
 const OrderDetails = () => {
@@ -76,6 +82,9 @@ const OrderDetails = () => {
       customer_name !== '' &&
       customer_phone !== '' &&
       customer_address !== '' &&
+      validateName(customer_name) === 'Name is valid' &&
+      validatePhone(customer_phone) === 'Phone is valid' &&
+      validateAddress(customer_address) === 'Address is valid' &&
       blueberry === ''
     ) {
       sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
@@ -184,6 +193,11 @@ const OrderDetails = () => {
                 required
                 onChange={onChange}
               />
+              {validateName(customer_name) !== 'Name is valid' && (
+                <p className='text-red-700 text-xs italic'>
+                  Please provide a proper name
+                </p>
+              )}
             </div>
             <div className='mb-4'>
               <label className='block' htmlFor='phone'>
@@ -198,6 +212,11 @@ const OrderDetails = () => {
                 required
                 onChange={onChange}
               />
+              {validatePhone(customer_phone) !== 'Phone is valid' && (
+                <p className='text-red-700 text-xs italic'>
+                  Please provide a valid mobile number
+                </p>
+              )}
             </div>
             <div className='mb-4'>
               <label className='block' htmlFor='address'>
@@ -216,6 +235,11 @@ const OrderDetails = () => {
                 onChange={onChange}
                 rows='5'
               />
+              {validateAddress(customer_address) !== 'Address is valid' && (
+                <p className='text-red-700 text-xs italic'>
+                  Delivery location must be in Dhanmondi or Jhigatola
+                </p>
+              )}
             </div>
             <div className='mb-4'>
               <label className='block' htmlFor='additional_notes'>

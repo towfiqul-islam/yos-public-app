@@ -4,7 +4,7 @@ const connection = require('../startup/db');
 
 function getMedByTradeName(name) {
   return new Promise(function (resolve, reject) {
-    const sql = `SELECT * FROM medicines WHERE trade_name LIKE '%${name}%'`;
+    const sql = `SELECT * FROM medicines WHERE trade_name LIKE '%${name}%' LIMIT 10`;
 
     connection.query(sql, (err, results) => {
       if (err) throw err;

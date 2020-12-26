@@ -8,6 +8,7 @@ import MobileSearchOverlay from './MobileSearchOverlay';
 
 import SecondaryNav from './SecondaryNav';
 import Footer from './Footer';
+import {validateAddress, validateName, validatePhone} from '../utils';
 
 const OrderByPrescription = () => {
   const appContext = useContext(AppContext);
@@ -56,6 +57,9 @@ const OrderByPrescription = () => {
       customer_name !== '' &&
       customer_phone !== '' &&
       customer_address !== '' &&
+      validateName(customer_name) === 'Name is valid' &&
+      validatePhone(customer_phone) === 'Phone is valid' &&
+      validateAddress(customer_address) === 'Address is valid' &&
       blueberry === ''
     ) {
       sessionStorage.setItem('orderInfo', JSON.stringify({orderDetails}));
@@ -227,6 +231,11 @@ const OrderByPrescription = () => {
                 value={customer_name}
                 onChange={onChange}
               />
+              {validateName(customer_name) !== 'Name is valid' && (
+                <p className='text-red-700 text-xs italic'>
+                  Please provide a proper name
+                </p>
+              )}
             </div>
             <div className='mb-4'>
               <label className='block' htmlFor='phone'>
@@ -240,6 +249,11 @@ const OrderByPrescription = () => {
                 value={customer_phone}
                 onChange={onChange}
               />
+              {validatePhone(customer_phone) !== 'Phone is valid' && (
+                <p className='text-red-700 text-xs italic'>
+                  Please provide a valid mobile number
+                </p>
+              )}
             </div>
             <div className='mb-4'>
               <label className='block' htmlFor='address'>
@@ -257,6 +271,11 @@ const OrderByPrescription = () => {
                 onChange={onChange}
                 rows='5'
               />
+              {validateAddress(customer_address) !== 'Address is valid' && (
+                <p className='text-red-700 text-xs italic'>
+                  Delivery location must be in Dhanmondi or Jhigatola
+                </p>
+              )}
             </div>
 
             <input
