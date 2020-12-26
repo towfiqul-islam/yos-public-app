@@ -182,8 +182,13 @@ const SecondaryNav = () => {
         </div>
         {/* Mobile search toggle */}
         <div
-          onClick={() => toggleMobileSearch(!isMobileSearchOpen)}
-          className='md:hidden ml-6 border border-gray-500 w-8 h-8 flex items-center justify-center rounded-full'
+          onClick={() =>
+            checkPath(router.pathname) &&
+            toggleMobileSearch(!isMobileSearchOpen)
+          }
+          className={`md:hidden ml-6 border border-gray-500 w-8 h-8 flex items-center justify-center rounded-full ${
+            !checkPath(router.pathname) && 'opacity-25'
+          }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'

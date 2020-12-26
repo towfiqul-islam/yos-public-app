@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import AppContext from '../context/appContext';
 import Footer from './Footer';
 
@@ -12,6 +12,15 @@ const About = () => {
 
     isMobileSearchOpen,
   } = appContext;
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
