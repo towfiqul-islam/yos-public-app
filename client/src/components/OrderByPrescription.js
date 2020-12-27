@@ -12,7 +12,13 @@ import {validateAddress, validateName, validatePhone} from '../utils';
 
 const OrderByPrescription = () => {
   const appContext = useContext(AppContext);
-  const {isMobileSearchOpen, isCartOpen, isAlertOpen, setAlert} = appContext;
+  const {
+    isMobileSearchOpen,
+    isCartOpen,
+    isAlertOpen,
+    setAlert,
+    addToCart,
+  } = appContext;
   const [file, setFile] = useState('');
   const [orderDetails, setOrderDetails] = useState({
     customer_name: '',
@@ -76,6 +82,13 @@ const OrderByPrescription = () => {
     sessionStorage.setItem('orderInfo', JSON.stringify({orderDetails}));
   };
   useEffect(() => {
+    localStorage.removeItem('carts');
+    addToCart([]);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
     const orderInfos = JSON.parse(sessionStorage.getItem('orderInfo'));
 
     if (orderInfos !== null) {

@@ -94,7 +94,8 @@ const SecondaryItemCard = ({med, inCart}) => {
             </button>
             {inCart ? (
               <input
-                className='text-center h-8 focus:outline-none'
+                style={{width: '50px'}}
+                className='text-center w-16 h-8 focus:outline-none'
                 type='number'
                 min='1'
                 max='100'
@@ -106,7 +107,7 @@ const SecondaryItemCard = ({med, inCart}) => {
               />
             ) : (
               <input
-                className='text-center h-8'
+                className='text-center h-8 w-16'
                 type='number'
                 min='1'
                 max='100'

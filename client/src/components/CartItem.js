@@ -155,7 +155,7 @@ const CartItem = ({cart, index}) => {
                 -
               </button>
               <input
-                className='text-center  h-8'
+                className='text-center w-16 h-8'
                 type='number'
                 min='1'
                 max='100'

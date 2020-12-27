@@ -72,6 +72,11 @@ const MedicineDetails = () => {
     setPrice(res.data.data.unit_price);
   }
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
     getMedicineDetails(id);
 
     // eslint-disable-next-line

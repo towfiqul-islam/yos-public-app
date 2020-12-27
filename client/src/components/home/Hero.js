@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <div className=''>
       <div
-        className='hidden sm:block'
+        className='hidden md:block'
         style={{
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -37,7 +37,7 @@ const Hero = () => {
           </p>
           <button
             onClick={() => history.push('/order-by-prescription')}
-            className='px-10 py-4 mt-8 text-lg tracking-wider font-medium bg-yellow-500 text-black uppercase shadow-xl rounded'
+            className='px-10 py-4 mt-8 text-lg tracking-wider font-semibold bg-yellow-500 text-black uppercase shadow-xl rounded'
           >
             Upload prescription
           </button>
@@ -45,7 +45,7 @@ const Hero = () => {
       </div>
       {/* Mobile Hero */}
       <div
-        className='block sm:hidden'
+        className='block md:hidden'
         style={{
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -57,26 +57,26 @@ const Hero = () => {
       >
         <div
           style={{
-            top: '50%',
+            top: '40%',
             left: '0%',
-            transform: 'translate(0%, -50%)',
+            transform: 'translate(-0%, -30%)',
             color: 'white',
           }}
           className='text-center absolute'
         >
-          <h1 className='text-4xl text-black font-bold'>
+          <h1 className='text-3xl text-black font-bold'>
             Pharmacy at your doorstep
           </h1>
-          <p className='text-xl text-gray-900  w-11/12 text-center mx-auto mt-4 leading-8'>
+          <p className='text-lg text-gray-900  w-11/12 text-center mx-auto mt-4 leading-8'>
             Search and order any medicine from us and get it delivered at your
             doorstep in less than 3 hours.
           </p>
-          <p className='text-lg text-black w-11/12 font-semibold  mx-auto mt-20'>
+          <p className='text-base text-black w-11/12   mx-auto mt-10'>
             Or just upload the prescription and we'll fill the order for you.
           </p>
           <button
             onClick={() => history.push('/order-by-prescription')}
-            className='px-8 py-4 mt-8 text tracking-wider font-medium bg-yellow-500 text-black uppercase shadow-xl rounded'
+            className='px-8 py-4 mt-8 text font-medium bg-yellow-500 text-black shadow-xl rounded'
           >
             Upload prescription
           </button>

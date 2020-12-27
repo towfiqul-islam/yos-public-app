@@ -15,8 +15,10 @@ import {
   validatePhone,
 } from '../utils';
 import Footer from './Footer';
+import OrderDetailsCart from './OrderDetailsCart';
 
 const OrderDetails = () => {
+  const [showItems, setShowItems] = useState(false);
   const appContext = useContext(AppContext);
   const {
     isMobileSearchOpen,
@@ -109,6 +111,11 @@ const OrderDetails = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
     if (!storedCarts || storedCarts.length < 1) {
       history.push('/');
@@ -160,10 +167,47 @@ const OrderDetails = () => {
             </div>
           )}
           {/* Show Alert */}
-          <h2 className='text-center font-semibold text-gray-600 sm:text-2xl text-lg mt-10'>
-            You have {carts.length === 1 ? '1 item' : `${carts.length} items`}{' '}
-            in your Cart
-          </h2>
+          <div className='flex items-center justify-center mt-10'>
+            <h2
+              onClick={() => setShowItems(!showItems)}
+              className='text-center font-normal text-gray-800 text-base sm:text-lg mr-2 cursor-pointer'
+            >
+              You have {carts.length === 1 ? '1 item' : `${carts.length} items`}{' '}
+              in your Cart
+            </h2>
+            {showItems ? (
+              <span
+                className='cursor-pointer'
+                onClick={() => setShowItems(!showItems)}
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  width='24'
+                >
+                  <path d='M0 0h24v24H0V0z' fill='none' />
+                  <path d='M7 14l5-5 5 5H7z' />
+                </svg>
+              </span>
+            ) : (
+              <span
+                className='cursor-pointer'
+                onClick={() => setShowItems(!showItems)}
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  width='24'
+                >
+                  <path d='M0 0h24v24H0V0z' fill='none' />
+                  <path d='M7 10l5 5 5-5H7z' />
+                </svg>
+              </span>
+            )}
+          </div>
+          {showItems && <OrderDetailsCart carts={carts} />}
           <div className='flex justify-center items-center  mt-4 sm:w-3/4 w-11/12 sm:mx-auto'>
             <h3 className='font-medium text-lg sm:text-xl text-gray-800'>
               Total amount

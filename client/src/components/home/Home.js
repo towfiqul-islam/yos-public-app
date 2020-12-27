@@ -20,10 +20,10 @@ const Home = () => {
 
   return (
     <>
-      <div className={isMobileSearchOpen ? 'block sm:hidden' : 'hidden'}>
+      <div className={isMobileSearchOpen ? 'block md:hidden' : 'hidden'}>
         <MobileSearchOverlay />
       </div>
-      <div className={isMobileSearchOpen ? 'hidden sm:block' : 'block'}>
+      <div className={isMobileSearchOpen ? 'hidden md:block' : 'block'}>
         <SecondaryNav />
         <div
           style={{
