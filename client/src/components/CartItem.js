@@ -23,7 +23,7 @@ const CartItem = ({cart, index}) => {
     }
   };
   const onChange = e => {
-    if (!e.target.value) {
+    if (!e.target.value || parseInt(e.target.value) === 0) {
       setQty(1);
       cart.price = cart.unit_price;
       cart.quantity = 1;

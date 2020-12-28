@@ -209,16 +209,23 @@ const OrderDetails = () => {
           </div>
           {showItems && <OrderDetailsCart carts={carts} />}
           <div className='flex justify-center items-center  mt-4 sm:w-3/4 w-11/12 sm:mx-auto'>
-            <h3 className='font-medium text-lg sm:text-xl text-gray-800'>
-              Total amount
+            <h3 className='font-medium text-sm sm:text-xl text-gray-800'>
+              Total
             </h3>
 
-            <h3 className='font-bold text-lg sm:text-2xl ml-10 bg-gray-900 text-gray-100 px-2 py-1 rounded'>
+            <h3 className='font-bold text-base sm:text-2xl sm:ml-5 ml-2 bg-gray-900 text-gray-100 sm:px-2 px-1 py-1 rounded'>
               {Math.round(
                 (calculatePriceWithDiscount(cartValue) + Number.EPSILON) * 100,
               ) / 100}{' '}
-              Tk
+              Tk{' '}
             </h3>
+            <span className='sm:text-base text-sm  text-gray-600 line-through inline-block ml-2'>
+              {' '}
+              {Math.round((cartValue + Number.EPSILON) * 100) / 100} Tk
+            </span>
+            <span className='bg-yellow-400 sm:px-2 px-1 py-1 rounded sm:text-sm text-xs ml-2'>
+              Save {discount}%
+            </span>
           </div>
           <div className='mx-auto sm:w-3/4'>
             <h2 className='border-b-2 pb-2 font-bold border-gray-900 text-gray-700  inline-block mt-12 mb-6 '>

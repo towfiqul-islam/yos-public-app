@@ -10,7 +10,7 @@ const SecondaryItemCard = ({med, inCart}) => {
   const [price, setPrice] = useState(med.unit_price);
 
   const onChange = e => {
-    if (!e.target.value) {
+    if (!e.target.value || parseInt(e.target.value) === 0) {
       setQty(1);
 
       setPrice(med.unit_price);

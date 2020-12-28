@@ -83,6 +83,7 @@ const OrderByPrescription = () => {
   };
   useEffect(() => {
     localStorage.removeItem('carts');
+    // sessionStorage.removeItem('orderInfo');
     addToCart([]);
     window.scrollTo({
       top: 0,
@@ -96,6 +97,9 @@ const OrderByPrescription = () => {
 
       setOrderDetails({
         ...orderDetails,
+        total_amount: 0,
+        discount_percentage: 0,
+        amount_after_discount: 0,
       });
     }
 
