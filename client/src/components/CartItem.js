@@ -107,8 +107,8 @@ const CartItem = ({cart, index}) => {
       <div className='m-auto flex justify-center mt-2 '>
         <div className='  border-b border-gray-300 px-4 py-3  w-11/12 '>
           <h1 className='font-semibold sm:text-lg text-base mb-1'>
-            {cart !== undefined && cart.trade_name}{' '}
-            {cart !== undefined && cart.medicine_type}
+            {cart !== undefined && cart.trade_name}
+
             {cart.over_the_counter === 'no' && (
               <span className='ml-1 border border-gray-400 px-2 rounded font-normal text-base'>
                 {cart.over_the_counter === 'no' && 'Rx'}
@@ -116,7 +116,7 @@ const CartItem = ({cart, index}) => {
             )}
           </h1>
           <p className='mb-2 text-gray-700'>
-            {cart !== undefined && cart.generic_name}
+            {cart !== undefined && cart.medicine_type}
           </p>
           <p className='mb-2 text-gray-700'>
             By {cart !== undefined && cart.company_name}

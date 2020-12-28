@@ -55,8 +55,8 @@ const SecondaryItemCard = ({med, inCart}) => {
           href={`/medicine-details/${med.trade_name}/${med.medicine_id}`}
           className='font-semibold sm:text-lg mb-1'
         >
-          {med !== undefined && med.trade_name}{' '}
-          {med !== undefined && med.medicine_type}
+          {med !== undefined && med.trade_name}
+
           {med.over_the_counter === 'no' && (
             <span className='ml-2 border border-gray-400 px-2 rounded font-normal text-base'>
               {med.over_the_counter === 'no' && 'Rx'}
@@ -64,7 +64,7 @@ const SecondaryItemCard = ({med, inCart}) => {
           )}
         </a>
         <p className='mb-1 text-gray-700'>
-          {med !== undefined && med.generic_name}
+          {med !== undefined && med.medicine_type}
         </p>
         <p className='mb-2 text-gray-700'>
           By {med !== undefined && med.company_name}
