@@ -52,7 +52,7 @@ const SecondaryItemCard = ({med, inCart}) => {
     <div>
       <div className='bg-gray-100 border-t border-gray-300 px-4 py-4'>
         <a
-          href={`/medicine-details/${med.trade_name}/${med.medicine_id}`}
+          href={`/medicine-details/${med.medicine_id}`}
           className='font-semibold sm:text-lg mb-1'
         >
           {med !== undefined && med.trade_name}

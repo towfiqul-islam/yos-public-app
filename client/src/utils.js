@@ -69,3 +69,17 @@ export function validateAddress(address) {
     return 'Address is valid';
   else return 'Address is invalid';
 }
+
+export const getPageNumbers = total_count => {
+  const total = parseInt(total_count);
+  let divider = total / 10;
+  divider = Math.ceil(divider);
+
+  const pageNumber = [];
+
+  for (let i = 1; i <= divider; i++) {
+    pageNumber.push(i);
+  }
+
+  return pageNumber;
+};

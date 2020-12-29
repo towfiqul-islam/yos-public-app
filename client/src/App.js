@@ -12,6 +12,7 @@ import MedicineDetails from './components/MedicineDetails';
 import AboutUs from './components/AboutUs';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
+import Browse from './components/browse_medicines/Browse';
 
 function App() {
   return (
@@ -23,7 +24,12 @@ function App() {
             <Route exact path='/order-details' component={OrderDetails} />
             <Route
               exact
-              path='/medicine-details/:name/:id'
+              path='/browse-medicines/page/:page'
+              component={Browse}
+            />
+            <Route
+              exact
+              path='/medicine-details/:id'
               component={MedicineDetails}
             />
             <Route

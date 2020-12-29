@@ -11,6 +11,7 @@ import {
   onAddToCart,
 } from '../utils';
 import Footer from './Footer';
+import DetailsSkeleton from './DetailsSkeleton';
 
 const MedicineDetails = () => {
   const {id} = useParams();
@@ -90,116 +91,121 @@ const MedicineDetails = () => {
         <SecondaryNav />
         <div
           style={{
-            height: isCartOpen ? '60vh' : '60vh',
+            height: '88vh',
             overflowY: isCartOpen && 'hidden',
           }}
           className='sm:w-3/4 w-11/12 mx-auto'
         >
-          <div className='mt-12 flex flex-wrap  mx-auto'>
-            <img
-              width='300'
-              height='250'
-              style={{
-                width: '300px',
-                height: '250px',
-              }}
-              className='rounded shadow sm:mr-8 object-fit object-center'
-              src={
-                med.image !== ''
-                  ? med.image
-                  : 'https://www.pharmamirror.com/wp-content/themes/fox/images/placeholder.jpg'
-              }
-              alt={med.image !== '' ? med.trade_name : 'placeholder'}
-            />
-            <div className='mt-8 sm:mt-0'>
-              <h2 className='font-semibold text-gray-800 text-2xl'>
-                {med !== undefined && med.trade_name}{' '}
-                {med !== undefined && med.medicine_type}
-                {med.over_the_counter === 'no' && (
-                  <span className='ml-2 border border-gray-400 px-2 rounded font-normal text-base'>
-                    {med.over_the_counter === 'no' && 'Rx'}
-                  </span>
-                )}
-              </h2>
-              <p className='mb-1 text-gray-700 text-lg'>
-                {med !== undefined && med.generic_name}
-              </p>
-              <p className='mb-2 text-gray-700'>
-                By {med !== undefined && med.company_name}
-              </p>
-
-              <div className='mb-4'>
-                <span className='font-medium text-xl text-gray-800'>
-                  {Math.round(
-                    (calculatePriceWithDiscount(price) + Number.EPSILON) * 100,
-                  ) / 100}{' '}
-                  Tk
-                </span>
-                <span className='text-sm text-gray-600 line-through ml-2'>
-                  {Math.round((price + Number.EPSILON) * 100) / 100} Tk
-                </span>
-                <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
-                  Save {discount}%
-                </span>
-              </div>
-              <div className='flex items-center'>
-                <div className='flex items-center'>
-                  <p className='mb-1  mr-4'>Quantity</p>
-                  <button
-                    onClick={() => onQuantityClick('dec')}
-                    className='w-8 h-8 font-bold bg-gray-300 px-2'
-                  >
-                    -
-                  </button>
-                  {checkCarts(med, carts) ? (
-                    <input
-                      className='text-center w-16 h-8 focus:outline-none'
-                      type='number'
-                      min='1'
-                      max='100'
-                      step='1'
-                      placeholder='Qty'
-                      readOnly
-                      name='qty'
-                      value={qty}
-                    />
-                  ) : (
-                    <input
-                      className='text-center w-16 h-8'
-                      type='number'
-                      min='1'
-                      max='100'
-                      step='1'
-                      placeholder='Qty'
-                      value={!qty ? 1 : qty}
-                      name='qty'
-                      onChange={onChange}
-                    />
+          {Object.keys(med).length === 0 ? (
+            <DetailsSkeleton />
+          ) : (
+            <div className='mt-12 flex flex-wrap  mx-auto'>
+              <img
+                width='300'
+                height='250'
+                style={{
+                  width: '300px',
+                  height: '250px',
+                }}
+                className='rounded shadow sm:mr-8 object-fit object-center'
+                src={
+                  med.image !== ''
+                    ? med.image
+                    : 'https://www.pharmamirror.com/wp-content/themes/fox/images/placeholder.jpg'
+                }
+                alt={med.image !== '' ? med.trade_name : 'placeholder'}
+              />
+              <div className='mt-8 sm:mt-0'>
+                <h2 className='font-semibold text-gray-800 text-2xl'>
+                  {med !== undefined && med.trade_name}{' '}
+                  {med !== undefined && med.medicine_type}
+                  {med.over_the_counter === 'no' && (
+                    <span className='ml-2 border border-gray-400 px-2 rounded font-normal text-base'>
+                      {med.over_the_counter === 'no' && 'Rx'}
+                    </span>
                   )}
+                </h2>
+                <p className='mb-1 text-gray-700 text-lg'>
+                  {med !== undefined && med.generic_name}
+                </p>
+                <p className='mb-2 text-gray-700'>
+                  By {med !== undefined && med.company_name}
+                </p>
 
-                  <button
-                    onClick={() => onQuantityClick('inc')}
-                    className='w-8 h-8 font-bold bg-gray-300 px-2'
-                  >
-                    +
-                  </button>
+                <div className='mb-4'>
+                  <span className='font-medium text-xl text-gray-800'>
+                    {Math.round(
+                      (calculatePriceWithDiscount(price) + Number.EPSILON) *
+                        100,
+                    ) / 100}{' '}
+                    Tk
+                  </span>
+                  <span className='text-sm text-gray-600 line-through ml-2'>
+                    {Math.round((price + Number.EPSILON) * 100) / 100} Tk
+                  </span>
+                  <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
+                    Save {discount}%
+                  </span>
                 </div>
+                <div className='flex items-center'>
+                  <div className='flex items-center'>
+                    <p className='mb-1  mr-4'>Quantity</p>
+                    <button
+                      onClick={() => onQuantityClick('dec')}
+                      className='w-8 h-8 font-bold bg-gray-300 px-2'
+                    >
+                      -
+                    </button>
+                    {checkCarts(med, carts) ? (
+                      <input
+                        className='text-center w-16 h-8 focus:outline-none'
+                        type='number'
+                        min='1'
+                        max='100'
+                        step='1'
+                        placeholder='Qty'
+                        readOnly
+                        name='qty'
+                        value={qty}
+                      />
+                    ) : (
+                      <input
+                        className='text-center w-16 h-8'
+                        type='number'
+                        min='1'
+                        max='100'
+                        step='1'
+                        placeholder='Qty'
+                        value={!qty ? 1 : qty}
+                        name='qty'
+                        onChange={onChange}
+                      />
+                    )}
+
+                    <button
+                      onClick={() => onQuantityClick('inc')}
+                      className='w-8 h-8 font-bold bg-gray-300 px-2'
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    !checkCarts(med, carts) &&
+                    onAddToCart(med, carts, addToCart, calculateCartValue, qty)
+                  }
+                  className={
+                    !checkCarts(med, carts)
+                      ? ' bg-gray-900 text-gray-100 px-8 py-2 rounded text-sm mt-4 inline-block'
+                      : ' bg-gray-300 text-gray-600 px-12 py-2 rounded text-sm cursor-default focus:outline-none mt-4 inline-block'
+                  }
+                >
+                  {checkCarts(med, carts) ? 'In Cart' : 'Add To Cart'}
+                </button>
               </div>
-              <button
-                onClick={() =>
-                  !checkCarts(med, carts) &&
-                  onAddToCart(med, carts, addToCart, calculateCartValue, qty)
-                }
-                className={
-                  !checkCarts(med, carts)
-                    ? ' bg-gray-900 text-gray-100 px-8 py-2 rounded text-sm mt-4 inline-block'
-                    : ' bg-gray-300 text-gray-600 px-12 py-2 rounded text-sm cursor-default focus:outline-none mt-4 inline-block'
-                }
-              >
-                {checkCarts(med, carts) ? 'In Cart' : 'Add To Cart'}
-              </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
       {/* <div style={{height: '200px'}} className='w-full'></div> */}

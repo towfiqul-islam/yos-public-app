@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import AppContext from '../context/appContext';
 import history from '../history';
-import {useLocation} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import Cart from './Cart';
 
 import SecondaryItemCard from './SecondaryItemCard';
@@ -85,7 +85,7 @@ const SecondaryNav = () => {
               history.push('/');
               toggleMobileMenu(false);
             }}
-            className=' font-bold md:text-4xl text-xl cursor-pointer'
+            className=' font-bold md:text-4xl text-xl cursor-pointer sm:mr-12 mr-4'
           >
             YOS
           </h1>
@@ -93,8 +93,8 @@ const SecondaryNav = () => {
         <div
           className={
             checkPath(router.pathname)
-              ? 'md:flex relative flex-grow items-center justify-center z-30  hidden'
-              : 'md:flex relative flex-grow items-center justify-center z-30  hidden opacity-50'
+              ? 'md:flex relative  items-center justify-center z-30  hidden'
+              : 'md:flex relative  items-center justify-center z-30  hidden opacity-50'
           }
         >
           <span className='block bg-white pl-4 py-3 border-l border-t border-b border-gray-500'>
@@ -148,6 +148,12 @@ const SecondaryNav = () => {
               </div>
             )}
         </div>
+        <Link
+          to='/browse-medicines/page/1'
+          className=' sm:text-lg sm:mx-12 mr-4 '
+        >
+          Browse Meds
+        </Link>
         <div
           onClick={() => {
             if (checkPath(router.pathname)) {
@@ -179,7 +185,7 @@ const SecondaryNav = () => {
               <path d='M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z' />
             </svg>
           </span>
-          <span className='font-semibold text-lg ml-2 hidden md:block '>
+          <span className='font-normal text-lg ml-2 hidden md:block '>
             Cart
           </span>
         </div>
@@ -212,8 +218,8 @@ const SecondaryNav = () => {
             }}
             className={
               router.pathname === '/order-by-prescription'
-                ? 'bg-gray-500 text-gray-300 rounded px-6 py-2 cursor-default focus:outline-none'
-                : 'border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-gray-100 rounded px-6 py-2'
+                ? 'bg-gray-500 text-gray-300 rounded px-2 py-1 cursor-default focus:outline-none'
+                : 'border-2 border-gray-900 text-gray-900  hover:bg-gray-900 hover:text-gray-100 rounded px-2 py-1'
             }
           >
             Order by prescription
@@ -227,7 +233,7 @@ const SecondaryNav = () => {
           <div className='pb-2 '>
             <button
               onClick={() => history.push('/order-by-prescription')}
-              className='border-2 border-gray-900 text-gray-900 font-medium px-4 py-2 block w-3/4 mx-auto rounded'
+              className='border-2 border-gray-900 text-gray-900 w-3/4 px-2 py-1 block mx-auto rounded'
             >
               Order by prescription
             </button>
