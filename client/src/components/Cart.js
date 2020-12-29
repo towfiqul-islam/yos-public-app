@@ -20,7 +20,7 @@ const Cart = () => {
   return (
     <div>
       <div
-        className={`sm:w-1/3 w-full  h-full bg-gray-100 top-0 right-0  fixed z-50 transition duration-300 transform ${
+        className={`md:w-1/3 w-full  h-full bg-gray-100 top-0 right-0  fixed z-50 transition duration-300 transform ${
           isCartOpen ? 'translate-x-0' : 'translate-x-full'
         } shadow-lg overflow-y-auto`}
       >

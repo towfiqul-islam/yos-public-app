@@ -24,7 +24,7 @@ const MobileSearchOverlay = () => {
   } = appContext;
   const onChange = async e => {
     onSearch(e.target.value);
-    if (search.length >= 2) {
+    if (search.length >= 2 && search.length <= 20) {
       const res = await axios.get(`/api/medicines/search/${search}`);
       fillSearchResults(res.data.data);
     }

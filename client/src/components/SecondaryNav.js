@@ -30,7 +30,7 @@ const SecondaryNav = () => {
 
   const onChange = async e => {
     onSearch(e.target.value);
-    if (search.length >= 2) {
+    if (search.length >= 2 && search.length <= 20) {
       const res = await axios.get(`/api/medicines/search/${search}`);
       fillSearchResults(res.data.data);
     }
@@ -140,7 +140,10 @@ const SecondaryNav = () => {
                   />
                 ))}
                 <p className='bg-gray-100 text-center p-2  pb-2 text-sm border-t border-gray-500'>
-                  Found {searchResults.length} results
+                  Found{' '}
+                  {searchResults.length === 1
+                    ? '1 result'
+                    : `${searchResults.length} results`}
                 </p>
               </div>
             )}

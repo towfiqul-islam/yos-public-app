@@ -28,7 +28,7 @@ const MedicineDetails = () => {
   const [price, setPrice] = useState(med.unit_price);
 
   const onChange = e => {
-    if (!e.target.value) {
+    if (!e.target.value || parseInt(e.target.value) === 0) {
       setQty(1);
 
       setPrice(med.unit_price);
@@ -90,7 +90,7 @@ const MedicineDetails = () => {
         <SecondaryNav />
         <div
           style={{
-            maxHeight: isCartOpen && '88vh',
+            height: isCartOpen ? '60vh' : '60vh',
             overflowY: isCartOpen && 'hidden',
           }}
           className='sm:w-3/4 w-11/12 mx-auto'
@@ -153,7 +153,7 @@ const MedicineDetails = () => {
                   </button>
                   {checkCarts(med, carts) ? (
                     <input
-                      className='text-center h-8 focus:outline-none'
+                      className='text-center w-16 h-8 focus:outline-none'
                       type='number'
                       min='1'
                       max='100'
@@ -165,7 +165,7 @@ const MedicineDetails = () => {
                     />
                   ) : (
                     <input
-                      className='text-center h-8'
+                      className='text-center w-16 h-8'
                       type='number'
                       min='1'
                       max='100'
@@ -202,7 +202,7 @@ const MedicineDetails = () => {
           </div>
         </div>
       </div>
-      <div className='w-full h-40'></div>
+      {/* <div style={{height: '200px'}} className='w-full'></div> */}
       <Footer />
     </>
   );
