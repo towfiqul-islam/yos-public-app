@@ -1,7 +1,7 @@
 import React from 'react';
 // import '../../../skeleton.css';
 import '../../skeleton.css';
-const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 const MobileSkeleton = () => {
   return (
     <div className='sm:hidden block'>

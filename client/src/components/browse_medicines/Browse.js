@@ -42,9 +42,10 @@ const alphabets = [
 ];
 
 const Browse = () => {
+  const arr = [];
   const {page} = useParams();
-  const [data, setData] = useState([]);
-  const [count, setCount] = useState([]);
+  const [data, setData] = useState(arr);
+  const [count, setCount] = useState(0);
   const [filterVal, setFilterVal] = useState('');
   const appContext = useContext(AppContext);
   const {isMobileSearchOpen, isCartOpen, carts} = appContext;
@@ -53,6 +54,7 @@ const Browse = () => {
     const res = await axios.get(`/api/medicines/browse_medicines/${page}`);
     setCount(get_count.data.total_count);
     setData(res.data);
+    // console.log(res.data);
   }
   const page_numbers = getPageNumbers(count);
   const onPageClick = page => {
@@ -71,7 +73,7 @@ const Browse = () => {
     );
     const count = await axios.get(`/api/medicines/total_count_by_letter/${al}`);
     setData(res.data);
-    // console.log(res.data);
+    // console.log(data);
     setCount(count.data.total_count);
   };
   useEffect(() => {
@@ -130,7 +132,7 @@ const Browse = () => {
               </p>
             </div>
           </div>
-          {data.length > 0 ? (
+          {Array.isArray(data) === true && data.length > 0 ? (
             <>
               <div className='mb-4'>
                 <p className='border-gray-400 border-b inline-block pb-1 text-sm sm:text-base'>
@@ -138,16 +140,14 @@ const Browse = () => {
                 </p>
               </div>
               <div className='flex flex-wrap gap-8'>
-                {data !== undefined &&
-                  data.length > 0 &&
-                  data.map(med => (
-                    <div key={med.medicine_id}>
-                      <Card med={med} inCart={checkCarts(med, carts)} />
-                      <MobileCard med={med} inCart={checkCarts(med, carts)} />
-                    </div>
-                  ))}
+                {data.map(med => (
+                  <div key={med.medicine_id}>
+                    <Card med={med} inCart={checkCarts(med, carts)} />
+                    <MobileCard med={med} inCart={checkCarts(med, carts)} />
+                  </div>
+                ))}
               </div>
-              {data !== undefined && data.length > 0 && (
+              {
                 <div className='mt-12'>
                   <p className='text-center mb-4 text-sm text-gray-600'>
                     Page {parseInt(page)} of {page_numbers.length}.
@@ -175,7 +175,7 @@ const Browse = () => {
                     </button>
                   </div>
                 </div>
-              )}
+              }
             </>
           ) : (
             <>
