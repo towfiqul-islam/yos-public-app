@@ -118,7 +118,7 @@ router.post('/guest_order_mail', async (req, res) => {
                   <a style="margin-top: 10px; display: inline-block; background: black; padding: 8px 12px; color: white; border-radius: 4px; text-align: center; text-decoration: none;" href='${
                     process.env.NODE_ENV === 'testing'
                       ? 'http://localhost:3001'
-                      : 'https://admin-stage.yos.com.bd'
+                      : 'https://admin.yos.com.bd'
                   }/update-order/${req.body.order_id}'>Update order</a>
                   </div>
                 `,
