@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import AppContext from '../context/appContext';
 import MobileSearchOverlay from './MobileSearchOverlay';
 import SecondaryNav from './SecondaryNav';
@@ -96,10 +96,22 @@ const MedicineDetails = () => {
           }}
           className='sm:w-3/4 w-11/12 mx-auto'
         >
+          <div className='mt-4  bg-gray-200 px-2 py-1 rounded inline-block'>
+            {/* <svg
+              xmlns='http://www.w3.org/2000/svg'
+              height='20'
+              viewBox='0 0 24 24'
+              width='20'
+            >
+              <path d='M0 0h24v24H0V0z' fill='none' />
+              <path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' />
+            </svg> */}
+            <Link to='/browse-medicines/page/1'>Back to browse</Link>
+          </div>
           {Object.keys(med).length === 0 ? (
             <DetailsSkeleton />
           ) : (
-            <div className='mt-12 flex flex-wrap  mx-auto'>
+            <div className='mt-6 flex flex-wrap  mx-auto'>
               <img
                 width='300'
                 height='250'

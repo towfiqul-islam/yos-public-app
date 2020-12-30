@@ -264,8 +264,9 @@ const OrderDetails = () => {
                 onChange={onChange}
               />
               {validatePhone(customer_phone) !== 'Phone is valid' && (
-                <p className='text-red-700 text-xs italic'>
-                  Please provide a valid mobile number
+                <p className='text-red-700 text-xs italic w-11/12'>
+                  Please provide a valid mobile number (e.g. +88017XXXXXXXX,
+                  88017XXXXXXXX, 017XXXXXXXX)
                 </p>
               )}
             </div>

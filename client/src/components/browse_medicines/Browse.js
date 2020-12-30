@@ -66,7 +66,10 @@ const Browse = () => {
     }
   };
   const onFilter = async al => {
+    setData([]);
     setFilterVal(al);
+
+    history.push('/browse-medicines/page/1');
 
     const res = await axios.get(
       `/api/medicines/browse_medicines_by_letter/${al}/${page}`,
@@ -79,14 +82,16 @@ const Browse = () => {
   useEffect(() => {
     if (filterVal !== '') {
       onFilter(filterVal);
+      history.push(`/browse-medicines/page/${page}`);
     } else {
+      setData([]);
       getMeds();
     }
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'auto',
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   left: 0,
+    //   behavior: 'auto',
+    // });
     // eslint-disable-next-line
   }, [page]);
   return (
@@ -136,10 +141,11 @@ const Browse = () => {
             <>
               <div className='mb-4'>
                 <p className='border-gray-400 border-b inline-block pb-1 text-sm sm:text-base'>
-                  Showing {page} - {page * 10} of {count} medicines
+                  Showing {page} - {count < page * 10 ? count : page * 10} of{' '}
+                  {count} medicines
                 </p>
               </div>
-              <div className='flex flex-wrap gap-8'>
+              <div className='flex flex-wrap gap-8 '>
                 {data.map(med => (
                   <div key={med.medicine_id}>
                     <Card med={med} inCart={checkCarts(med, carts)} />
@@ -159,7 +165,7 @@ const Browse = () => {
                           onPageClick(parseInt(page) - 1);
                         }
                       }}
-                      className='bg-gray-400 rounded px-2 py-1 mr-4'
+                      className='bg-gray-200 border border-gray-400 rounded px-2 py-1 mr-4 text-sm'
                     >
                       Previous
                     </button>
@@ -169,7 +175,7 @@ const Browse = () => {
                           onPageClick(parseInt(page) + 1);
                         }
                       }}
-                      className='bg-gray-400 rounded px-2 py-1'
+                      className='bg-gray-200 border border-gray-400 rounded px-2 py-1 text-sm'
                     >
                       Next
                     </button>

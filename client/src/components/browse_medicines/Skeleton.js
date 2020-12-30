@@ -14,7 +14,7 @@ const Skeleton = () => {
           <div key={index} className=' mb-10 '>
             <div
               className='bg-gray-400 skeleton-box'
-              style={{width: '150px', height: '130px'}}
+              style={{width: '200px', height: '150px'}}
             ></div>
             <div className='bg-gray-400 w-4/5 h-3 mt-4 skeleton-box'></div>
             <div className='bg-gray-400 w-4/5 h-3 mt-4 skeleton-box'></div>

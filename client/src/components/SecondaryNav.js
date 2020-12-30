@@ -148,6 +148,7 @@ const SecondaryNav = () => {
               </div>
             )}
         </div>
+
         <Link
           to='/browse-medicines/page/1'
           className=' sm:text-lg sm:mx-12 mr-4 '
