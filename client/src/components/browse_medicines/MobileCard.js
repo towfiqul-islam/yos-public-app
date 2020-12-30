@@ -26,7 +26,7 @@ const MobileCard = ({med, inCart}) => {
           <h2 className='font-semibold text-sm mb-1' style={{width: '200px'}}>
             {med.trade_name}
           </h2>
-          <h2 className='text-xs mb-1' style={{width: '200px'}}>
+          <h2 className='text-xs mb-1 mr-1' style={{width: '200px'}}>
             By {med.company_name}
           </h2>
           <h2 className='text-sm font-medium mb-2'>

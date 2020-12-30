@@ -137,12 +137,12 @@ const MedicineDetails = () => {
                   {med !== undefined && med.trade_name}{' '}
                   {med !== undefined && med.medicine_type}
                   {med.over_the_counter === 'no' && (
-                    <span className='ml-2 border border-gray-400 px-2 rounded font-normal text-base'>
+                    <span className='ml-2 border border-gray-400 px-2 rounded font-normal text-base '>
                       {med.over_the_counter === 'no' && 'Rx'}
                     </span>
                   )}
                 </h2>
-                <p className='mb-1 text-gray-700 sm:text-lg text-sm'>
+                <p className='mb-2 text-gray-700 sm:text-lg text-sm'>
                   {med !== undefined && med.generic_name}
                 </p>
                 <p className='mb-2 text-gray-700 text-sm sm:text-base'>
@@ -157,10 +157,10 @@ const MedicineDetails = () => {
                     ) / 100}{' '}
                     Tk
                   </span>
-                  <span className='text-sm text-gray-600 line-through ml-2'>
+                  <span className='sm:text-sm text-xs text-gray-600 line-through ml-2'>
                     {Math.round((price + Number.EPSILON) * 100) / 100} Tk
                   </span>
-                  <span className='bg-yellow-400 px-2 py-1 rounded text-sm ml-2'>
+                  <span className='bg-yellow-400 px-2 py-1 rounded sm:text-sm text-xs ml-2'>
                     Save {discount}%
                   </span>
                 </div>
