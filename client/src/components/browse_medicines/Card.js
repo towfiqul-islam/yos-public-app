@@ -9,8 +9,8 @@ const Card = ({med, inCart}) => {
   return (
     <>
       <div
-        style={{width: '200px', height: '350px'}}
-        className='sm:block hidden  rounded shadow relative'
+        style={{width: '200px', height: '320px'}}
+        className='sm:block hidden   rounded shadow relative mb-4'
       >
         <img
           className='object-cover object-center'
@@ -26,13 +26,14 @@ const Card = ({med, inCart}) => {
           alt={med.trade_name}
         />
         <Link to={`/medicine-details/${med.medicine_id}`}>
-          <h2
-            className='font-semibold mb-2 mt-2 truncate px-2'
-            style={{width: '200px'}}
-          >
+          <h2 className='font-medium mb-2 mt-2 px-2' style={{width: '200px'}}>
             {med.trade_name}
           </h2>
-          <h2 className='mb-2 px-2' style={{width: '200px'}}>
+          <h2
+            title={med.company_name}
+            className='mb-2 px-2 truncate'
+            style={{width: '200px'}}
+          >
             By {med.company_name}
           </h2>
           <h2 className='mb-2 font-medium px-2'>
