@@ -35,10 +35,10 @@ const MobileCard = ({med, inCart}) => {
                 100,
             ) / 100}{' '}
             Tk{' '}
-            <span className='line-through text-gray-500 text-xs'>
+            <span className='line-through text-gray-500 text-xs mr-2 inline-block mb-1'>
               {Math.round((med.unit_price + Number.EPSILON) * 100) / 100} Tk
             </span>
-            <span className='text-xs bg-yellow-400 px-2 py-1 rounded ml-2'>
+            <span className='text-xs bg-yellow-400 px-2 py-1 rounded inline-block'>
               Save {discount}%
             </span>
           </h2>

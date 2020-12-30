@@ -91,10 +91,10 @@ const MedicineDetails = () => {
         <SecondaryNav />
         <div
           style={{
-            height: '88vh',
+            height: '95vh',
             overflowY: isCartOpen && 'hidden',
           }}
-          className='sm:w-3/4 w-11/12 mx-auto'
+          className='sm:w-3/4 w-11/12  mx-auto'
         >
           <div className='mt-4  bg-gray-200 px-2 py-1 rounded inline-block'>
             {/* <svg
@@ -106,7 +106,12 @@ const MedicineDetails = () => {
               <path d='M0 0h24v24H0V0z' fill='none' />
               <path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' />
             </svg> */}
-            <Link to='/browse-medicines/page/1'>Back to browse</Link>
+            <Link
+              className='sm:text-base text-sm'
+              to='/browse-medicines/page/1'
+            >
+              Back to browse
+            </Link>
           </div>
           {Object.keys(med).length === 0 ? (
             <DetailsSkeleton />
@@ -128,7 +133,7 @@ const MedicineDetails = () => {
                 alt={med.image !== '' ? med.trade_name : 'placeholder'}
               />
               <div className='mt-8 sm:mt-0'>
-                <h2 className='font-semibold text-gray-800 text-2xl'>
+                <h2 className='font-semibold text-gray-800 sm:text-2xl text-lg mb-2'>
                   {med !== undefined && med.trade_name}{' '}
                   {med !== undefined && med.medicine_type}
                   {med.over_the_counter === 'no' && (
@@ -137,15 +142,15 @@ const MedicineDetails = () => {
                     </span>
                   )}
                 </h2>
-                <p className='mb-1 text-gray-700 text-lg'>
+                <p className='mb-1 text-gray-700 sm:text-lg text-sm'>
                   {med !== undefined && med.generic_name}
                 </p>
-                <p className='mb-2 text-gray-700'>
+                <p className='mb-2 text-gray-700 text-sm sm:text-base'>
                   By {med !== undefined && med.company_name}
                 </p>
 
                 <div className='mb-4'>
-                  <span className='font-medium text-xl text-gray-800'>
+                  <span className='font-medium sm:text-xl text-lg text-gray-800'>
                     {Math.round(
                       (calculatePriceWithDiscount(price) + Number.EPSILON) *
                         100,
