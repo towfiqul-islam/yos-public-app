@@ -27,7 +27,7 @@ const OrderDetailsCart = ({carts}) => {
                 {item.quantity}
               </td>
               <td className='px-2 py-1 border  border-gray-300'>
-                {item.price}
+                {Math.round((item.price + Number.EPSILON) * 100) / 100}
               </td>
             </tr>
           ))}
