@@ -308,17 +308,17 @@ const OrderByPrescription = () => {
 
             {customer_prescription === '' && file !== '' ? (
               <div className='my-10 sm:w-2/3'>
-                <button className='bg-gray-500 text-gray-300 px-8 py-1 rounded flex items-center mx-auto'>
-                  Next <span className='text-2xl ml-2'>&#8594;</span>
+                <button className='bg-gray-500 text-gray-300 px-8 py-2 rounded flex items-center mx-auto'>
+                  Next <span className=' ml-2'>&#8594;</span>
                 </button>
               </div>
             ) : (
               <div className='my-10 sm:w-2/3'>
                 <button
                   onClick={onConfirmOrder}
-                  className='bg-gray-900 text-gray-100 px-8 py-1 rounded flex items-center mx-auto'
+                  className='bg-gray-900 text-gray-100 px-8 py-2 rounded flex items-center mx-auto'
                 >
-                  Next <span className='text-2xl ml-2'>&#8594;</span>
+                  Next <span className=' ml-2'>&#8594;</span>
                 </button>
               </div>
             )}

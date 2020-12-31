@@ -49,13 +49,11 @@ export const onAddToCart = (med, carts, addToCart, calculateCartValue, qty) => {
 };
 
 export function validateName(name) {
-  const name_regex = /^[a-zA-Z ][a-zA-Z ][a-zA-Z ]+$/g;
+  const name_regex = /^[a-zA-Z ]*[a-zA-Z]{3}[a-zA-Z ]*$/g;
   if (name_regex.test(name)) return 'Name is valid';
   else return 'Name is invalid';
 }
 export function validatePhone(phone) {
-  // const phone_regex = /^[0][1][3|4|5|6|7|8|9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/g;
-  // const phone_regex = /^[+]?[[8][8]]?[0][1][3|4|5|6|7|8|9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/g;
   const phone_regex = /^[+]?([8]{2})?[0][1][3|4|5|6|7|8|9][0-9]{8}$/g;
   if (phone_regex.test(phone)) return 'Phone is valid';
   else return 'Phone is invalid';

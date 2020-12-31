@@ -128,6 +128,7 @@ const Browse = () => {
               ))}
               <p
                 onClick={() => {
+                  setData([]);
                   getMeds();
                   setFilterVal('');
                 }}

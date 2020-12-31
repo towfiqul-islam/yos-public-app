@@ -12,7 +12,7 @@ const Services = () => {
           <div className='sm:flex sm:justify-center gap-12'>
             {' '}
             <div className='flex flex-wrap justify-center sm:w-1/4 w-11/12 mx-auto'>
-              <span className='flex justify-center items-center mt-10 bg-blue-100 rounded-full w-32 h-32'>
+              <span className='flex justify-center items-center mt-10 bg-blue-200 rounded-full w-32 h-32'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   height='48'
@@ -34,8 +34,8 @@ const Services = () => {
                 </div>
               </div>
             </div>
-            <div className='flex flex-wrap justify-center sm:w-1/4 w-11/12 mx-auto'>
-              <span className='flex justify-center items-center mt-10 bg-blue-100 rounded-full w-32 h-32'>
+            <div className='flex flex-wrap justify-center sm:w-1/4 w-2/3 mx-auto'>
+              <span className='flex justify-center items-center mt-10 bg-blue-200 rounded-full w-32 h-32'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   height='48'
@@ -56,8 +56,8 @@ const Services = () => {
                 </div>
               </div>
             </div>
-            <div className='flex flex-wrap justify-center sm:w-1/4'>
-              <span className='flex justify-center items-center mt-10 bg-blue-100 rounded-full w-32 h-32'>
+            <div className='flex flex-wrap justify-center sm:w-1/4 w-2/3 mx-auto'>
+              <span className='flex justify-center items-center mt-10 bg-blue-200 rounded-full w-32 h-32'>
                 {' '}
                 <svg
                   xmlns='http://www.w3.org/2000/svg'

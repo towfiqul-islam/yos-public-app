@@ -24,7 +24,7 @@ const Footer = () => {
           </li>
         </ul>
       </div>
-      <p className='text-center sm:pt-4 pb-8'>
+      <p className='text-center sm:pt-4 pb-4'>
         Contact:{' '}
         <span
           onClick={() => {
@@ -36,9 +36,23 @@ const Footer = () => {
           support@yos.com.bd
         </span>
       </p>
-      <p className='text-center border-t border-gray-700 pt-4'>
-        Copyright &#169; {new Date().getFullYear()} yos.com.bd
+      <p className='text-center  pb-8'>
+        Find us at:{' '}
+        <a
+          style={{color: '#0D8CF0'}}
+          href='https://www.facebook.com/Yoshealth'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='text-blue-300 font-medium  cursor-pointer underline'
+        >
+          facebook
+        </a>
       </p>
+      <div className='flex justify-center border-t border-gray-700 pt-2'>
+        <p className='text-center  '>
+          Copyright &#169; {new Date().getFullYear()} yos.com.bd
+        </p>
+      </div>
     </footer>
   );
 };
