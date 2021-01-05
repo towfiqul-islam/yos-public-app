@@ -48,7 +48,7 @@ const Browse = () => {
   const [count, setCount] = useState(0);
   const [filterVal, setFilterVal] = useState('');
   const appContext = useContext(AppContext);
-  const {isMobileSearchOpen, isCartOpen, carts} = appContext;
+  const {isMobileSearchOpen, isCartOpen, carts, toggleMobileMenu} = appContext;
   async function getMeds() {
     const get_count = await axios.get('/api/medicines/total_count');
     const res = await axios.get(`/api/medicines/browse_medicines/${page}`);
@@ -80,6 +80,7 @@ const Browse = () => {
     setCount(count.data.total_count);
   };
   useEffect(() => {
+    toggleMobileMenu(false);
     if (filterVal !== '') {
       onFilter(filterVal);
       history.push(`/browse-medicines/page/${page}`);

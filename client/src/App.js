@@ -14,6 +14,10 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Browse from './components/browse_medicines/Browse';
 
+import Login from './components/users/Login';
+import SignUp from './components/users/SignUp';
+import User from './components/users/User';
+
 function App() {
   return (
     <>
@@ -21,6 +25,9 @@ function App() {
         <Router history={history}>
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/sign-up' component={SignUp} />
+            <Route exact path='/user' component={User} />
             <Route exact path='/order-details' component={OrderDetails} />
             <Route
               exact
