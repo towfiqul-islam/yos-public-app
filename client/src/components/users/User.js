@@ -5,9 +5,11 @@ import SecondaryNav from '../SecondaryNav';
 import Footer from '../Footer';
 import axios from 'axios';
 import history from '../../history';
+import DeactivateModal from '../DeactivateModal';
 
 const User = () => {
   const [alert, setAlert] = useState(false);
+  const [modal, setModal] = useState(false);
   const appContext = useContext(AppContext);
   const {isMobileSearchOpen, isCartOpen, user, setAuthentication} = appContext;
   const {
@@ -64,6 +66,7 @@ const User = () => {
         <MobileSearchOverlay />
       </div>
       <div className={isMobileSearchOpen ? 'hidden sm:block' : 'block'}>
+        {modal && <DeactivateModal setModal={setModal} />}
         <SecondaryNav />
         <div
           style={{
@@ -74,18 +77,30 @@ const User = () => {
         >
           <div className='flex justify-center'>
             <div style={{width: '200px'}} className='relative'>
-              <img
+              <div>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 24 24'
+                  fill='#718096'
+                  width='200px'
+                  height='200px'
+                >
+                  <path d='M0 0h24v24H0z' fill='none' />
+                  <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z' />
+                </svg>
+              </div>
+              {/* <img
                 src='https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg'
                 width='200px'
                 height='200px'
                 alt=''
-              />
-              <button
+              /> */}
+              {/* <button
                 style={{bottom: '100px', left: '10px'}}
                 className='absolute bg-gray-100 text-gray-900 shadow px-4 py-1 rounded cursor-pointer'
               >
                 Edit
-              </button>
+              </button> */}
               <div className=''>
                 <h2 className='text-center sm:text-2xl font-semibold'>
                   {first_name} {last_name}
@@ -145,6 +160,7 @@ const User = () => {
                 style={{width: '300px'}}
                 className='border border-gray-400 rounded px-2 py-1'
                 type='text'
+                id='f_name'
                 name='f_name'
                 onChange={onChange}
                 value={f_name}
@@ -202,7 +218,10 @@ const User = () => {
             </div>
           </div>
           <div className='mt-6'>
-            <button className='text-red-700 font-medium underline'>
+            <button
+              onClick={() => setModal(true)}
+              className='text-red-700 font-medium underline'
+            >
               Deactivate account
             </button>
           </div>

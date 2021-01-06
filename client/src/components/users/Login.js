@@ -20,6 +20,13 @@ const Login = () => {
     if (res.data.msg === 'Invalid email or password') {
       setAlert(true);
     } else if (res.data.msg === 'Sign in success') {
+      if (res.data.user.account_status === 'disabled') {
+        const data = {
+          account_status: 'active',
+          closed_in: null,
+        };
+        await axios.put(`/api/users/update-account/${res.data.user.id}`, data);
+      }
       localStorage.setItem('yos_user', JSON.stringify(res.data.user));
       history.push('/');
     }
