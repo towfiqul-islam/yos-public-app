@@ -26,6 +26,10 @@ const SecondaryNav = () => {
     addToCart,
     calculateCartValue,
     fillSearchResults,
+    setUser,
+    user,
+    setAuthentication,
+    isAuthenticated,
   } = appContext;
 
   const onChange = async e => {
@@ -36,12 +40,24 @@ const SecondaryNav = () => {
     }
   };
 
+  const onLogout = () => {
+    setAuthentication(false);
+    localStorage.removeItem('yos_user');
+    history.push('/login');
+  };
+
   useEffect(() => {
     onSearch('');
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
     if (storedCarts !== null) {
       addToCart(storedCarts);
       calculateCartValue(storedCarts);
+    }
+
+    const yos_user = JSON.parse(localStorage.getItem('yos_user'));
+    if (yos_user) {
+      setUser(yos_user);
+      setAuthentication(true);
     }
     // eslint-disable-next-line
   }, []);
@@ -76,7 +92,7 @@ const SecondaryNav = () => {
               Call to order
             </p>
           </div>
-          {false ? (
+          {isAuthenticated ? (
             <div className='ml-8 flex'>
               <div className='flex items-center'>
                 <span>
@@ -93,9 +109,17 @@ const SecondaryNav = () => {
                     />
                   </svg>
                 </span>
-                <span className='ml-1'>Towfiqul...</span>
+                <span
+                  onClick={() => history.push('/user')}
+                  className='ml-1 cursor-pointer'
+                >
+                  {user.first_name}...
+                </span>
               </div>
-              <div className='ml-8 text-red-700 font-medium md:flex items-center hidden'>
+              <div
+                onClick={onLogout}
+                className='ml-8 text-red-700 font-medium md:flex items-center hidden cursor-pointer'
+              >
                 <span>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -331,7 +355,10 @@ const SecondaryNav = () => {
               Order by prescription
             </button>
 
-            <button className='block text-red-700 font-medium text-base pb-2 '>
+            <button
+              onClick={onLogout}
+              className='block text-red-700 font-medium text-base pb-2 '
+            >
               Logout
             </button>
           </div>

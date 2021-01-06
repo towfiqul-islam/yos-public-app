@@ -7,3 +7,5 @@ export const ON_SEARCH = 'ON_SEARCH';
 export const SET_ALERT = 'SET_ALERT';
 export const SET_LOADING = 'SET_LOADING';
 export const FILL_SEARCH = 'FILL_SEARCH';
+export const SET_USER = 'SET_USER';
+export const SET_AUTHENTICATION = 'SET_AUTHENTICATION';

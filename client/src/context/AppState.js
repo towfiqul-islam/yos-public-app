@@ -13,6 +13,8 @@ import {
   SET_ALERT,
   SET_LOADING,
   FILL_SEARCH,
+  SET_USER,
+  SET_AUTHENTICATION,
 } from './types';
 
 const AppState = props => {
@@ -26,9 +28,25 @@ const AppState = props => {
     searchResults: [],
     isAlertOpen: false,
     isLoading: false,
+    user: {},
+    isAuthenticated: false,
   };
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
+  const setAuthentication = val => {
+    dispatch({
+      type: SET_AUTHENTICATION,
+      payload: val,
+    });
+  };
+
+  const setUser = user => {
+    dispatch({
+      type: SET_USER,
+      payload: user,
+    });
+  };
 
   const setLoading = val => {
     dispatch({
@@ -108,6 +126,10 @@ const AppState = props => {
         searchResults: state.searchResults,
         isAlertOpen: state.isAlertOpen,
         isLoading: state.isLoading,
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+        setAuthentication,
+        setUser,
         setLoading,
         setAlert,
         onSearch,

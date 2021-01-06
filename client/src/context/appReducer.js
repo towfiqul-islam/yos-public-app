@@ -8,12 +8,26 @@ import {
   SET_ALERT,
   SET_LOADING,
   FILL_SEARCH,
+  SET_USER,
+  SET_AUTHENTICATION,
 } from './types';
 
 export default (state, action) => {
   switch (action.type) {
     default:
       return state;
+
+    case SET_AUTHENTICATION:
+      return {
+        ...state,
+        isAuthenticated: action.payload,
+      };
+
+    case SET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
 
     case FILL_SEARCH:
       return {

@@ -26,7 +26,7 @@ function signUp(fields) {
 
 function signIn(email, password) {
   return new Promise(function (resolve, reject) {
-    const sql = `SELECT id, email, password FROM users WHERE email='${email}' AND password='${password}'`;
+    const sql = `SELECT * FROM users WHERE email='${email}' AND password='${password}'`;
     connection.query(sql, (err, results) => {
       if (err) reject(err.sqlMessage);
       else {
@@ -120,10 +120,10 @@ router.post('/sign-in', async (req, res) => {
       (user && user.email) === req.body.email &&
       (user && user.password) === req.body.password
     ) {
-      res.json({id: user.id, msg: 'Sign in success'});
+      res.json({user, msg: 'Sign in success'});
     } else {
       res.json({
-        msg: 'Inavlid email or password',
+        msg: 'Invalid email or password',
       });
     }
   } catch (err) {
