@@ -16,17 +16,16 @@ const User = () => {
     first_name,
     last_name,
     email,
-    phone,
-    address,
+
     user_status,
     yos_wallet,
     total_purchase,
   } = user;
   const [updateUser, setUpdateUser] = useState({
-    f_name: undefined ? '' : first_name,
-    l_name: undefined ? '' : last_name,
-    mobile: undefined ? '' : phone,
-    home_address: address === (null || undefined) ? '' : address,
+    f_name: '',
+    l_name: '',
+    mobile: '',
+    home_address: '',
   });
 
   const {f_name, l_name, mobile, home_address} = updateUser;
@@ -51,12 +50,16 @@ const User = () => {
   };
 
   useEffect(() => {
-    setUpdateUser({
-      f_name: first_name,
-      l_name: last_name,
-      mobile: phone,
-      home_address: address === null ? '' : address,
-    });
+    const yos_user = JSON.parse(localStorage.getItem('yos_user'));
+    const {first_name, last_name, phone, address} = yos_user;
+    if (user !== undefined) {
+      setUpdateUser({
+        f_name: first_name,
+        l_name: last_name,
+        mobile: phone,
+        home_address: address,
+      });
+    }
     // eslint-disable-next-line
   }, [user]);
 
@@ -201,7 +204,7 @@ const User = () => {
                 className='border border-gray-400 rounded px-2 py-1'
                 name='home_address'
                 onChange={onChange}
-                value={home_address}
+                value={home_address === null ? '' : home_address}
                 id=''
                 cols='30'
                 rows='5'

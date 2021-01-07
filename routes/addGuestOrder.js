@@ -14,16 +14,6 @@ function addOrderItem(fields) {
       }
       resolve(results.insertId);
     });
-    // pool.getConnection(function (err, connection) {
-    // connection.query(sql, fields, (err, results) => {
-    //   if (!err) {
-    //     connection.release();
-    //     resolve(results.insertId);
-    //   } else {
-    //     console.error('OOPS!!!', err);
-    //   }
-    // });
-    // });
   });
 }
 
@@ -36,16 +26,6 @@ function addGuestOrder(fields) {
       }
       resolve(results.insertId);
     });
-    // pool.getConnection(function (err, connection) {
-    //   connection.query(sql, fields, (err, results) => {
-    //     if (!err) {
-    //       connection.release();
-    //       resolve(results.insertId);
-    //     } else {
-    //       throw err;
-    //     }
-    //   });
-    // });
   });
 }
 

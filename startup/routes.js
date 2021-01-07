@@ -3,6 +3,7 @@ const cors = require('cors');
 const addGuestOrder = require('../routes/addGuestOrder');
 const medicines = require('../routes/medicines');
 const users = require('../routes/users');
+const userOrders = require('../routes/userOrders');
 
 module.exports = function (app) {
   app.use(cors());
@@ -10,4 +11,5 @@ module.exports = function (app) {
   app.use('/api/guest', addGuestOrder);
   app.use('/api/medicines', medicines);
   app.use('/api/users', users);
+  app.use('/api/users', userOrders);
 };
