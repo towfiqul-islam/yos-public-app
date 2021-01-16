@@ -47,6 +47,16 @@ const OrderReview = () => {
       amount_after_discount: orderDetails.orderDetails.amount_after_discount,
     };
 
+    // Update user info
+    if (user.phone === '' && user.address === null) {
+      // Update user phone and address
+      const data = {
+        phone: orderDetails.orderDetails.customer_phone,
+        address: orderDetails.orderDetails.customer_address,
+      };
+      await axios.put(`/api/users/update-account/${user.id}`, data);
+    }
+
     const res = await axios.post('/api/users/add_order', customerData);
 
     if (res.status === 200 && orderDetails.carts) {

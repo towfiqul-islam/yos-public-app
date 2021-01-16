@@ -42,6 +42,7 @@ const SecondaryNav = () => {
 
   const onLogout = () => {
     setAuthentication(false);
+    localStorage.removeItem('carts');
     localStorage.removeItem('yos_user');
     history.push('/login');
   };
