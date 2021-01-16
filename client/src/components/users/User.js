@@ -49,17 +49,22 @@ const User = () => {
     }
   };
 
+  async function getSingleUser(id) {
+    const res = await axios.get(`/api/users/get-user/${id}`);
+
+    setUpdateUser({
+      ...updateUser,
+      f_name: res.data.user.first_name,
+      l_name: res.data.user.last_name,
+      mobile: res.data.user.phone,
+      home_address: res.data.user.address,
+    });
+  }
+
   useEffect(() => {
     const yos_user = JSON.parse(localStorage.getItem('yos_user'));
-    const {first_name, last_name, phone, address} = yos_user;
-    if (user !== undefined) {
-      setUpdateUser({
-        f_name: first_name,
-        l_name: last_name,
-        mobile: phone,
-        home_address: address,
-      });
-    }
+    getSingleUser(yos_user.id);
+
     // eslint-disable-next-line
   }, [user]);
 
