@@ -330,12 +330,21 @@ const SecondaryNav = () => {
         <div className='hidden md:block'>
           <button
             onClick={() => {
-              if (router.pathname !== '/order-by-prescription') {
+              if (
+                router.pathname !== '/order-by-prescription' &&
+                !isAuthenticated
+              ) {
                 history.push('/order-by-prescription');
+              } else if (
+                router.pathname !== '/user-order-by-prescription' &&
+                isAuthenticated
+              ) {
+                history.push('/user-order-by-prescription');
               }
             }}
             className={
-              router.pathname === '/order-by-prescription'
+              router.pathname === '/order-by-prescription' ||
+              router.pathname === '/user-order-by-prescription'
                 ? 'bg-gray-500 text-gray-300 rounded px-2 py-1 cursor-default focus:outline-none'
                 : 'border-2 border-gray-900 text-gray-900  hover:bg-gray-900 hover:text-gray-100 rounded px-2 py-1'
             }
@@ -345,25 +354,33 @@ const SecondaryNav = () => {
         </div>
       </nav>
 
-      {isMenuOpen && router.pathname !== '/order-by-prescription' && (
-        <div className='pb-2  border-t border-gray-300'>
-          <div className='w-11/12 mx-auto'>
-            <button
-              onClick={() => history.push('/order-by-prescription')}
-              className=' block py-4 text-base '
-            >
-              Order by prescription
-            </button>
+      {isMenuOpen &&
+        (router.pathname !== '/order-by-prescription' ||
+          router.pathname !== '/user-order-by-prescription') && (
+          <div className='pb-2  border-t border-gray-300'>
+            <div className='w-11/12 mx-auto'>
+              <button
+                onClick={() => {
+                  if (user) {
+                    history.push('/user-order-by-prescription');
+                  } else {
+                    history.push('/order-by-prescription');
+                  }
+                }}
+                className=' block py-4 text-base '
+              >
+                Order by prescription
+              </button>
 
-            <button
-              onClick={onLogout}
-              className='block text-red-700 font-medium text-base pb-2 '
-            >
-              Logout
-            </button>
+              <button
+                onClick={onLogout}
+                className='block text-red-700 font-medium text-base pb-2 '
+              >
+                Logout
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };

@@ -22,7 +22,10 @@ export function checkPath(pathName) {
   if (
     pathName === '/order-review' ||
     pathName === '/order-details' ||
-    pathName === '/order-by-prescription'
+    pathName === '/order-by-prescription' ||
+    pathName === '/user-order-review' ||
+    pathName === '/user-order-details' ||
+    pathName === '/user-order-by-prescription'
   ) {
     return false;
   }

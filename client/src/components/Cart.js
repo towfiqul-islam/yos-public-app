@@ -15,6 +15,7 @@ const Cart = () => {
     carts,
 
     cartValue,
+    user,
   } = appContext;
 
   return (
@@ -69,7 +70,11 @@ const Cart = () => {
           <div>
             <button
               onClick={() => {
-                history.push('/order-details');
+                if (user) {
+                  history.push('/user-order-details');
+                } else {
+                  history.push('/order-details');
+                }
                 openCart();
                 toggleMobileSearch(false);
                 toggleMobileMenu(false);

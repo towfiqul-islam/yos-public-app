@@ -6,8 +6,11 @@ import Home from './components/home/Home';
 
 import AppState from './context/AppState';
 import OrderDetails from './components/OrderDetails';
+import UserOrderDetails from './components/users/OrderDetails';
 import OrderByPrescription from './components/OrderByPrescription';
+import UserOrderByPrescription from './components/users/OrderByPrescription';
 import OrderReview from './components/OrderReview';
+import UserOrderReview from './components/users/OrderReview';
 import MedicineDetails from './components/MedicineDetails';
 import AboutUs from './components/AboutUs';
 import Privacy from './components/Privacy';
@@ -18,7 +21,7 @@ import Login from './components/users/Login';
 import SignUp from './components/users/SignUp';
 import User from './components/users/User';
 
-function App() {
+const App = () => {
   return (
     <>
       <AppState>
@@ -28,7 +31,15 @@ function App() {
             <Route exact path='/login' component={Login} />
             <Route exact path='/sign-up' component={SignUp} />
             <Route exact path='/user' component={User} />
+
+            <Route
+              exact
+              path='/user-order-details'
+              component={UserOrderDetails}
+            />
+
             <Route exact path='/order-details' component={OrderDetails} />
+
             <Route
               exact
               path='/browse-medicines/page/:page'
@@ -44,7 +55,17 @@ function App() {
               path='/order-by-prescription'
               component={OrderByPrescription}
             />
+            <Route
+              exact
+              path='/user-order-by-prescription'
+              component={UserOrderByPrescription}
+            />
             <Route exact path='/order-review' component={OrderReview} />
+            <Route
+              exact
+              path='/user-order-review'
+              component={UserOrderReview}
+            />
             <Route exact path='/about-us' component={AboutUs} />
             <Route exact path='/privacy-policy' component={Privacy} />
             <Route exact path='/terms-and-conditions' component={Terms} />
@@ -53,6 +74,6 @@ function App() {
       </AppState>
     </>
   );
-}
+};
 
 export default App;
