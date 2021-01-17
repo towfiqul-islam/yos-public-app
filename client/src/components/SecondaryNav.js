@@ -45,6 +45,7 @@ const SecondaryNav = () => {
     localStorage.removeItem('carts');
     localStorage.removeItem('yos_user');
     history.push('/login');
+    window.location.reload();
   };
 
   useEffect(() => {

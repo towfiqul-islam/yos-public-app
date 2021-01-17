@@ -27,6 +27,7 @@ const OrderDetails = () => {
     isAlertOpen,
     setAlert,
     user,
+    isAuthenticated,
   } = appContext;
 
   const [file, setFile] = useState('');
@@ -87,7 +88,7 @@ const OrderDetails = () => {
       blueberry === ''
     ) {
       sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
-      if (user) {
+      if (isAuthenticated) {
         history.push('/user-order-review');
       } else {
         history.push('/order-review');

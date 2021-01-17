@@ -15,7 +15,8 @@ const Cart = () => {
     carts,
 
     cartValue,
-    user,
+
+    isAuthenticated,
   } = appContext;
 
   return (
@@ -70,7 +71,7 @@ const Cart = () => {
           <div>
             <button
               onClick={() => {
-                if (user) {
+                if (isAuthenticated) {
                   history.push('/user-order-details');
                 } else {
                   history.push('/order-details');

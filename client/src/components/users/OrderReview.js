@@ -70,37 +70,40 @@ const OrderReview = () => {
         await axios.post('/api/users/add_order_item', data);
       }
       // send mail
-      // TODO: Setup mail for user
-      //   const mailBody = {
-      //     order_id: res.data.insertID,
-      //     customer_name: orderDetails.orderDetails.customer_name,
-      //     customer_phone: orderDetails.orderDetails.customer_phone,
-      //     customer_address: orderDetails.orderDetails.customer_address,
-      //     customer_prescription: orderDetails.orderDetails.customer_prescription,
-      //     customer_additional_notes:
-      //       orderDetails.orderDetails.customer_additional_notes,
-      //     orderedItems: orderDetails.carts,
-      //     total_amount: orderDetails.orderDetails.total_amount,
-      //     discount_percentage: orderDetails.orderDetails.discount_percentage,
-      //     amount_after_discount: orderDetails.orderDetails.amount_after_discount,
-      //   };
-      //   await axios.post('/api/guest/guest_order_mail', mailBody);
+
+      const mailBody = {
+        order_id: res.data.insertID,
+        customer_name: `${user.first_name} ${user.last_name}`,
+        customer_email: user.email,
+        customer_phone: orderDetails.orderDetails.customer_phone,
+        customer_address: orderDetails.orderDetails.customer_address,
+        customer_prescription: orderDetails.orderDetails.customer_prescription,
+        customer_additional_notes:
+          orderDetails.orderDetails.customer_additional_notes,
+        orderedItems: orderDetails.carts,
+        total_amount: orderDetails.orderDetails.total_amount,
+        discount_percentage: orderDetails.orderDetails.discount_percentage,
+        amount_after_discount: orderDetails.orderDetails.amount_after_discount,
+      };
+      await axios.post('/api/users/user_order_mail', mailBody);
+      await axios.post('/api/users/send_order_mail_to_user', mailBody);
       setLoading(false);
       sessionStorage.removeItem('orderInfo');
       localStorage.removeItem('carts');
       setConfirm(true);
     } else if (res.status === 200 && !orderDetails.carts) {
-      // TODO: Setup mail for user
-      //   const mailBody = {
-      //     order_id: res.data.insertID,
-      //     customer_name: orderDetails.orderDetails.customer_name,
-      //     customer_phone: orderDetails.orderDetails.customer_phone,
-      //     customer_address: orderDetails.orderDetails.customer_address,
-      //     customer_prescription: orderDetails.orderDetails.customer_prescription,
-      //     customer_additional_notes:
-      //       orderDetails.orderDetails.customer_additional_notes,
-      //   };
-      //   await axios.post('/api/guest/guest_order_mail', mailBody);
+      const mailBody = {
+        order_id: res.data.insertID,
+        customer_name: `${user.first_name} ${user.last_name}`,
+        customer_email: user.email,
+        customer_phone: orderDetails.orderDetails.customer_phone,
+        customer_address: orderDetails.orderDetails.customer_address,
+        customer_prescription: orderDetails.orderDetails.customer_prescription,
+        customer_additional_notes:
+          orderDetails.orderDetails.customer_additional_notes,
+      };
+      await axios.post('/api/users/user_order_mail', mailBody);
+      await axios.post('/api/users/send_order_mail_to_user', mailBody);
       setLoading(false);
       sessionStorage.removeItem('orderInfo');
       localStorage.removeItem('carts');

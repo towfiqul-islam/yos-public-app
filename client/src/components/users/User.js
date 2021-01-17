@@ -4,14 +4,14 @@ import MobileSearchOverlay from '../MobileSearchOverlay';
 import SecondaryNav from '../SecondaryNav';
 import Footer from '../Footer';
 import axios from 'axios';
-import history from '../../history';
+
 import DeactivateModal from '../DeactivateModal';
 
 const User = () => {
   const [alert, setAlert] = useState(false);
   const [modal, setModal] = useState(false);
   const appContext = useContext(AppContext);
-  const {isMobileSearchOpen, isCartOpen, user, setAuthentication} = appContext;
+  const {isMobileSearchOpen, isCartOpen, user} = appContext;
   const {
     first_name,
     last_name,
@@ -42,10 +42,14 @@ const User = () => {
       address: home_address,
     };
     const res = await axios.put(`/api/users/update-account/${user.id}`, data);
+    getSingleUser(user.id);
     if (res.data.msg === 'account updated') {
-      localStorage.removeItem('yos_user');
-      setAuthentication(false);
+      //   localStorage.removeItem('yos_user');
+      //   setAuthentication(false);
       setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
     }
   };
 
@@ -146,10 +150,10 @@ const User = () => {
                 style={{width: '300px'}}
                 className='flex items-center justify-between px-2 py-1 rounded mb-4 bg-green-300'
               >
-                <p className='text-xs'>
-                  Account updated. Login to see the change
+                <p className='text-sm text-center'>
+                  Account successfully updated.
                 </p>
-                <span
+                {/* <span
                   onClick={() => {
                     setAlert(false);
                     history.push('/login');
@@ -157,7 +161,7 @@ const User = () => {
                   className='cursor-pointer bg-gray-100 px-3 py-1 rounded text-xs'
                 >
                   Ok
-                </span>
+                </span> */}
               </div>
             )}
             <div>
