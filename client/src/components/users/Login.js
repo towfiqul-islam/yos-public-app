@@ -5,11 +5,16 @@ import Footer from '../Footer';
 import axios from 'axios';
 
 const Login = () => {
-  const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState({
+    showAlert: false,
+    alertMsg: '',
+    alertType: '',
+  });
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
+  const {showAlert, alertMsg, alertType} = alert;
   const {email, password} = user;
 
   const onChange = e => {
@@ -18,7 +23,11 @@ const Login = () => {
   const onSubmit = async () => {
     const res = await axios.post('/api/users/sign-in', user);
     if (res.data.msg === 'Invalid email or password') {
-      setAlert(true);
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Incorrect email or password',
+        alertType: 'warning',
+      });
     } else if (res.data.msg === 'Sign in success') {
       if (res.data.user.account_status === 'disabled') {
         const data = {
@@ -29,6 +38,41 @@ const Login = () => {
       }
       localStorage.setItem('yos_user', JSON.stringify(res.data.user));
       history.push('/');
+    }
+  };
+  const resetPassword = async () => {
+    if (email !== '') {
+      // get user id if a valid mail is provided
+      const res = await axios.get(`/api/users/get-user-id-by-mail/${email}`);
+      if (res.data === '') {
+        setAlert({
+          showAlert: true,
+          alertMsg: 'Email does not exist',
+          alertType: 'warning',
+        });
+      } else {
+        const data = {
+          user_email: email,
+        };
+        const resp = await axios.post(
+          `/api/users/send-reset-password-mail/${res.data.id}`,
+          data,
+        );
+
+        if (resp.data.msg === 'Reset link sent!') {
+          setAlert({
+            showAlert: true,
+            alertMsg: 'Reset password link sent to mail',
+            alertType: 'success',
+          });
+        }
+      }
+    } else {
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Email cannot be empty',
+        alertType: 'warning',
+      });
     }
   };
   return (
@@ -49,9 +93,13 @@ const Login = () => {
             Sign in to{' '}
             <span className='font-semibold text-gray-900'>YOS Health</span>
           </h2>
-          {alert && (
-            <div className='flex items-center justify-between px-4 py-3 rounded mb-2 bg-red-300'>
-              <p className='text-sm'>Incorrect email or password</p>
+          {showAlert && (
+            <div
+              className={`flex items-center justify-between px-4 py-3 rounded mb-2 ${
+                alertType === 'warning' ? 'bg-red-300' : 'bg-green-300'
+              }`}
+            >
+              <p className='text-sm'>{alertMsg}</p>
               <span onClick={() => setAlert(false)} className='cursor-pointer'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -90,9 +138,12 @@ const Login = () => {
                 >
                   Password
                 </label>
-                <Link className='text-xs text-blue-600 font-semibold' to='/'>
+                <button
+                  onClick={resetPassword}
+                  className='text-xs text-blue-600 font-semibold mb-2'
+                >
                   Forgot password?
-                </Link>
+                </button>
               </div>
               <input
                 className='px-2 py-1 border border-gray-500 w-full rounded block'

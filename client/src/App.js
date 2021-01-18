@@ -20,6 +20,7 @@ import Browse from './components/browse_medicines/Browse';
 import Login from './components/users/Login';
 import SignUp from './components/users/SignUp';
 import User from './components/users/User';
+import ResetPassword from './components/users/ResetPassword';
 
 const App = () => {
   return (
@@ -66,6 +67,7 @@ const App = () => {
               path='/user-order-review'
               component={UserOrderReview}
             />
+            <Route exact path='/reset-password/:id' component={ResetPassword} />
             <Route exact path='/about-us' component={AboutUs} />
             <Route exact path='/privacy-policy' component={Privacy} />
             <Route exact path='/terms-and-conditions' component={Terms} />
