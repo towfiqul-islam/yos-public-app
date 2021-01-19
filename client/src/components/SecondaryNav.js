@@ -8,6 +8,7 @@ import SecondaryItemCard from './SecondaryItemCard';
 
 import {checkCarts, checkPath} from '../utils';
 import axios from 'axios';
+import EmailVerifyWarning from './users/EmailVerifyWarning';
 
 const SecondaryNav = () => {
   const router = useLocation();
@@ -44,6 +45,7 @@ const SecondaryNav = () => {
     setAuthentication(false);
     localStorage.removeItem('carts');
     localStorage.removeItem('yos_user');
+    localStorage.removeItem('token');
     history.push('/login');
     window.location.reload();
   };
@@ -66,6 +68,7 @@ const SecondaryNav = () => {
 
   return (
     <div className='bg-gray-200'>
+      {isAuthenticated && user.isVerified === 'no' && <EmailVerifyWarning />}
       <div className='bg-gray-300 text-gray-900 py-2'>
         <div className=' flex sm:justify-center justify-between sm:w-3/4 mx-auto w-11/12  '>
           <div className='flex justify-center items-center'>

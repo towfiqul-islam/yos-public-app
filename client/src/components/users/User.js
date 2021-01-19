@@ -6,6 +6,8 @@ import Footer from '../Footer';
 import axios from 'axios';
 
 import DeactivateModal from '../DeactivateModal';
+import {setAuthToken} from '../../utils';
+import history from '../../history';
 
 const User = () => {
   const [alert, setAlert] = useState(false);
@@ -44,8 +46,6 @@ const User = () => {
     const res = await axios.put(`/api/users/update-account/${user.id}`, data);
     getSingleUser(user.id);
     if (res.data.msg === 'account updated') {
-      //   localStorage.removeItem('yos_user');
-      //   setAuthentication(false);
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
@@ -53,8 +53,11 @@ const User = () => {
     }
   };
 
-  async function getSingleUser(id) {
-    const res = await axios.get(`/api/users/get-user/${id}`);
+  async function getSingleUser() {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    const res = await axios.get(`/api/users/get-user`);
 
     setUpdateUser({
       ...updateUser,
@@ -66,8 +69,10 @@ const User = () => {
   }
 
   useEffect(() => {
-    const yos_user = JSON.parse(localStorage.getItem('yos_user'));
-    getSingleUser(yos_user.id);
+    if (!localStorage.token) {
+      history.push('/login');
+    }
+    getSingleUser();
 
     // eslint-disable-next-line
   }, [user]);

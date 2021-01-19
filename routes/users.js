@@ -1,8 +1,11 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const {transport} = require('../mail');
 const router = express.Router();
 
 const connection = require('../startup/db');
+const auth = require('../middleware/auth');
 
 // - API routes - /api/users
 // - /sign-up - POST
@@ -25,9 +28,9 @@ function signUp(fields) {
   });
 }
 
-function signIn(email, password) {
+function signIn(email) {
   return new Promise(function (resolve, reject) {
-    const sql = `SELECT * FROM users WHERE email='${email}' AND password='${password}'`;
+    const sql = `SELECT * FROM users WHERE email='${email}'`;
     connection.query(sql, (err, results) => {
       if (err) reject(err.sqlMessage);
       else {
@@ -116,9 +119,9 @@ router.put('/reset-password/:id', async (req, res) => {
 });
 
 // TODO: Auth middleware
-router.get('/get-user/:id', async (req, res) => {
+router.get('/get-user', auth, async (req, res) => {
   try {
-    const user = await getUser(req.params.id);
+    const user = await getUser(req.user.id);
     res.json({user});
   } catch (err) {
     res.status(400).json({msg: 'Something went worng!!'});
@@ -140,13 +143,19 @@ router.put('/update-account/:id', async (req, res) => {
 
 router.post('/sign-in', async (req, res) => {
   try {
-    const user = await signIn(req.body.email, req.body.password);
+    const user = await signIn(req.body.email);
 
-    if (
-      (user && user.email) === req.body.email &&
-      (user && user.password) === req.body.password
-    ) {
-      res.json({user, msg: 'Sign in success'});
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password,
+    );
+
+    if ((user && user.email) === req.body.email && validPassword) {
+      const token = jwt.sign({id: user.id}, process.env.JWT_KEY);
+
+      res
+        .header('x-auth-token', token)
+        .json({user, msg: 'Sign in success', token});
     } else {
       res.json({
         msg: 'Invalid email or password',
@@ -162,6 +171,8 @@ router.post('/sign-up', async (req, res) => {
   try {
     const checkPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
     if (checkPassword.test(req.body.password)) {
+      const salt = await bcrypt.genSalt(10);
+      req.body.password = await bcrypt.hash(req.body.password, salt);
       const id = await signUp(req.body);
       res.json({id, msg: 'Sign up success'});
     } else
@@ -177,6 +188,51 @@ router.post('/sign-up', async (req, res) => {
         msg: 'Something went wrong! Please try again few minutes later',
       });
     }
+  }
+});
+
+function verifyMail(id) {
+  return new Promise(function (resolve, reject) {
+    const sql = `UPDATE users SET isVerified = 'yes' WHERE id=${id}`;
+    connection.query(sql, (err, results) => {
+      if (err) throw err;
+      resolve(results.affectedRows);
+    });
+  });
+}
+
+// Verify mail
+router.put('/verify-email/:id', async (req, res) => {
+  try {
+    const row = await verifyMail(req.params.id);
+    res.json({
+      row,
+      msg: 'email verified',
+    });
+  } catch (err) {
+    res.status(400).json({msg: 'Something went worng!!'});
+  }
+});
+
+// Verification mail
+router.post('/send-verification-mail/:id', async (req, res) => {
+  try {
+    await transport.sendMail({
+      from: 'yoscombd@yos.com.bd',
+      to: req.body.user_email,
+      subject: 'Verify Your Email',
+      html: `
+        <div>
+          <p>Click the following link to verify your email</p>
+          <a style="padding: 8px 12px; text-decoration: none; color: white; background: black; display: inline-block;" href=http://localhost:3000/verify-email/${req.params.id}>Verify Email</a>
+        </div>
+      `,
+    });
+
+    res.json({msg: 'Verification link sent!'});
+  } catch (err) {
+    console.error('Something went wrong!', err);
+    return res.status(400).send('Something went wrong!');
   }
 });
 

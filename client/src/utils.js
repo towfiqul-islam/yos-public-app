@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const discount = 5;
 
 export function calculatePriceWithDiscount(price) {
@@ -85,4 +87,12 @@ export const getPageNumbers = total_count => {
   }
 
   return pageNumber;
+};
+
+export const setAuthToken = token => {
+  if (token) {
+    axios.defaults.headers.common['x-auth-token'] = token;
+  } else {
+    delete axios.defaults.headers.common['x-auth-token'];
+  }
 };

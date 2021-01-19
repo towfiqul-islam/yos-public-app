@@ -37,6 +37,7 @@ const Login = () => {
         await axios.put(`/api/users/update-account/${res.data.user.id}`, data);
       }
       localStorage.setItem('yos_user', JSON.stringify(res.data.user));
+      localStorage.setItem('token', res.data.token);
       history.push('/');
     }
   };

@@ -21,6 +21,12 @@ import Login from './components/users/Login';
 import SignUp from './components/users/SignUp';
 import User from './components/users/User';
 import ResetPassword from './components/users/ResetPassword';
+import {setAuthToken} from './utils';
+import VerifyMail from './components/users/VerifyMail';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
@@ -68,6 +74,7 @@ const App = () => {
               component={UserOrderReview}
             />
             <Route exact path='/reset-password/:id' component={ResetPassword} />
+            <Route exact path='/verify-email/:id' component={VerifyMail} />
             <Route exact path='/about-us' component={AboutUs} />
             <Route exact path='/privacy-policy' component={Privacy} />
             <Route exact path='/terms-and-conditions' component={Terms} />

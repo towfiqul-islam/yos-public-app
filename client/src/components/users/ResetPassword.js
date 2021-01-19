@@ -40,6 +40,7 @@ const ResetPassword = () => {
     setAuthentication(false);
     localStorage.removeItem('carts');
     localStorage.removeItem('yos_user');
+    localStorage.removeItem('token');
     history.push('/login');
     window.location.reload();
   };
