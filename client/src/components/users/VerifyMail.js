@@ -10,9 +10,7 @@ const VerifyMail = () => {
   async function verifyMail() {
     const res = await axios.put(`/api/users/verify-email/${id}`);
     if (res.data.msg === 'email verified') {
-      //   setTimeout(() => {
       setVerified(true);
-      //   }, 3000);
     }
   }
   useEffect(() => {

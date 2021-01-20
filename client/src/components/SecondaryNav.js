@@ -6,7 +6,7 @@ import Cart from './Cart';
 
 import SecondaryItemCard from './SecondaryItemCard';
 
-import {checkCarts, checkPath} from '../utils';
+import {checkCarts, checkPath, setAuthToken} from '../utils';
 import axios from 'axios';
 import EmailVerifyWarning from './users/EmailVerifyWarning';
 
@@ -50,6 +50,17 @@ const SecondaryNav = () => {
     window.location.reload();
   };
 
+  async function getSingleUser() {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    const res = await axios.get(`/api/users/get-user`);
+
+    setUser(res.data.user);
+
+    // console.log(res);
+  }
+
   useEffect(() => {
     onSearch('');
     const storedCarts = JSON.parse(localStorage.getItem('carts'));
@@ -58,11 +69,7 @@ const SecondaryNav = () => {
       calculateCartValue(storedCarts);
     }
 
-    const yos_user = JSON.parse(localStorage.getItem('yos_user'));
-    if (yos_user) {
-      setUser(yos_user);
-      setAuthentication(true);
-    }
+    getSingleUser();
     // eslint-disable-next-line
   }, []);
 

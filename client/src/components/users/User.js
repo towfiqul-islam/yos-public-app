@@ -13,7 +13,7 @@ const User = () => {
   const [alert, setAlert] = useState(false);
   const [modal, setModal] = useState(false);
   const appContext = useContext(AppContext);
-  const {isMobileSearchOpen, isCartOpen, user} = appContext;
+  const {isMobileSearchOpen, isCartOpen, user, setUser} = appContext;
   const {
     first_name,
     last_name,
@@ -59,6 +59,8 @@ const User = () => {
     }
     const res = await axios.get(`/api/users/get-user`);
 
+    setUser(res.data.user);
+
     setUpdateUser({
       ...updateUser,
       f_name: res.data.user.first_name,
@@ -75,7 +77,7 @@ const User = () => {
     getSingleUser();
 
     // eslint-disable-next-line
-  }, [user]);
+  }, []);
 
   return (
     <>

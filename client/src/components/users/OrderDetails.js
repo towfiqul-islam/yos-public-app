@@ -10,6 +10,7 @@ import SecondaryNav from '../SecondaryNav';
 import {
   calculatePriceWithDiscount,
   discount,
+  setAuthToken,
   validateAddress,
   validatePhone,
 } from '../../utils';
@@ -63,6 +64,11 @@ const OrderDetails = () => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     formData.append('upload_preset', 'yos-prescription');
+    // Get token
+    const token = localStorage.getItem('token');
+    if (localStorage.token) {
+      delete axios.defaults.headers.common['x-auth-token'];
+    }
     const res = await axios.post(
       'https://api.cloudinary.com/v1_1/yos/image/upload',
       formData,
@@ -71,6 +77,7 @@ const OrderDetails = () => {
       ...orderDetails,
       customer_prescription: res.data.secure_url,
     });
+    setAuthToken(token);
     setFile('');
   };
 

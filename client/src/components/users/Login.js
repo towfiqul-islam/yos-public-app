@@ -22,6 +22,7 @@ const Login = () => {
   };
   const onSubmit = async () => {
     const res = await axios.post('/api/users/sign-in', user);
+
     if (res.data.msg === 'Invalid email or password') {
       setAlert({
         showAlert: true,
@@ -39,6 +40,12 @@ const Login = () => {
       localStorage.setItem('yos_user', JSON.stringify(res.data.user));
       localStorage.setItem('token', res.data.token);
       history.push('/');
+    } else {
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Incorrect email or password',
+        alertType: 'warning',
+      });
     }
   };
   const resetPassword = async () => {

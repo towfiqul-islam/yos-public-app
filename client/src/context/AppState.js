@@ -46,6 +46,8 @@ const AppState = props => {
       type: SET_USER,
       payload: user,
     });
+    localStorage.setItem('yos_user', JSON.stringify(user));
+    setAuthentication(true);
   };
 
   const setLoading = val => {

@@ -8,7 +8,7 @@ import MobileSearchOverlay from '../MobileSearchOverlay';
 
 import SecondaryNav from '../SecondaryNav';
 import Footer from '../Footer';
-import {validateAddress, validatePhone} from '../../utils';
+import {setAuthToken, validateAddress, validatePhone} from '../../utils';
 
 const OrderByPrescription = () => {
   const appContext = useContext(AppContext);
@@ -46,6 +46,10 @@ const OrderByPrescription = () => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     formData.append('upload_preset', 'yos-prescription');
+    const token = localStorage.getItem('token');
+    if (localStorage.token) {
+      delete axios.defaults.headers.common['x-auth-token'];
+    }
     const res = await axios.post(
       'https://api.cloudinary.com/v1_1/yos/image/upload',
       formData,
@@ -54,6 +58,7 @@ const OrderByPrescription = () => {
       ...orderDetails,
       customer_prescription: res.data.secure_url,
     });
+    setAuthToken(token);
     setFile('');
   };
   const onConfirmOrder = () => {

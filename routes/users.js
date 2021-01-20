@@ -145,10 +145,10 @@ router.post('/sign-in', async (req, res) => {
   try {
     const user = await signIn(req.body.email);
 
-    const validPassword = await bcrypt.compare(
-      req.body.password,
-      user.password,
-    );
+    let validPassword;
+    if (user) {
+      validPassword = await bcrypt.compare(req.body.password, user.password);
+    }
 
     if ((user && user.email) === req.body.email && validPassword) {
       const token = jwt.sign({id: user.id}, process.env.JWT_KEY);
@@ -163,7 +163,7 @@ router.post('/sign-in', async (req, res) => {
     }
   } catch (err) {
     // console.error(err);
-    res.status(400).json({msg: 'Something went worng!!'});
+    return res.status(400).json({msg: 'Something went worng!!'});
   }
 });
 
