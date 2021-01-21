@@ -106,6 +106,8 @@ router.put('/reset-password/:id', async (req, res) => {
   try {
     const checkPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
     if (checkPassword.test(req.body.password)) {
+      const salt = await bcrypt.genSalt(10);
+      req.body.password = await bcrypt.hash(req.body.password, salt);
       const id = await resetPassword(req.params.id, req.body.password);
       res.json({id, msg: 'Password updated. You need to sign in'});
     } else

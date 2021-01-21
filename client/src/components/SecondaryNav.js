@@ -69,7 +69,10 @@ const SecondaryNav = () => {
       calculateCartValue(storedCarts);
     }
 
-    getSingleUser();
+    if (localStorage.token) {
+      getSingleUser();
+    }
+
     // eslint-disable-next-line
   }, []);
 

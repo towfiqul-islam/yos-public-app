@@ -101,7 +101,7 @@ router.post('/user_order_mail', async (req, res) => {
                     process.env.NODE_ENV === 'testing'
                       ? 'http://localhost:3001'
                       : 'https://admin.yos.com.bd'
-                  }/update-order/${req.body.order_id}'>Update order</a>
+                  }/update-user-order/${req.body.order_id}'>Update order</a>
                   </div>
                 `,
     });

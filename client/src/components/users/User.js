@@ -73,8 +73,9 @@ const User = () => {
   useEffect(() => {
     if (!localStorage.token) {
       history.push('/login');
+    } else {
+      getSingleUser();
     }
-    getSingleUser();
 
     // eslint-disable-next-line
   }, []);
