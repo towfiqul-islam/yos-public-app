@@ -85,6 +85,9 @@ const OrderByPrescription = () => {
     sessionStorage.setItem('orderInfo', JSON.stringify({orderDetails}));
   };
   useEffect(() => {
+    if (!localStorage.token) {
+      history.push('/login');
+    }
     localStorage.removeItem('carts');
     // sessionStorage.removeItem('orderInfo');
     addToCart([]);

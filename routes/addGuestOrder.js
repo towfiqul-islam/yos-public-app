@@ -44,7 +44,7 @@ router.post('/guest_order_mail', async (req, res) => {
   try {
     await transport.sendMail({
       from: 'yoscombd@yos.com.bd',
-      to: 'guest_order@yos.com.bd',
+      to: 'order@yos.com.bd',
       subject: 'Guest order',
       html: ` 
                 <div>

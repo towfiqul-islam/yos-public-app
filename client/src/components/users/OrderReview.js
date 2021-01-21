@@ -112,9 +112,13 @@ const OrderReview = () => {
   };
 
   useEffect(() => {
-    const storedInSessions = JSON.parse(sessionStorage.getItem('orderInfo'));
-    if (!storedInSessions || Object.keys('orderInfo').length < 1) {
-      history.push('/');
+    if (!localStorage.token) {
+      history.push('/login');
+    } else {
+      const storedInSessions = JSON.parse(sessionStorage.getItem('orderInfo'));
+      if (!storedInSessions || Object.keys('orderInfo').length < 1) {
+        history.push('/');
+      }
     }
     // eslint-disable-next-line
   }, []);

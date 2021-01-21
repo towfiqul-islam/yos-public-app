@@ -5,8 +5,13 @@ import axios from 'axios';
 import history from '../../history';
 
 const SignUp = () => {
-  const [alert, setAlert] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [alert, setAlert] = useState({
+    showAlert: false,
+    alertMsg: '',
+    alertType: '',
+  });
+  const {showAlert, alertMsg, alertType} = alert;
+  // const [errorMsg, setErrorMsg] = useState('');
   const [user, setUser] = useState({
     first_name: '',
     last_name: '',
@@ -22,9 +27,27 @@ const SignUp = () => {
   };
   const onSubmit = async () => {
     if (password !== confirm_password) {
-      setErrorMsg('Passwords do not match');
-      setAlert(true);
+      // setErrorMsg('Passwords do not match');
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Passwords do not match',
+        alertType: 'warning',
+      });
+      return;
+    } else if (
+      first_name === '' ||
+      last_name === '' ||
+      email === '' ||
+      password === ''
+    ) {
+      setAlert({
+        showAlert: true,
+        alertMsg: 'All fields are required',
+        alertType: 'warning',
+      });
+      return;
     }
+
     const data = {
       first_name: first_name,
       last_name: last_name,
@@ -33,16 +56,29 @@ const SignUp = () => {
     };
     const res = await axios.post('/api/users/sign-up', data);
     if (res.data.msg === 'Email already in use') {
-      setErrorMsg('Email already in use');
-      setAlert(true);
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Email already in use',
+        alertType: 'warning',
+      });
     } else if (
       res.data.msg ===
       'Something went wrong! Please try again few minutes later'
     ) {
-      setErrorMsg('Something went wrong! Please try again few minutes later');
-      setAlert(true);
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Something went wrong! Please try again few minutes later',
+        alertType: 'warning',
+      });
     } else if (res.data.msg === 'Sign up success') {
-      history.push('/login');
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Sign up successful',
+        alertType: 'success',
+      });
+      setTimeout(() => {
+        history.push('/login');
+      }, 1000);
     }
   };
   return (
@@ -63,20 +99,34 @@ const SignUp = () => {
             Sign up for{' '}
             <span className='font-semibold text-gray-900'>YOS Health</span>
           </h2>
-          {alert && (
-            <div className='flex items-center justify-between px-4 py-3 rounded mb-2 bg-red-300'>
-              <p className='text-sm'>{errorMsg}</p>
-              <span onClick={() => setAlert(false)} className='cursor-pointer'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='16'
-                  viewBox='0 0 24 24'
-                  width='16'
+          {showAlert && (
+            <div
+              className={`flex items-center justify-between px-4 py-3 rounded mb-2 ${
+                alertType === 'warning' ? 'bg-red-300' : 'bg-green-300'
+              }`}
+            >
+              <p className='text-sm'>{alertMsg}</p>
+              {alertMsg !== 'Sign up successful' && (
+                <span
+                  onClick={() =>
+                    setAlert({
+                      ...alert,
+                      showAlert: false,
+                    })
+                  }
+                  className='cursor-pointer'
                 >
-                  <path d='M0 0h24v24H0V0z' fill='none' />
-                  <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z' />
-                </svg>
-              </span>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    height='16'
+                    viewBox='0 0 24 24'
+                    width='16'
+                  >
+                    <path d='M0 0h24v24H0V0z' fill='none' />
+                    <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z' />
+                  </svg>
+                </span>
+              )}
             </div>
           )}
           <div className='sm:bg-gray-200  px-6 py-8 rounded'>

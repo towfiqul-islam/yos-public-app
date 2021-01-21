@@ -120,6 +120,9 @@ const OrderDetails = () => {
   };
 
   useEffect(() => {
+    if (!localStorage.token) {
+      history.push('/login');
+    }
     window.scrollTo({
       top: 0,
       left: 0,

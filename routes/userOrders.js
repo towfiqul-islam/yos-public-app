@@ -46,7 +46,7 @@ router.post('/user_order_mail', async (req, res) => {
   try {
     await transport.sendMail({
       from: 'yoscombd@yos.com.bd',
-      to: 'yos_health@yos.com.bd',
+      to: 'order@yos.com.bd',
       subject: 'User order',
       html: ` 
                 <div>

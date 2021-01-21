@@ -224,7 +224,11 @@ router.post('/send-verification-mail/:id', async (req, res) => {
       html: `
         <div>
           <p>Click the following link to verify your email</p>
-          <a style="padding: 8px 12px; text-decoration: none; color: white; background: black; display: inline-block;" href=http://localhost:3000/verify-email/${req.params.id}>Verify Email</a>
+          <a style="padding: 8px 12px; text-decoration: none; color: white; background: black; display: inline-block;" href=${
+            process.env.NODE_ENV === 'testing'
+              ? 'http://localhost:3000'
+              : 'https://yos.com.bd'
+          }/verify-email/${req.params.id}>Verify Email</a>
         </div>
       `,
     });
@@ -246,7 +250,11 @@ router.post('/send-reset-password-mail/:id', async (req, res) => {
       html: `
         <div>
           <p>Click the following link to reset your password</p>
-          <a style="padding: 8px 12px; text-decoration: none; color: white; background: black; display: inline-block;" href=http://localhost:3000/reset-password/${req.params.id}>Reset password</a>
+          <a style="padding: 8px 12px; text-decoration: none; color: white; background: black; display: inline-block;" href=${
+            process.env.NODE_ENV === 'testing'
+              ? 'http://localhost:3000'
+              : 'https://yos.com.bd'
+          }/reset-password/${req.params.id}>Reset password</a>
         </div>
       `,
     });
