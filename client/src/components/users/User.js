@@ -131,20 +131,22 @@ const User = () => {
           </div>
           <div className='flex justify-between mt-10 sm:bg-gray-200 sm:border sm:border-gray-400 sm:shadow sm:px-8 sm:py-4 rounded'>
             <div className=''>
-              <h2 className='sm:text-2xl text-sm'>User status</h2>
-              <p className='font-bold text-gray-600 mt-1 text-base'>
+              <h2 className='sm:text-2xl text-gray-600 text-sm'>User status</h2>
+              <p className='font-bold text-gray-900 mt-1 text-base'>
                 {user_status}
               </p>
             </div>
             <div className=''>
-              <h2 className='sm:text-2xl text-sm'>YOS wallet</h2>
-              <p className='font-bold text-gray-600 mt-1 text-base'>
+              <h2 className='sm:text-2xl text-gray-600 text-sm'>YOS wallet</h2>
+              <p className='font-bold text-gray-900 mt-1 text-base'>
                 {yos_wallet} Tk
               </p>
             </div>
             <div className=''>
-              <h2 className='sm:text-2xl text-sm'>Total purchase</h2>
-              <p className='font-bold text-gray-600 mt-1 text-base'>
+              <h2 className='sm:text-2xl text-gray-600 text-sm'>
+                Total purchase
+              </h2>
+              <p className='font-bold text-gray-900 mt-1 text-base'>
                 {total_purchase} Tk
               </p>
             </div>

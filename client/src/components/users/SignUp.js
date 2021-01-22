@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Footer from '../Footer';
 import axios from 'axios';
 import history from '../../history';
+import {checkPassword, validateEmail, validateName} from '../../utils';
 
 const SignUp = () => {
   const [alert, setAlert] = useState({
@@ -18,16 +19,23 @@ const SignUp = () => {
     email: '',
     password: '',
     confirm_password: '',
+    blueBerry: '',
   });
 
-  const {first_name, last_name, email, password, confirm_password} = user;
+  const {
+    first_name,
+    last_name,
+    email,
+    password,
+    confirm_password,
+    blueBerry,
+  } = user;
 
   const onChange = e => {
     setUser({...user, [e.target.name]: e.target.value});
   };
   const onSubmit = async () => {
     if (password !== confirm_password) {
-      // setErrorMsg('Passwords do not match');
       setAlert({
         showAlert: true,
         alertMsg: 'Passwords do not match',
@@ -43,6 +51,19 @@ const SignUp = () => {
       setAlert({
         showAlert: true,
         alertMsg: 'All fields are required',
+        alertType: 'warning',
+      });
+      return;
+    } else if (
+      validateName(first_name) !== 'Name is valid' ||
+      validateName(last_name) !== 'Name is valid' ||
+      validateEmail(email) === false ||
+      checkPassword(password) === false ||
+      blueBerry !== ''
+    ) {
+      setAlert({
+        showAlert: true,
+        alertMsg: 'Invalid input',
         alertType: 'warning',
       });
       return;
@@ -144,6 +165,11 @@ const SignUp = () => {
                 onChange={onChange}
                 value={first_name}
               />
+              {validateName(first_name) !== 'Name is valid' && (
+                <p className='text-red-700 text-xs italic mt-1'>
+                  Only uppercase or lowercase letters are allowed.
+                </p>
+              )}
             </div>
             <div style={{width: '300px'}} className='mt-2'>
               <label
@@ -159,6 +185,11 @@ const SignUp = () => {
                 onChange={onChange}
                 value={last_name}
               />
+              {validateName(first_name) !== 'Name is valid' && (
+                <p className='text-red-700 text-xs italic mt-1'>
+                  Only uppercase or lowercase letters are allowed.
+                </p>
+              )}
             </div>
             <div style={{width: '300px'}} className='mt-2'>
               <label
@@ -174,6 +205,11 @@ const SignUp = () => {
                 onChange={onChange}
                 value={email}
               />
+              {validateEmail(email) === false && (
+                <p className='text-red-700 text-xs italic mt-1'>
+                  Please put a valid email.
+                </p>
+              )}
             </div>
             <div style={{width: '300px'}} className='mt-2'>
               <label
@@ -190,10 +226,12 @@ const SignUp = () => {
                 onChange={onChange}
                 value={password}
               />
-              <p className='text-xs text-gray-600 mt-1'>
-                Minimum 8 characters including at least a number, one lowercase
-                and one uppercase letter
-              </p>
+              {checkPassword(password) === false && (
+                <p className='text-xs text-red-700 italic mt-1'>
+                  Minimum 8 characters including at least a number, one
+                  lowercase and one uppercase letter
+                </p>
+              )}
             </div>
             <div style={{width: '300px'}} className='mt-2'>
               <label
@@ -210,7 +248,21 @@ const SignUp = () => {
                 onChange={onChange}
                 value={confirm_password}
               />
+              {password !== confirm_password && (
+                <p className='text-xs text-red-700 italic mt-1'>
+                  Passwords do not match
+                </p>
+              )}
             </div>
+            <input
+              style={{display: 'none'}}
+              className='appearance-none block w-full bg-white text-gray-700 border border-gray-500 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+              id='blueBerry'
+              name='blueBerry'
+              onChange={onChange}
+              value={blueBerry}
+              type='text'
+            />
             <div className='mt-6'>
               <button
                 onClick={onSubmit}

@@ -54,7 +54,7 @@ export const onAddToCart = (med, carts, addToCart, calculateCartValue, qty) => {
 };
 
 export function validateName(name) {
-  const name_regex = /^[a-zA-Z ]*[a-zA-Z]{3}[a-zA-Z ]*$/g;
+  const name_regex = /^[a-zA-Z ]*[a-zA-Z]{2}[a-zA-Z ]*$/g;
   if (name_regex.test(name)) return 'Name is valid';
   else return 'Name is invalid';
 }
@@ -95,4 +95,14 @@ export const setAuthToken = token => {
   } else {
     delete axios.defaults.headers.common['x-auth-token'];
   }
+};
+
+export const validateEmail = email => {
+  const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+
+export const checkPassword = password => {
+  const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+  return re.test(String(password));
 };
