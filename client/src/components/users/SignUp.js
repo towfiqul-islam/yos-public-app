@@ -167,7 +167,7 @@ const SignUp = () => {
               />
               {validateName(first_name) !== 'Name is valid' && (
                 <p className='text-red-700 text-xs italic mt-1'>
-                  Only uppercase or lowercase letters are allowed.
+                  Only uppercase and lowercase letters are allowed.
                 </p>
               )}
             </div>
@@ -187,7 +187,7 @@ const SignUp = () => {
               />
               {validateName(first_name) !== 'Name is valid' && (
                 <p className='text-red-700 text-xs italic mt-1'>
-                  Only uppercase or lowercase letters are allowed.
+                  Only uppercase and lowercase letters are allowed.
                 </p>
               )}
             </div>
