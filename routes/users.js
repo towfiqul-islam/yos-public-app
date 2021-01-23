@@ -30,7 +30,7 @@ function signUp(fields) {
 
 function signIn(email) {
   return new Promise(function (resolve, reject) {
-    const sql = `SELECT * FROM users WHERE email='${email}'`;
+    const sql = `SELECT * FROM users WHERE email = '${email}'`;
     connection.query(sql, (err, results) => {
       if (err) reject(err.sqlMessage);
       else {
@@ -145,6 +145,8 @@ router.put('/update-account/:id', async (req, res) => {
 
 router.post('/sign-in', async (req, res) => {
   try {
+    let email = req.body.email;
+    req.body.email = email.toLowerCase();
     const user = await signIn(req.body.email);
 
     let validPassword;
@@ -171,6 +173,8 @@ router.post('/sign-in', async (req, res) => {
 
 router.post('/sign-up', async (req, res) => {
   try {
+    let email = req.body.email;
+    req.body.email = email.toLowerCase();
     const checkPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
     if (checkPassword.test(req.body.password)) {
       const salt = await bcrypt.genSalt(10);
