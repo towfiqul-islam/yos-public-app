@@ -1460,6 +1460,16 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+.logo {
+  width: 64px;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 48px;
+  }
+}
+
 @media (min-width: 640px) {
 
   .sm\:bg-gray-200 {
@@ -1542,6 +1552,10 @@ input[type='number'] {
 
   .sm\:mr-8 {
     margin-right: 2rem;
+  }
+
+  .sm\:mt-12 {
+    margin-top: 3rem;
   }
 
   .sm\:mr-12 {

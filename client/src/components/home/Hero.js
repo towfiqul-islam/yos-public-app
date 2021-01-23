@@ -1,6 +1,7 @@
 import React from 'react';
-import hero from '../../assets/hero-2.jpg';
-import history from '../../history';
+import hero from '../../assets/Cover-2.png';
+import hero2 from '../../assets/cover-4.png';
+// import history from '../../history';
 
 const Hero = () => {
   return (
@@ -12,8 +13,9 @@ const Hero = () => {
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           position: 'relative',
-          height: '80vh',
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${hero})`,
+          height: '65vh',
+          // backgroundImage: `url(${hero})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(${hero})`,
         }}
       >
         <div
@@ -25,7 +27,7 @@ const Hero = () => {
           }}
           className='text-center absolute'
         >
-          <h1 className='text-5xl text-gray-900 font-bold'>
+          {/* <h1 className='text-5xl text-gray-900 font-bold'>
             100% Authentic Medicine at your doorstep
           </h1>
           <p className='text-xl text-gray-300   w-3/4 text-center mx-auto mt-4 leading-8'>
@@ -40,7 +42,7 @@ const Hero = () => {
             className='px-10 py-4 mt-8 text-lg tracking-wider font-semibold bg-yellow-500 text-black uppercase shadow-xl rounded'
           >
             Upload prescription
-          </button>
+          </button> */}
         </div>
       </div>
       {/* Mobile Hero */}
@@ -49,10 +51,12 @@ const Hero = () => {
         style={{
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
+          backgroundSize: 'contain',
           position: 'relative',
-          height: '80vh',
-          background: '#DADADA',
+          height: '60vh',
+          // background: '#DADADA',
+          // backgroundImage: `url(${hero2})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(${hero2})`,
         }}
       >
         <div
@@ -64,7 +68,7 @@ const Hero = () => {
           }}
           className='text-center absolute'
         >
-          <h1 className='text-3xl text-gray-900 font-bold'>
+          {/* <h1 className='text-3xl text-gray-900 font-bold'>
             100% Authentic Medicine at your doorstep
           </h1>
           <p className='text-lg text-gray-900  w-11/12 text-center mx-auto mt-4 leading-8'>
@@ -79,7 +83,7 @@ const Hero = () => {
             className='px-8 py-4 mt-8 text font-medium bg-yellow-500 text-black shadow-xl rounded'
           >
             Upload prescription
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

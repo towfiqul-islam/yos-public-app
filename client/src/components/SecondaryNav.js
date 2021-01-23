@@ -10,6 +10,8 @@ import {checkCarts, checkPath, setAuthToken} from '../utils';
 import axios from 'axios';
 import EmailVerifyWarning from './users/EmailVerifyWarning';
 
+import logo from '../assets/YOS-Logo.svg';
+
 const SecondaryNav = () => {
   const router = useLocation();
   const appContext = useContext(AppContext);
@@ -212,7 +214,16 @@ const SecondaryNav = () => {
               <path d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' />
             </svg>
           </span>
-          <h1
+          <img
+            onClick={() => {
+              history.push('/');
+              toggleMobileMenu(false);
+            }}
+            className='sm:mr-12 mr-4 logo'
+            src={logo}
+            alt=''
+          />
+          {/* <h1
             onClick={() => {
               history.push('/');
               toggleMobileMenu(false);
@@ -220,7 +231,7 @@ const SecondaryNav = () => {
             className=' font-bold md:text-4xl text-xl cursor-pointer sm:mr-12 mr-4'
           >
             YOS
-          </h1>
+          </h1> */}
         </div>
         <div
           className={

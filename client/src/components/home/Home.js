@@ -7,9 +7,10 @@ import MobileSearchOverlay from '../MobileSearchOverlay';
 
 import SecondaryNav from '../SecondaryNav';
 import Hero from './Hero';
-import HowToOrder from './HowToOrder';
+// import HowToOrder from './HowToOrder';
 
 import Services from './Services';
+import ShowMeds from './ShowMeds';
 
 const Home = () => {
   const appContext = useContext(AppContext);
@@ -67,7 +68,8 @@ const Home = () => {
 
           {/* <MobileServices /> */}
           <Services />
-          <HowToOrder />
+          {/* <HowToOrder /> */}
+          <ShowMeds />
         </div>
         <Footer />
       </div>

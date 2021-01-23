@@ -33,6 +33,16 @@ function browseMeds(page) {
   });
 }
 
+function getRandomMeds() {
+  return new Promise(function (resolve, reject) {
+    const sql = `SELECT * FROM medicines ORDER BY RAND() LIMIT 10`;
+    connection.query(sql, (err, results) => {
+      if (err) throw err;
+      resolve(results);
+    });
+  });
+}
+
 function getTotalCount() {
   return new Promise(function (resolve, reject) {
     const sql = 'SELECT COUNT(*) AS total_count FROM medicines';
@@ -64,6 +74,11 @@ function browseMedsByLetter(letter, page) {
     });
   });
 }
+
+router.get('/get-random-meds', async (req, res) => {
+  const data = await getRandomMeds();
+  res.send(data);
+});
 
 router.get('/browse_medicines_by_letter/:letter/:page', async (req, res) => {
   const data = await browseMedsByLetter(req.params.letter, req.params.page);
