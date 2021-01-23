@@ -82,7 +82,7 @@ const SecondaryNav = () => {
     <div className='bg-gray-200'>
       {isAuthenticated && user.isVerified === 'no' && <EmailVerifyWarning />}
       <div className='bg-gray-300 text-gray-900 py-2'>
-        <div className=' flex sm:justify-center justify-between sm:w-3/4 mx-auto w-11/12  '>
+        <div className=' flex  justify-between sm:w-3/4 mx-auto w-11/12  '>
           <div className='flex justify-center items-center'>
             {' '}
             <p className='mr-2'>
@@ -198,7 +198,7 @@ const SecondaryNav = () => {
           ></div>
         )}
       {checkPath(router.pathname) && <Cart />}
-      <nav className='flex  py-4  items-center md:w-3/4 w-11/12 m-auto'>
+      <nav className='flex  py-4 justify-between  items-center md:w-3/4 w-11/12 m-auto'>
         <div className='flex flex-grow md:flex-grow-0 items-center'>
           <span
             onClick={() => toggleMobileMenu(!isMenuOpen)}

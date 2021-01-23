@@ -14,7 +14,6 @@ const ShowMeds = () => {
   const [meds, setMeds] = useState([]);
   async function getRandomMeds() {
     const res = await axios.get('/api/medicines/get-random-meds');
-    // console.log(res.data);
     setMeds(res.data);
   }
   useEffect(() => {
@@ -45,12 +44,14 @@ const ShowMeds = () => {
             </>
           )}
         </div>
-        <Link
-          className='flex justify-center  mt-6  py-1 underline text-sm sm:text-base'
-          to='/browse-medicines/page/1'
-        >
-          Show All
-        </Link>
+        <div className='flex justify-center mt-8'>
+          <Link
+            className=' border border-gray-900 px-6 py-1 rounded'
+            to='/browse-medicines/page/1'
+          >
+            See all
+          </Link>
+        </div>
       </div>
     </div>
   );
