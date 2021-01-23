@@ -73,7 +73,7 @@ const App = () => {
               path='/user-order-review'
               component={UserOrderReview}
             />
-            <Route exact path='/reset-password/:id' component={ResetPassword} />
+            <Route exact path='/:random_url' component={ResetPassword} />
             <Route exact path='/verify-email/:id' component={VerifyMail} />
             <Route exact path='/about-us' component={AboutUs} />
             <Route exact path='/privacy-policy' component={Privacy} />

@@ -63,9 +63,11 @@ const Login = () => {
           user_email: email,
         };
         const resp = await axios.post(
-          `/api/users/send-reset-password-mail/${res.data.id}`,
+          `/api/users/send-reset-password-mail`,
           data,
         );
+
+        localStorage.setItem('reset-id', res.data.id);
 
         if (resp.data.msg === 'Reset link sent!') {
           setAlert({

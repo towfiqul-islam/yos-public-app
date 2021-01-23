@@ -1,13 +1,14 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import history from '../../history';
 import AppContext from '../../context/appContext';
+import {urlStrings} from '../../utils';
 
 const ResetPassword = () => {
   const appContext = useContext(AppContext);
   const {setAuthentication} = appContext;
-  const {id} = useParams();
+  const {random_url} = useParams();
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -25,7 +26,10 @@ const ResetPassword = () => {
         password: new_password,
       };
 
-      const res = await axios.put(`/api/users/reset-password/${id}`, data);
+      const res = await axios.put(
+        `/api/users/reset-password/${localStorage.getItem('reset-id')}`,
+        data,
+      );
       if (res.data.msg === 'Password updated. You need to sign in') {
         setShowAlert(true);
       } else {
@@ -41,9 +45,18 @@ const ResetPassword = () => {
     localStorage.removeItem('carts');
     localStorage.removeItem('yos_user');
     localStorage.removeItem('token');
+    localStorage.removeItem('reset-id');
     history.push('/login');
     window.location.reload();
   };
+  useEffect(() => {
+    const resetId = localStorage.getItem('reset-id');
+
+    if (!urlStrings.includes(random_url) || resetId === null) {
+      history.push('/login');
+    }
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className='sm:w-3/4 w-11/12 m-auto'>
       <h2 className='my-8 border-b-2 border-gray-600 inline-block'>

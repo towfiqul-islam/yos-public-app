@@ -79,109 +79,9 @@ const SecondaryNav = () => {
   }, []);
 
   return (
-    <div className='bg-gray-200'>
+    <div className='bg-white'>
       {isAuthenticated && user.isVerified === 'no' && <EmailVerifyWarning />}
-      <div className='bg-gray-300 text-gray-900 py-2'>
-        <div className=' flex  justify-between sm:w-3/4 mx-auto w-11/12  '>
-          <div className='flex justify-center items-center'>
-            {' '}
-            <p className='mr-2'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                height='20'
-                viewBox='0 0 24 24'
-                width='20'
-              >
-                <path d='M0 0h24v24H0V0z' fill='none' />
-                <path
-                  d='M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z'
-                  fill='#1a202c'
-                />
-              </svg>
-            </p>
-            <p
-              onClick={() => window.open('tel: 01813548952')}
-              className='mr-2 hover:underline sm:text-base text-sm cursor-pointer '
-            >
-              01813548952
-            </p>
-            <p className='mr-2 text-gray-700 sm:text-sm text-xs sm:block hidden'>
-              Call to order
-            </p>
-          </div>
-          {isAuthenticated ? (
-            <div className='ml-8 flex'>
-              <div className='flex items-center'>
-                <span>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='24'
-                    viewBox='0 0 24 24'
-                    width='24'
-                  >
-                    <path d='M0 0h24v24H0V0z' fill='none' />
-                    <path
-                      d='M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z'
-                      fill='#4a5568'
-                    />
-                  </svg>
-                </span>
-                <span
-                  onClick={() => history.push('/user')}
-                  className='ml-1 cursor-pointer'
-                >
-                  {user.first_name}...
-                </span>
-              </div>
-              <div
-                onClick={onLogout}
-                className='ml-8 text-red-700 font-medium md:flex items-center hidden cursor-pointer'
-              >
-                <span>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='24'
-                    viewBox='0 0 24 24'
-                    width='24'
-                  >
-                    <path d='M0 0h24v24H0V0z' fill='none' />
-                    <path
-                      d='M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'
-                      fill='#4a5568'
-                    />
-                  </svg>
-                </span>
-                <span className='ml-1'>Logout</span>
-              </div>
-            </div>
-          ) : (
-            <div className='flex items-center ml-8'>
-              <span>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  enableBackground='new 0 0 24 24'
-                  height='20'
-                  viewBox='0 0 24 24'
-                  width='20'
-                >
-                  <g>
-                    <rect fill='none' height='20' width='20' />
-                  </g>
-                  <g>
-                    <path
-                      d='M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z'
-                      fill='#1a202c'
-                    />
-                  </g>
-                </svg>
-              </span>
-              <Link to='/login' className='ml-2 text-sm'>
-                Login/Signup
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
+
       {isCartOpen && checkPath(router.pathname) && (
         <div
           onClick={openCart}
@@ -198,7 +98,7 @@ const SecondaryNav = () => {
           ></div>
         )}
       {checkPath(router.pathname) && <Cart />}
-      <nav className='flex  py-4 justify-between  items-center md:w-3/4 w-11/12 m-auto'>
+      <nav className='flex  py-6 shadow-sm justify-between  items-center md:w-4/5 w-11/12 m-auto'>
         <div className='flex flex-grow md:flex-grow-0 items-center'>
           <span
             onClick={() => toggleMobileMenu(!isMenuOpen)}
@@ -240,7 +140,7 @@ const SecondaryNav = () => {
               : 'md:flex relative  items-center justify-center z-30  hidden opacity-50'
           }
         >
-          <span className='block bg-white pl-4 py-3 border-l border-t border-b border-gray-500'>
+          <span className='block bg-gray-200 pl-4 py-3 border-l-2 border-t-2 border-b-2 border-gray-500'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               height='24'
@@ -253,7 +153,7 @@ const SecondaryNav = () => {
           </span>
           <input
             style={{width: '400px'}}
-            className=' border-t border-b border-r border-gray-500 px-4 py-3 focus:outline-none'
+            className='border-t-2 bg-gray-200 border-b-2 border-r-2 border-gray-500 px-4 py-3 focus:outline-none'
             type='text'
             placeholder='Search and order medicine'
             name='search'
@@ -292,12 +192,6 @@ const SecondaryNav = () => {
             )}
         </div>
 
-        <Link
-          to='/browse-medicines/page/1'
-          className=' sm:text-lg sm:mx-12 mr-4 '
-        >
-          Medicines
-        </Link>
         <div
           onClick={() => {
             if (checkPath(router.pathname)) {
@@ -306,8 +200,8 @@ const SecondaryNav = () => {
           }}
           className={
             checkPath(router.pathname)
-              ? 'flex md:mr-24 relative cursor-pointer'
-              : 'flex md:mr-24 relative cursor-default opacity-25'
+              ? 'flex md:mr-8 relative cursor-pointer'
+              : 'flex md:mr-8 relative cursor-default opacity-25'
           }
         >
           {carts.length > 0 && (
@@ -378,7 +272,115 @@ const SecondaryNav = () => {
             Order by prescription
           </button>
         </div>
+        {isAuthenticated ? (
+          <div className='ml-8 flex'>
+            <div className='flex items-center'>
+              <span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  width='24'
+                >
+                  <path d='M0 0h24v24H0V0z' fill='none' />
+                  <path
+                    d='M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z'
+                    fill='#4a5568'
+                  />
+                </svg>
+              </span>
+              <span
+                onClick={() => history.push('/user')}
+                className='ml-1 cursor-pointer'
+              >
+                {user.first_name}...
+              </span>
+            </div>
+            <div
+              onClick={onLogout}
+              className='ml-8 text-red-700 font-medium md:flex items-center hidden cursor-pointer'
+            >
+              <span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  width='24'
+                >
+                  <path d='M0 0h24v24H0V0z' fill='none' />
+                  <path
+                    d='M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'
+                    fill='#4a5568'
+                  />
+                </svg>
+              </span>
+              <span className='ml-1'>Logout</span>
+            </div>
+          </div>
+        ) : (
+          <div className='flex items-center ml-8'>
+            <span>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                enableBackground='new 0 0 24 24'
+                height='20'
+                viewBox='0 0 24 24'
+                width='20'
+              >
+                <g>
+                  <rect fill='none' height='20' width='20' />
+                </g>
+                <g>
+                  <path
+                    d='M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z'
+                    fill='#1a202c'
+                  />
+                </g>
+              </svg>
+            </span>
+            <Link to='/login' className='ml-2 text-sm md:text-base'>
+              Login/Signup
+            </Link>
+          </div>
+        )}
       </nav>
+
+      <div className='bg-gray-300 text-gray-700 py-3'>
+        <div className=' flex justify-between md:justify-start  sm:w-3/4 mx-auto w-11/12  '>
+          <div className='flex justify-center items-center'>
+            {' '}
+            <p className='mr-2'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                height='20'
+                viewBox='0 0 24 24'
+                width='20'
+              >
+                <path d='M0 0h24v24H0V0z' fill='none' />
+                <path
+                  d='M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z'
+                  fill='#1a202c'
+                />
+              </svg>
+            </p>
+            <p
+              onClick={() => window.open('tel: 01813548952')}
+              className='mr-2 hover:underline sm:text-base text-sm cursor-pointer '
+            >
+              01813548952
+            </p>
+            <p className='mr-2 text-gray-700 sm:text-sm text-xs sm:block hidden'>
+              Call to order
+            </p>
+          </div>
+          <Link
+            to='/browse-medicines/page/1'
+            className=' sm:text-base sm:mx-12 mr-4 uppercase font-medium text-gray-700'
+          >
+            Medicines
+          </Link>
+        </div>
+      </div>
 
       {isMenuOpen &&
         (router.pathname !== '/order-by-prescription' ||

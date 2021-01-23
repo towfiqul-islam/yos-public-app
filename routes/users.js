@@ -247,7 +247,7 @@ router.post('/send-verification-mail/:id', async (req, res) => {
 });
 
 // Reset password mail
-router.post('/send-reset-password-mail/:id', async (req, res) => {
+router.post('/send-reset-password-mail', async (req, res) => {
   try {
     await transport.sendMail({
       from: 'yoscombd@yos.com.bd',
@@ -260,7 +260,7 @@ router.post('/send-reset-password-mail/:id', async (req, res) => {
             process.env.NODE_ENV === 'testing'
               ? 'http://localhost:3000'
               : 'https://yos.com.bd'
-          }/reset-password/${req.params.id}>Reset password</a>
+          }/${urlStrings[generateRandomNumber()]}>Reset password</a>
         </div>
       `,
     });
@@ -271,5 +271,60 @@ router.post('/send-reset-password-mail/:id', async (req, res) => {
     return res.status(400).send('Something went wrong!');
   }
 });
+
+const urlStrings = [
+  'yQOFocNnzl',
+  'W7duWPuchX',
+  '7DuPG1RYqx',
+  'u0afX56Tt0',
+  '3SihQ9lGm9',
+  'a8yYXqGCuH',
+  'tfwcirNaQC',
+  'B3cDzpawPu',
+  'CVl6NJNcNQ',
+  'WIk5xs8jR0',
+  'SpMGd8jqPN',
+  'M1PTMMuVhh',
+  'x8jIDLish0',
+  'h1I3sSR9SY',
+  '10s7WmCmls',
+  'zL0b0jA8Yd',
+  '1JcDFsxFRn',
+  'VGBZ8lClcZ',
+  'URCv5BfJU8',
+  'REaIg3Iykt',
+  'NFFIuWjgJs',
+  'jngMd4eAQi',
+  'IkZOG6gQ86',
+  'mTa6vbsegr',
+  's1ypxDPdYf',
+  'JqfStEmlG8',
+  'Q6CQJT3r0v',
+  'QXyAj8bBj5',
+  'sdZ6NXFoNI',
+  'toM1B5WfZn',
+  'UftOE1I7pY',
+  'pkocwEDLqO',
+  '1G8uxstcf8',
+  'bd0CoPU3iB',
+  '3XYo41mI1w',
+  'XdOCNUGpQC',
+  'YxONRTtv2h',
+  'bSYSMjdR1L',
+  'tTznDv3b1e',
+  'Ooh4iIeC0o',
+  '690TjH8tDQ',
+  'aG9orZOxFd',
+  'NILj13Vo6G',
+  'mB65NhwHzz',
+  'Ej4a3GbzuV',
+  'aJ1uAG969f',
+  'xQYOnSmqld',
+  'ZgcouDHNvR',
+  'ppWPiWKyBC',
+  'FnOfVqDyvc',
+];
+
+const generateRandomNumber = () => Math.floor(Math.random() * 49);
 
 module.exports = router;
