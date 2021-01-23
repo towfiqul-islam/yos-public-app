@@ -29,7 +29,7 @@ const Hero = () => {
           position: 'relative',
           height: '60vh',
 
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(${hero2})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${hero2})`,
         }}
       >
         <div

@@ -273,7 +273,7 @@ const SecondaryNav = () => {
           </button>
         </div>
         {isAuthenticated ? (
-          <div className='ml-8 flex'>
+          <div className='ml-8 sm:flex hidden'>
             <div className='flex items-center'>
               <span>
                 <svg
@@ -318,7 +318,7 @@ const SecondaryNav = () => {
             </div>
           </div>
         ) : (
-          <div className='flex items-center ml-8'>
+          <div className='sm:flex hidden items-center ml-8'>
             <span>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -344,6 +344,65 @@ const SecondaryNav = () => {
           </div>
         )}
       </nav>
+
+      {isMenuOpen &&
+        (router.pathname !== '/order-by-prescription' ||
+          router.pathname !== '/user-order-by-prescription') && (
+          <div className='pb-2  border-t border-gray-300'>
+            <div className='w-11/12 mx-auto'>
+              <button
+                onClick={() => {
+                  if (user) {
+                    history.push('/user-order-by-prescription');
+                  } else {
+                    history.push('/order-by-prescription');
+                  }
+                  toggleMobileMenu(!isMenuOpen);
+                }}
+                className=' block py-4 text-base '
+              >
+                Order by prescription
+              </button>
+
+              {isAuthenticated ? (
+                <div className='sm:hidden flex pb-4'>
+                  <div className='flex items-center'>
+                    <span
+                      onClick={() => {
+                        history.push('/user');
+                        toggleMobileMenu(!isMenuOpen);
+                      }}
+                      className='cursor-pointer'
+                    >
+                      {user.first_name}...
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onClick={() => toggleMobileMenu(!isMenuOpen)}
+                  className='sm:hidden flex items-center pb-2'
+                >
+                  <Link to='/login' className=''>
+                    Login/Signup
+                  </Link>
+                </div>
+              )}
+
+              {isAuthenticated && (
+                <button
+                  onClick={() => {
+                    onLogout();
+                    toggleMobileMenu(!isMenuOpen);
+                  }}
+                  className='block text-red-700 font-medium text-base pb-2 '
+                >
+                  Logout
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
       <div className='bg-gray-300 text-gray-700 py-3'>
         <div className=' flex justify-between md:justify-start  sm:w-3/4 mx-auto w-11/12  '>
@@ -382,7 +441,7 @@ const SecondaryNav = () => {
         </div>
       </div>
 
-      {isMenuOpen &&
+      {/* {isMenuOpen &&
         (router.pathname !== '/order-by-prescription' ||
           router.pathname !== '/user-order-by-prescription') && (
           <div className='pb-2  border-t border-gray-300'>
@@ -394,21 +453,52 @@ const SecondaryNav = () => {
                   } else {
                     history.push('/order-by-prescription');
                   }
+                  toggleMobileMenu(!isMenuOpen);
                 }}
                 className=' block py-4 text-base '
               >
                 Order by prescription
               </button>
 
-              <button
-                onClick={onLogout}
-                className='block text-red-700 font-medium text-base pb-2 '
-              >
-                Logout
-              </button>
+              {isAuthenticated ? (
+                <div className='sm:hidden flex pb-4'>
+                  <div className='flex items-center'>
+                    <span
+                      onClick={() => {
+                        history.push('/user');
+                        toggleMobileMenu(!isMenuOpen);
+                      }}
+                      className='cursor-pointer'
+                    >
+                      {user.first_name}...
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onClick={() => toggleMobileMenu(!isMenuOpen)}
+                  className='sm:hidden flex items-center pb-2'
+                >
+                  <Link to='/login' className=''>
+                    Login/Signup
+                  </Link>
+                </div>
+              )}
+
+              {isAuthenticated && (
+                <button
+                  onClick={() => {
+                    onLogout();
+                    toggleMobileMenu(!isMenuOpen);
+                  }}
+                  className='block text-red-700 font-medium text-base pb-2 '
+                >
+                  Logout
+                </button>
+              )}
             </div>
           </div>
-        )}
+        )} */}
     </div>
   );
 };
